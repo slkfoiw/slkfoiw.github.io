@@ -94,6 +94,9 @@ $$dx\left( {coef*x^{xexpo}*\exp \left(eexpo\right)} \right) = coef*xexpo*x^{xexp
 
 求导中也用到了递归下降的思想，对Poly求导，即对Poly的每个Mono求导；对Mono求导，应用上述公式，得到的是Poly/ArrayList\<Mono\>
 
+### 三、bug分析
+本次作业无强测bug，未被hack。第二次作业的架构调整对第三次作业帮助很大，在其上迭代开发非常清晰，不容易出现问题
+
 ## 度量分析
 方法复杂度
 
