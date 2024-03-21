@@ -26,6 +26,7 @@ $$\left\{ {\begin{array}{l}
 {d\mathop w\nolimits_2  = \frac{{\partial L}}{{\partial \mathop w\nolimits_2 }} = \frac{{\partial L}}{{\partial a}} \cdot \frac{{\partial a}}{{\partial \mathop w\nolimits_2 }} = \mathop x\nolimits_2  \cdot (a - y)}\\
 {db = \frac{{\partial L}}{{\partial b}} = a - y}
 \end{array}} \right.$$
+
 更新：
 $$\left\{ {\begin{array}{l}
 {\mathop w\nolimits_1 : = \mathop w\nolimits_1  - \partial  \cdot d\mathop w\nolimits_1 }\\
