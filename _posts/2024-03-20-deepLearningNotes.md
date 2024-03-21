@@ -16,7 +16,7 @@ $z=w^{T}x+b$
 
 损失函数(衡量在单个训练样本上的表现)：$L(\hat y, y) = -ylog\hat y - (1-y)log(1-\hat{y})$
 
-成本函数(衡量在全体训练样本上的表现)：$J\left( {w,b} \right) = \frac{1}{m}\sum\limits_{i = 1}^m {L({{\hat y}^{(i)}},\mathop y\nolimits^{(i)} )} $
+成本函数(衡量在全体训练样本上的表现)：$J\left( {w,b} \right) = \frac{1}{m}\sum\limits_{i = 1}^m {L({\hat{y}^{(i)}},\mathop y\nolimits^{(i)} )}$
 
 梯度下降算法：
 $$da = \frac{{\partial L}}{{\partial a}} =  - \frac{y}{a} + \frac{{1 - y}}{{1 - a}}$$
