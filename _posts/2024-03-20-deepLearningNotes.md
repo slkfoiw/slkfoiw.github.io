@@ -1,0 +1,45 @@
+---
+layout: post
+title: deeplearningNotes
+category: deepLearning
+---
+
+## 基础知识
+### 标注习惯
+* 上角小括号：训练集里的值
+* 上角中括号：神经网络的层数
+* 大括号：不同的mini-batch
+
+$z=w^{T}x+b$
+
+激活函数：$a = \hat y = \sigma (z)$
+
+损失函数(衡量在单个训练样本上的表现)：$L(\hat y, y) = -ylog\hat y - (1-y)log(1-\hat{y})$
+
+成本函数(衡量在全体训练样本上的表现)：$J\left( {w,b} \right) = \frac{1}{m}\sum\limits_{i = 1}^m {L({{\hat y}^{(i)}},\mathop y\nolimits^{(i)} )} $
+
+梯度下降算法：
+$$da = \frac{{\partial L}}{{\partial a}} =  - \frac{y}{a} + \frac{{1 - y}}{{1 - a}}$$
+$$dz = \frac{{\partial L}}{{\partial z}} = \frac{{\partial L}}{{\partial a}} \cdot \frac{{\partial a}}{{\partial z}} = ( - \frac{y}{a} + \frac{{1 - y}}{{1 - a}}) \cdot a \cdot (1 - a) = a - y$$
+$$\left\{ {\begin{array}{l}
+{d\mathop w\nolimits_1  = \frac{{\partial L}}{{\partial \mathop w\nolimits_1 }} = \frac{{\partial L}}{{\partial a}} \cdot \frac{{\partial a}}{{\partial \mathop w\nolimits_1 }} = \mathop x\nolimits_1  \cdot (a - y)}\\
+{d\mathop w\nolimits_2  = \frac{{\partial L}}{{\partial \mathop w\nolimits_2 }} = \frac{{\partial L}}{{\partial a}} \cdot \frac{{\partial a}}{{\partial \mathop w\nolimits_2 }} = \mathop x\nolimits_2  \cdot (a - y)}\\
+{db = \frac{{\partial L}}{{\partial b}} = a - y}
+\end{array}} \right.$$
+更新：
+$$\left\{ {\begin{array}{l}
+{\mathop w\nolimits_1 : = \mathop w\nolimits_1  - \partial  \cdot d\mathop w\nolimits_1 }\\
+{\mathop w\nolimits_2 : = \mathop w\nolimits_2  - \partial  \cdot d\mathop w\nolimits_2 }\\
+{b: = b - \partial  \cdot db}
+\end{array}} \right.$$
+
+m个样本的梯度下降：
+$$\left\{ {\begin{array}{l}
+{d{\rm{ }}{w_1} = \frac{{\rm{1}}}{{\rm{m}}}\sum\limits_{i = 1}^m {x_1^{(i)} \cdot ({a^{(i)}} - {y^{(i)}})} {\rm{ }}}\\
+{d{\rm{ }}{w_2} = \frac{{\rm{1}}}{{\rm{m}}}\sum\limits_{i = 1}^m {x_2^{(i)} \cdot ({a^{(i)}} - {y^{(i)}})} {\rm{ }}}\\
+{db = \frac{{\partial L}}{{\partial b}} = \frac{{\rm{1}}}{{\rm{m}}}\sum\limits_{i = 1}^m {({a^{(i)}} - {y^{(i)}})} }
+\end{array}} \right.$$
+
+深层网络的向前传播：
+$$z^{[l]}=w^{[l]}a^{[l]-1}+b^{[l]}$$
+$$a^{[l]} =  \sigma (z^{[l]})$$
