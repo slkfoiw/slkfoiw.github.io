@@ -12,7 +12,7 @@ category: deepLearning
 
 $z=w^{T}x+b$
 
-激活函数：$a = \hat y = \sigma (z)$
+激活函数：$a = \hat{y} = \sigma (z)$
 
 损失函数(衡量在单个训练样本上的表现)：$L(\hat y, y) = -ylog\hat y - (1-y)log(1-\hat{y})$
 
