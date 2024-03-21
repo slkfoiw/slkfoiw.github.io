@@ -1,6 +1,6 @@
 ---
 layout: post
-title: deeplearningNotes
+title: deeplearningPre
 category: deepLearning
 ---
 
