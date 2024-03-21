@@ -19,8 +19,8 @@ $z=w^{T}x+b$
 成本函数(衡量在全体训练样本上的表现)：$J\left( {w,b} \right) = \frac{1}{m}\sum\limits_{i = 1}^m {L({\hat{y}^{(i)}},\mathop y\nolimits^{(i)} )}$
 
 梯度下降算法：
-$$da = \frac{{\partial L}}{{\partial a}} =  - \frac{y}{a} + \frac{{1 - y}}{{1 - a}}$$
-$$dz = \frac{{\partial L}}{{\partial z}} = \frac{{\partial L}}{{\partial a}} \cdot \frac{{\partial a}}{{\partial z}} = ( - \frac{y}{a} + \frac{{1 - y}}{{1 - a}}) \cdot a \cdot (1 - a) = a - y$$
+$$da = \frac{\partial L}{\partial a} =  - \frac{y}{a} + \frac{1 - y}{1 - a}$$
+$$dz = \frac{\partial L}{\partial z} = \frac{\partial L}{\partial a} \cdot \frac{\partial a}{\partial z} = ( - \frac{y}{a} + \frac{1 - y}{1 - a}) \cdot a \cdot (1 - a) = a - y$$
 $$\left\{ {\begin{array}{l}
 {d\mathop w\nolimits_1  = \frac{{\partial L}}{{\partial \mathop w\nolimits_1 }} = \frac{{\partial L}}{{\partial a}} \cdot \frac{{\partial a}}{{\partial \mathop w\nolimits_1 }} = \mathop x\nolimits_1  \cdot (a - y)}\\
 {d\mathop w\nolimits_2  = \frac{{\partial L}}{{\partial \mathop w\nolimits_2 }} = \frac{{\partial L}}{{\partial a}} \cdot \frac{{\partial a}}{{\partial \mathop w\nolimits_2 }} = \mathop x\nolimits_2  \cdot (a - y)}\\
