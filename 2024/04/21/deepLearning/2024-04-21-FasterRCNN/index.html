@@ -29,7 +29,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 7.2.0"></head>
+<meta name="generator" content="Hexo 7.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 
@@ -57,7 +59,7 @@
       
       <i class="fas fa-home" style="zoom: 0.6;"></i>
       
-      <span>Index</span>
+      <span>Home</span>
     </a>
     
   </li>
@@ -138,7 +140,7 @@
 			
 			    <i class="fa-fw fas fa-home"></i>
 			
-			Index
+			Home
 		</a>
           
         </li>
@@ -190,7 +192,7 @@
         
         <li><div class="divider"></div></li>
         <li>
-            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+            <a href="https://github.com/slkfoiw/slkfoiw.github.io" class="waves-effect waves-light" target="_blank">
                 <i class="fab fa-github-square fa-fw"></i>Fork Me
             </a>
         </li>
@@ -247,7 +249,7 @@
     }
 </style>
 
-<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+<a href="https://github.com/slkfoiw/slkfoiw.github.io" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
    data-tooltip="Fork Me" data-position="left" data-delay="50">
     <svg viewBox="0 0 250 250" aria-hidden="true">
         <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
@@ -415,6 +417,11 @@
                 
 
                 
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
+                    1.4k
+                </div>
+                
 
                 
 
@@ -423,6 +430,9 @@
         </div>
         <hr class="clearfix">
 
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
         
 
         
@@ -448,7 +458,7 @@
 <td>将目标分类与候选框回归统一到CNN网络中来，不需要额外存储特征</td>
 </tr>
 </tbody></table>
-<h2 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h2><p>![FastRCNN框架](..&#x2F;..&#x2F;images&#x2F;deepLearning&#x2F;Fast RCNN框架.png)</p>
+<h2 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h2><p><img src="/../../images/deepLearning/FastRCNN%E6%A1%86%E6%9E%B6.png" alt="FastRCNN框架"></p>
 <h1 id="Faster-RCNN"><a href="#Faster-RCNN" class="headerlink" title="Faster RCNN"></a>Faster RCNN</h1><h2 id="改进"><a href="#改进" class="headerlink" title="改进"></a>改进</h2><p>提出背景：<strong>Fast R-CNN通过选择性搜索</strong>（selective search）找出所有的候选框，仍然比较耗时</p>
 <p>解决方法：<strong>加入一个提取边缘的神经网络，把找候选框的工作交给这个神经网络（称作Region Proposal Network，RPN）</strong></p>
 <p>具体做法如下：</p>
@@ -456,11 +466,9 @@
 <li>将RPN放在一个卷积层的后面</li>
 <li>RPN直接训练得到候选区域</li>
 </ol>
-<h2 id="结构-检测过程"><a href="#结构-检测过程" class="headerlink" title="结构(检测过程)"></a>结构(检测过程)</h2><p>基本框架如下：</p>
-<img src="../../images/deepLearning/Faster RCNN框架.png" alt="Fast RCNN结构" style="zoom:50%;" />
-
+<h2 id="结构-检测过程"><a href="#结构-检测过程" class="headerlink" title="结构(检测过程)"></a>结构(检测过程)</h2><p>基本框架如下：<br><img src="/../../images/deepLearning/FasterRCNN%E6%A1%86%E6%9E%B6.png" alt="FasterRCNN框架"></p>
 <p>具体结构如下：</p>
-<p><img src="/....%5Cimages%5CdeepLearning%5CFasterRCNN%E5%85%B7%E4%BD%93%E7%BB%93%E6%9E%84.png" alt="FasterRCNN具体结构"></p>
+<p><img src="/../../images/deepLearning/FasterRCNN%E5%85%B7%E4%BD%93%E7%BB%93%E6%9E%84.png" alt="FasterRCNN具体结构"></p>
 <h3 id="conv-layers"><a href="#conv-layers" class="headerlink" title="conv layers"></a>conv layers</h3><p>特征提取网络，用于提取特征。通过一组conv+relu+pooling层来提取图像的feature maps。</p>
 <ol>
 <li>13个conv层：kernel_size&#x3D;3,  padding&#x3D;1,  stride&#x3D;1。因为$n &#x3D; \frac{n + 2p - f}{s} + 1$，所以经过每个卷积层后feature map维度不变。</li>
@@ -505,12 +513,12 @@
 <li>利用proposals feature maps计算出具体的类别</li>
 <li>再做一次bbox regression获得检测框最终的精确位置。</li>
 </ul>
-<h2 id="训练过程（two-stage）"><a href="#训练过程（two-stage）" class="headerlink" title="训练过程（two stage）"></a>训练过程（two stage）</h2><p><img src="/../..%5Cimages%5CdeepLearning%5CFasterRCNN%E5%8F%8C%E9%98%B6%E6%AE%B5.png" alt="FasterRCNN双阶段检测"></p>
+<h2 id="训练过程（two-stage）"><a href="#训练过程（two-stage）" class="headerlink" title="训练过程（two stage）"></a>训练过程（two stage）</h2><p><img src="/../../images/deepLearning/FasterRCNN%E5%8F%8C%E9%98%B6%E6%AE%B5.png" alt="FasterRCNN双阶段检测"></p>
 <ul>
 <li>训练RPN网络</li>
 <li>训练分类网络</li>
 </ul>
-<p><img src="D:\mynotes\images\deepLearning\FasterRCNN训练过程.png" alt="训练过程"></p>
+<p><img src="/../../images/deepLearning/FasterRCNN%E8%AE%AD%E7%BB%83%E8%BF%87%E7%A8%8B.png" alt="训练过程"></p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/kk123k/article/details/86515513">R-CNN论文详细解读</a></p>
 <p><a target="_blank" rel="noopener" href="http://t.csdnimg.cn/PnIKI">Faster RCNN</a></p>
 <p>[超级详细的Faster RCNN解读](一文读懂Faster RCNN - 你再好好想想的文章 - 知乎<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/31426458">https://zhuanlan.zhihu.com/p/31426458</a>)</p>
@@ -530,7 +538,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">fang</a>
+                    <a href="/about" rel="external nofollow noreferrer">CuberSugar</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -540,7 +548,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2024/04/21/deepLearning/2024-04-21-FasterRCNN/">http://example.com/2024/04/21/deepLearning/2024-04-21-FasterRCNN/</a>
+                    <a href="http://example.com/2024/04/21/deeplearning/2024-04-21-fasterrcnn/">http://example.com/2024/04/21/deeplearning/2024-04-21-fasterrcnn/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -553,7 +561,7 @@
                     All articles in this blog are used except for special statements
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     reprint polocy. If reproduced, please indicate source
-                    <a href="/about" target="_blank">fang</a>
+                    <a href="/about" target="_blank">CuberSugar</a>
                     !
                 </span>
             </div>
@@ -749,7 +757,7 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2024/04/26/deepLearning/2024-04-26-CLIP/">
+                <a href="/2024/04/26/deeplearning/2024-04-26-clip/">
                     <div class="card-image">
                         
                         
@@ -790,7 +798,7 @@
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2024/04/20/OO/2024-04-20-OO-unit2-summary/">
+                <a href="/2024/04/20/oo/2024-04-20-oo-unit2-summary/">
                     <div class="card-image">
                         
                         
@@ -960,10 +968,13 @@
                 <span id="year">2024</span>
             
             <span id="year">2024</span>
-            <a href="/about" target="_blank">fang</a>
+            <a href="/about" target="_blank">CuberSugar</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">50.2k</span>&nbsp;字
             
             
             
@@ -987,13 +998,13 @@
             
         </div>
         <div class="col s12 m4 l4 social-link social-statis">
-    <a href="https://github.com/blinkfox" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <a href="https://github.com/slkfoiw" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
         <i class="fab fa-github"></i>
     </a>
 
 
 
-    <a href="mailto:1181062873@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+    <a href="mailto:wxbcly@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
         <i class="fas fa-envelope-open"></i>
     </a>
 
@@ -1003,19 +1014,11 @@
 
 
 
-    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1181062873" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1181062873" data-position="top" data-delay="50">
-        <i class="fab fa-qq"></i>
-    </a>
 
 
 
 
 
-
-
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
 
 </div>
     </div>

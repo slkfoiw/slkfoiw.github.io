@@ -29,7 +29,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 7.2.0"></head>
+<meta name="generator" content="Hexo 7.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 
@@ -57,7 +59,7 @@
       
       <i class="fas fa-home" style="zoom: 0.6;"></i>
       
-      <span>Index</span>
+      <span>Home</span>
     </a>
     
   </li>
@@ -138,7 +140,7 @@
 			
 			    <i class="fa-fw fas fa-home"></i>
 			
-			Index
+			Home
 		</a>
           
         </li>
@@ -190,7 +192,7 @@
         
         <li><div class="divider"></div></li>
         <li>
-            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+            <a href="https://github.com/slkfoiw/slkfoiw.github.io" class="waves-effect waves-light" target="_blank">
                 <i class="fab fa-github-square fa-fw"></i>Fork Me
             </a>
         </li>
@@ -247,7 +249,7 @@
     }
 </style>
 
-<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+<a href="https://github.com/slkfoiw/slkfoiw.github.io" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
    data-tooltip="Fork Me" data-position="left" data-delay="50">
     <svg viewBox="0 0 250 250" aria-hidden="true">
         <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
@@ -415,6 +417,11 @@
                 
 
                 
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
+                    471
+                </div>
+                
 
                 
 
@@ -424,12 +431,15 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="整体架构"><a href="#整体架构" class="headerlink" title="整体架构"></a>整体架构</h1><p><img src="D:\mynotes\images\deepLearning\Transformer整体架构.png" alt="Transformer整体架构"></p>
+                <h1 id="整体架构"><a href="#整体架构" class="headerlink" title="整体架构"></a>整体架构</h1><p><img src="/../../images/deepLearning/Transformer%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84.png" alt="Transformer整体架构"></p>
 <p>图上全部为训练过程，去掉虚线框里的就是推理过程（没有正确答案输入的部分了）</p>
 <h2 id="Word-Embedding词嵌入"><a href="#Word-Embedding词嵌入" class="headerlink" title="Word Embedding词嵌入"></a>Word Embedding词嵌入</h2><p>将输入(输入句子有m个词)转化为向量，假设嵌入维度为n，则一个词对应一个n维向量，整个向量维度为m x n。</p>
 <h2 id="Positional-Encoding位置编码"><a href="#Positional-Encoding位置编码" class="headerlink" title="Positional Encoding位置编码"></a>Positional Encoding位置编码</h2><p>$$<br>PE(pos, 2i) &#x3D; sin(\frac{pos}{10000^{2i&#x2F;d_{model}}}) \<br>PE(pos, 2i+1) &#x3D; cos(\frac{pos}{10000^{2i&#x2F;d_{model}}})<br>$$</p>
@@ -445,7 +455,7 @@
 </blockquote>
 <p>为了防止模型知道后续输出单词（正确答案）的信息，需要掩码机制掩盖后面词的信息。</p>
 <p>实现方式：构造掩码矩阵（下三角矩阵），将归一化后的注意力分数与掩码矩阵按位相乘。其他部分和多头注意力机制一样。</p>
-<p><img src="D:\mynotes\images\deepLearning\掩码矩阵.png" alt="掩码矩阵"></p>
+<p><img src="/../../images/deepLearning/%E6%8E%A9%E7%A0%81%E7%9F%A9%E9%98%B5.png" alt="掩码矩阵"></p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="http://t.csdnimg.cn/lire2">自然语言处理Transformer模型最详细讲解（图解版）</a></p>
 
                 
@@ -463,7 +473,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">fang</a>
+                    <a href="/about" rel="external nofollow noreferrer">CuberSugar</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -473,7 +483,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2024/04/27/deepLearning/2024-04-27-Transformer/">http://example.com/2024/04/27/deepLearning/2024-04-27-Transformer/</a>
+                    <a href="http://example.com/2024/04/27/deeplearning/2024-04-27-transformer/">http://example.com/2024/04/27/deeplearning/2024-04-27-transformer/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -486,7 +496,7 @@
                     All articles in this blog are used except for special statements
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     reprint polocy. If reproduced, please indicate source
-                    <a href="/about" target="_blank">fang</a>
+                    <a href="/about" target="_blank">CuberSugar</a>
                     !
                 </span>
             </div>
@@ -682,7 +692,7 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2024/04/28/deepLearning/2024-04-28-attetion/">
+                <a href="/2024/04/28/deeplearning/2024-04-28-attetion/">
                     <div class="card-image">
                         
                         
@@ -723,7 +733,7 @@
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2024/04/26/deepLearning/2024-04-26-CLIP/">
+                <a href="/2024/04/26/deeplearning/2024-04-26-clip/">
                     <div class="card-image">
                         
                         
@@ -900,10 +910,13 @@
                 <span id="year">2024</span>
             
             <span id="year">2024</span>
-            <a href="/about" target="_blank">fang</a>
+            <a href="/about" target="_blank">CuberSugar</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">50.2k</span>&nbsp;字
             
             
             
@@ -927,13 +940,13 @@
             
         </div>
         <div class="col s12 m4 l4 social-link social-statis">
-    <a href="https://github.com/blinkfox" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <a href="https://github.com/slkfoiw" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
         <i class="fab fa-github"></i>
     </a>
 
 
 
-    <a href="mailto:1181062873@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+    <a href="mailto:wxbcly@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
         <i class="fas fa-envelope-open"></i>
     </a>
 
@@ -943,19 +956,11 @@
 
 
 
-    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1181062873" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1181062873" data-position="top" data-delay="50">
-        <i class="fab fa-qq"></i>
-    </a>
 
 
 
 
 
-
-
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
 
 </div>
     </div>

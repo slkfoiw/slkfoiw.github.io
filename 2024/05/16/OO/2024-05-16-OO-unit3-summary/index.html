@@ -29,7 +29,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 7.2.0"></head>
+<meta name="generator" content="Hexo 7.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 
@@ -57,7 +59,7 @@
       
       <i class="fas fa-home" style="zoom: 0.6;"></i>
       
-      <span>Index</span>
+      <span>Home</span>
     </a>
     
   </li>
@@ -138,7 +140,7 @@
 			
 			    <i class="fa-fw fas fa-home"></i>
 			
-			Index
+			Home
 		</a>
           
         </li>
@@ -190,7 +192,7 @@
         
         <li><div class="divider"></div></li>
         <li>
-            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+            <a href="https://github.com/slkfoiw/slkfoiw.github.io" class="waves-effect waves-light" target="_blank">
                 <i class="fab fa-github-square fa-fw"></i>Fork Me
             </a>
         </li>
@@ -247,7 +249,7 @@
     }
 </style>
 
-<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+<a href="https://github.com/slkfoiw/slkfoiw.github.io" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
    data-tooltip="Fork Me" data-position="left" data-delay="50">
     <svg viewBox="0 0 250 250" aria-hidden="true">
         <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
@@ -415,6 +417,11 @@
                 
 
                 
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
+                    1.9k
+                </div>
+                
 
                 
 
@@ -423,6 +430,9 @@
         </div>
         <hr class="clearfix">
 
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
         
 
         
@@ -440,7 +450,7 @@
 </ol>
 <h2 id="数据构造策略"><a href="#数据构造策略" class="headerlink" title="数据构造策略"></a>数据构造策略</h2><p>很明显感觉到这个单元随机生成数据无法很好得保证正确率，尤其是性能方面。所以需要手动构造一些极端数据，比如构造高并发的指令数据，反复执行某个指令，看看运行时间是否超过限制；构造边界数据，避免数据溢出导致的出错。</p>
 <h1 id="架构设计"><a href="#架构设计" class="headerlink" title="架构设计"></a>架构设计</h1><p>本单元的架构基本是参照着JML实现各个类和方法，在此基础上添加了UnionFind、Dijkstra类做性能的优化，Sender类单纯是为了满足MyNetwork小于500的要求分出去的一个方法。</p>
-<p><img src="/../..%5Cimages%5COO%5Cunit3.jpg" alt="架构图"></p>
+<p><img src="/../../images/OO/unit3.jpg" alt="架构图"></p>
 <h1 id="性能改进"><a href="#性能改进" class="headerlink" title="性能改进"></a>性能改进</h1><h2 id="HashMap替代ArrayList"><a href="#HashMap替代ArrayList" class="headerlink" title="HashMap替代ArrayList"></a>HashMap替代ArrayList</h2><p>JML中的描述都是数组形式，所以刚开始很自然地选择了ArrayList，但是这些数据结构有很多查找操作，所以最后都改成了HashMap，以降低查找操作的时间复杂度</p>
 <h2 id="并查集"><a href="#并查集" class="headerlink" title="并查集"></a>并查集</h2><p>用于判断两个人是否有联系，抽象出来就是判断图中两个结点是否属于同一个连通子图。</p>
 <p>实现细节方面，首先进行了路径压缩的优化，避免每次查找时都要递归。其次，由于人与人之间的关系会修改，有可能会断开连接（即关系图中结点之间的边可能会被删掉），所以需要重建并查集，这里借鉴了“写时复制”的思想，</p>
@@ -484,7 +494,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">fang</a>
+                    <a href="/about" rel="external nofollow noreferrer">CuberSugar</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -494,7 +504,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2024/05/16/OO/2024-05-16-OO-unit3-summary/">http://example.com/2024/05/16/OO/2024-05-16-OO-unit3-summary/</a>
+                    <a href="http://example.com/2024/05/16/oo/2024-05-16-oo-unit3-summary/">http://example.com/2024/05/16/oo/2024-05-16-oo-unit3-summary/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -507,7 +517,7 @@
                     All articles in this blog are used except for special statements
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     reprint polocy. If reproduced, please indicate source
-                    <a href="/about" target="_blank">fang</a>
+                    <a href="/about" target="_blank">CuberSugar</a>
                     !
                 </span>
             </div>
@@ -703,7 +713,7 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2024/05/17/OS/2024-05-17-OS-IO-management/">
+                <a href="/2024/05/17/os/2024-05-17-os-io-management/">
                     <div class="card-image">
                         
                         
@@ -725,7 +735,7 @@
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
-                            fang
+                            CuberSugar
                             
                         </span>
                     </div>
@@ -740,7 +750,7 @@
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2024/05/02/deepLearning/2024-05-02-OVD/">
+                <a href="/2024/05/02/deeplearning/2024-05-02-ovd/">
                     <div class="card-image">
                         
                         
@@ -910,10 +920,13 @@
                 <span id="year">2024</span>
             
             <span id="year">2024</span>
-            <a href="/about" target="_blank">fang</a>
+            <a href="/about" target="_blank">CuberSugar</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">50.2k</span>&nbsp;字
             
             
             
@@ -937,13 +950,13 @@
             
         </div>
         <div class="col s12 m4 l4 social-link social-statis">
-    <a href="https://github.com/blinkfox" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <a href="https://github.com/slkfoiw" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
         <i class="fab fa-github"></i>
     </a>
 
 
 
-    <a href="mailto:1181062873@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+    <a href="mailto:wxbcly@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
         <i class="fas fa-envelope-open"></i>
     </a>
 
@@ -953,19 +966,11 @@
 
 
 
-    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1181062873" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1181062873" data-position="top" data-delay="50">
-        <i class="fab fa-qq"></i>
-    </a>
 
 
 
 
 
-
-
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
 
 </div>
     </div>

@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="OO第三单元总结, CuberSugar&#39;s Blog">
+    <meta name="keywords" content="改善深层神经网络, CuberSugar&#39;s Blog">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>OO第三单元总结 | CuberSugar&#39;s Blog</title>
+    <title>改善深层神经网络 | CuberSugar&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -29,7 +29,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 7.2.0"></head>
+<meta name="generator" content="Hexo 7.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 
@@ -57,7 +59,7 @@
       
       <i class="fas fa-home" style="zoom: 0.6;"></i>
       
-      <span>Index</span>
+      <span>Home</span>
     </a>
     
   </li>
@@ -138,7 +140,7 @@
 			
 			    <i class="fa-fw fas fa-home"></i>
 			
-			Index
+			Home
 		</a>
           
         </li>
@@ -190,7 +192,7 @@
         
         <li><div class="divider"></div></li>
         <li>
-            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+            <a href="https://github.com/slkfoiw/slkfoiw.github.io" class="waves-effect waves-light" target="_blank">
                 <i class="fab fa-github-square fa-fw"></i>Fork Me
             </a>
         </li>
@@ -247,7 +249,7 @@
     }
 </style>
 
-<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+<a href="https://github.com/slkfoiw/slkfoiw.github.io" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
    data-tooltip="Fork Me" data-position="left" data-delay="50">
     <svg viewBox="0 0 250 250" aria-hidden="true">
         <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
@@ -266,12 +268,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">OO第三单元总结</h1>
+                    <h1 class="description center-align post-title">改善深层神经网络</h1>
                 </div>
             </div>
         </div>
@@ -395,8 +397,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/OO/" class="post-category">
-                                OO
+                            <a href="/categories/deepLearning/" class="post-category">
+                                deepLearning
                             </a>
                         
                     </div>
@@ -408,12 +410,17 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2024-06-11
+                    2024-02-17
                 </div>
                 
 
                 
 
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
+                    1.7k
+                </div>
                 
 
                 
@@ -424,55 +431,174 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="正向建模与开发"><a href="#正向建模与开发" class="headerlink" title="正向建模与开发"></a>正向建模与开发</h1><p>根据指导书给出的需求：</p>
+                <h1 id="深度学习的实践方面"><a href="#深度学习的实践方面" class="headerlink" title="深度学习的实践方面"></a>深度学习的实践方面</h1><h2 id="训练集-验证集-测试集-Train-Dev-Test-set"><a href="#训练集-验证集-测试集-Train-Dev-Test-set" class="headerlink" title="训练集&#x2F;验证集&#x2F;测试集(Train&#x2F;Dev&#x2F;Test set)"></a>训练集&#x2F;验证集&#x2F;测试集(Train&#x2F;Dev&#x2F;Test set)</h2><table>
+<thead>
+<tr>
+<th align="left"></th>
+<th>Train</th>
+<th>Dev</th>
+<th>Test</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">小数量</td>
+<td>70%</td>
+<td></td>
+<td>30%</td>
+</tr>
+<tr>
+<td align="left">or</td>
+<td>60%</td>
+<td>20%</td>
+<td>20%</td>
+</tr>
+<tr>
+<td align="left">百万级数据样本</td>
+<td>98%</td>
+<td>1%</td>
+<td>1%</td>
+</tr>
+<tr>
+<td align="left">超过百万</td>
+<td>99.5%</td>
+<td>0.25%</td>
+<td>0.25%</td>
+</tr>
+<tr>
+<td align="left">or</td>
+<td>99.5%</td>
+<td>0.4%</td>
+<td>0.1%</td>
+</tr>
+</tbody></table>
+<h2 id="偏见与方差-bias-varience"><a href="#偏见与方差-bias-varience" class="headerlink" title="偏见与方差(bias&amp;varience)"></a>偏见与方差(bias&amp;varience)</h2><table>
+<thead>
+<tr>
+<th align="left"></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">训练集错误率</td>
+<td>1%</td>
+<td>15%</td>
+<td>15%</td>
+<td>0.5%</td>
+</tr>
+<tr>
+<td align="left">开发集错误率</td>
+<td>11%</td>
+<td>16%</td>
+<td>30%</td>
+<td>1%</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td>high varience</td>
+<td>high bias</td>
+<td>high bias &amp; varience</td>
+<td>low bias &amp; varience</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td>过拟合overfitting</td>
+<td>欠拟合unfitting</td>
+<td>一些地方欠拟合，一些地方过拟合</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>以上分析基于：human&#x3D;0% (optimal&#x2F;base error 理想误差&#x2F;基误差)</p>
+<p>解决办法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">graph TD;</span><br><span class="line">    A[high bias]--&gt;B&#123;判断&#125;;</span><br><span class="line">    B--&gt;|no|C[high varience];</span><br><span class="line">    B--&gt;|yes|D[bigger network\n train longer\n NN architecture search];</span><br><span class="line">    D--&gt;A;</span><br><span class="line">    C--&gt;|no|E[Done];</span><br><span class="line">    C--&gt;|yes|F[more data\n regularization正则化\n NN architecture search];</span><br><span class="line">    F--&gt;A;</span><br></pre></td></tr></table></figure>
+
+<h2 id="正则化"><a href="#正则化" class="headerlink" title="正则化"></a>正则化</h2><h3 id="L2-regularization"><a href="#L2-regularization" class="headerlink" title="L2 regularization"></a>L2 regularization</h3><p>逻辑回归中：$J\left( {w,b} \right) &#x3D; \frac{1}{m}\sum\limits_{i &#x3D; 1}^m {L({\hat{y}^{(i)}},\mathop y\nolimits^{(i)} )} + \frac{\lambda}{2m}|w|^2$      $|w|^2&#x3D;\sum\limits_{j&#x3D;1}^{n_x}w_j^2&#x3D;w^Tw$</p>
+<p>神经网络中：$J\left( {w^{[1]},b^{[1]}, …, w^{[l]},b^{[l]}} \right) &#x3D; \frac{1}{m}\sum\limits_{i &#x3D; 1}^m {L({\hat{y}^{(i)}},\mathop y\nolimits^{(i)} )} + \frac{\lambda}{2m}|w^{[l]}|^2$      $|w^{[l]}|^2&#x3D;\sum\limits_{i&#x3D;1}^{n^{[l-1]}}\sum\limits_{j&#x3D;1}^{n^{[l]}}{w_{ij}^{[l]}}^2$</p>
+<p>用backprop计算dw的值：${\text{w}}^{[l]}: &#x3D; {\text{w}}^{[l]} - \partial (dw + \frac{\lambda }{m}{w^{[l]}}) &#x3D; (1 - \frac{\partial \lambda }{m}){w^{[l]}} - \partial dw$</p>
+<p>正则化减少过拟合的原因：$\lambda$增大，新的${\text{w}}^{[l]}$减小，隐藏单元的影响减小，存在一个$\lambda$的中间值使得接近”just right”的中间状态</p>
+<h3 id="随机失活正则化（Dropout-regularization-设置消除神经网络中节点的概率"><a href="#随机失活正则化（Dropout-regularization-设置消除神经网络中节点的概率" class="headerlink" title="随机失活正则化（Dropout regularization): 设置消除神经网络中节点的概率"></a>随机失活正则化（Dropout regularization): 设置消除神经网络中节点的概率</h3><p>在神经网络的训练过程中，随机地丢弃（屏蔽）一部分神经元的输出，即将它们的权重置为零。通过这种方式，可以防止神经网络过度依赖某些特征，从而提高模型的泛化能力和鲁棒性。Dropout技术通常应用于神经网络的隐藏层上，并按照一定的概率p随机失活部分节点，在后向传播时进行相应的参数更新</p>
+<p>最常用的实施方法：反向随机失活</p>
+<p>e.g.: 以一个三层随即网络为例</p>
 <ol>
-<li>首先肯定需要有一个图书馆，图书馆承担着处理请求的任务，并需要记录所有图书、用户的信息。</li>
-<li>图书馆里要有书架、借还处、预定处、用户以及之后作业引入的漂流角这些对象<ul>
-<li>书籍就在这些对象之间流动，所以这些对象里需要一个装着书籍信息的容器。</li>
-<li>需要接收图书、移除图书的动作。参考实验课的提示，我让书架、借还处、预定处、漂流角都通过与图书馆通信来完成，而不直接互相通信，这样每个地方都抽象出来接收图书、移除图书的两个动作，可扩展性强。</li>
-</ul>
+<li><p>定义向量d</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">d3=np.random.rand(a3.shape[0], a3.shape[1]) &lt; keep-prob</span><br></pre></td></tr></table></figure>
+
+<p>keep-prop表示保留某个隐藏单元的概率</p>
 </li>
-<li>由于预约处要保留预约信息，所以我额外设计了一个类，该类的每个对象存储一条预约信息</li>
 </ol>
-<h1 id="架构设计"><a href="#架构设计" class="headerlink" title="架构设计"></a>架构设计</h1><h2 id="第一次作业"><a href="#第一次作业" class="headerlink" title="第一次作业"></a>第一次作业</h2><ul>
-<li>图书馆类下管理着一个书架、借还处、预定处以及所有书本、用户，对于每种请求都有对应的一个方法去处理</li>
-<li>书架、借还处、预定处、用户类中有一个管理图书的容器，并有相应的增删图书的方法。第一次作业我用的HashMap存储图书及其数量，也就是说每种图书的所有副本共用一个对象，value来记录副本数量，这样扩展性较差，后续作业有所修改</li>
-<li>不同位置不直接通信，而是通过图书馆来移动图书</li>
-<li>图书对象的一致性问题：由于每次读入的请求中的图书都是一个新的对象，但在书架、借还处、预定处、用户间流动的图书应该是图书馆里管理的图书，所以我用了一个checkBookId的方法，返回图书馆里的图书对象的引用。</li>
+<h2 id="归一化输入（normalizing-inputs）-可以加速训练方法"><a href="#归一化输入（normalizing-inputs）-可以加速训练方法" class="headerlink" title="归一化输入（normalizing inputs）:可以加速训练方法"></a>归一化输入（normalizing inputs）:可以加速训练方法</h2><p>将所有图像的像素值缩放到一个特定的范围（通常是 [0, 1] 或 [-1, 1]）</p>
+<p>step：</p>
+<ol>
+<li>零均值化：${M_j} &#x3D; \frac{1}{m}\sum\limits_{i &#x3D; 1}^m {x_j^{(i)}}$     $x_j:&#x3D;x_j-\mu _j$</li>
+<li>归一化方差：${\sigma ^2} &#x3D; \frac{1}{m}{\sum\limits_{i &#x3D; 1}^m {({x^{(i)}})} ^2}$       ${x_j}: &#x3D; \frac{x_j}{\sigma }$</li>
+</ol>
+<h2 id="梯度消失和梯度爆炸"><a href="#梯度消失和梯度爆炸" class="headerlink" title="梯度消失和梯度爆炸"></a>梯度消失和梯度爆炸</h2><p>梯度爆炸：各层权重w都大于1，层数很大</p>
+<p>梯度消失：各层权重w都小于1，层数很大</p>
+<h2 id="神经网络的权重初始化"><a href="#神经网络的权重初始化" class="headerlink" title="神经网络的权重初始化"></a>神经网络的权重初始化</h2><p>${w^{[l]}} &#x3D; np.random.randn({n^{[l]}},{n^{[l - 1]}}.*np.sqrt(1&#x2F;{n^{[l - 1]}}))$</p>
+<p>$n^{[l - 1]}$表示第l-1层神经元的数量；如果用的Relu激活函数，sqrt中的1改为2更好</p>
+<h2 id="梯度检验：确保backprop正确实施"><a href="#梯度检验：确保backprop正确实施" class="headerlink" title="梯度检验：确保backprop正确实施"></a>梯度检验：确保backprop正确实施</h2><p>${\theta _{\text{i}}} &#x3D; (w_i^{[1]},b_i^{[1]},…,w_i^{[l]},b_i^{[l]})$连接成一个超大向量</p>
+<p>$d{\theta _{approx[i]}} &#x3D; \frac{J({\theta _1},{\theta _2},…,{\theta _i} + \epsilon ,..) - J({\theta _1},{\theta _2},…,{\theta _i} - \epsilon ,..)}{2\epsilon }$验证是否逼近$d{\theta _{[i]}} &#x3D; \frac{\partial J}{\partial {\theta _i}}$</p>
+<p>验证方法：计算两个向量的欧式距离$\frac{||d{\theta _{approx[i]} - d{\theta _{[i]}}||{^2}}}{||d{\theta _{approx[i]}}||{^2} + ||d{\theta _{[i]}}||{^2}}$,$\leqslant {10^{ - 7}}$没问题，$\approx {10^{ - 5}}$可能有问题&#x2F;bug，$\approx {10^{ - 3}}$有问题</p>
+<p>注：</p>
+<ol>
+<li>不要在训练中使用grad check，它只用于调试</li>
+<li>如果算法的梯度检验失败，要检查所有项，并试着找出bug，注意$\theta$的各项与b、w的各项都是一一对应的</li>
+<li>在实施梯度检验时，如果使用正则化，请注意正则项</li>
+<li>梯度检验不与dropout同时使用</li>
+<li>现实中不会在随机初始化时运行梯度检验</li>
+</ol>
+<h1 id="优化算法"><a href="#优化算法" class="headerlink" title="优化算法"></a>优化算法</h1><h2 id="Mini-batch梯度下降法"><a href="#Mini-batch梯度下降法" class="headerlink" title="Mini-batch梯度下降法"></a>Mini-batch梯度下降法</h2><p>将整个训练样本分成若干份（mini-batch），然后迭代。</p>
+<p>假设训练样本m个，分成n份，一次遍历训练集，可以做n次梯度梯度下降</p>
+<ul>
+<li>m&lt;2000时，直接batch gradient descent(就是之前讲的常规梯度下降法)</li>
+<li>m很大时，建议分成$2^n$倍（跟电脑内存存储方式有关）</li>
 </ul>
-<p><img src="D:\mynotes\images\OO\unit4-1.jpg" alt="unit4-1"></p>
-<h2 id="第二次作业"><a href="#第二次作业" class="headerlink" title="第二次作业"></a>第二次作业</h2><p>根据新增加的需求：</p>
+<h2 id="指数加权平均（Exponentially-weighted-averages）-统计学中称为指数加权移动平均"><a href="#指数加权平均（Exponentially-weighted-averages）-统计学中称为指数加权移动平均" class="headerlink" title="指数加权平均（Exponentially weighted averages）(统计学中称为指数加权移动平均)"></a>指数加权平均（Exponentially weighted averages）(统计学中称为指数加权移动平均)</h2><p>关键公式：${v_t} &#x3D; \beta {v_{t - 1}} + (1 - \beta ){\theta _t}$</p>
+<p>其中$\theta_t$是实际值，整个式子可以看成$v_t$是$\frac{1}{1-\beta}$个数据的平均值</p>
+<p>指数加权平均的偏差修正（bias correction）在预估初期，不用$v_t$，而用$\frac{v_t}{1-\beta^t}$</p>
+<h2 id="动量梯度下降法（Gradient-descent-with-momentum）"><a href="#动量梯度下降法（Gradient-descent-with-momentum）" class="headerlink" title="动量梯度下降法（Gradient descent  with momentum）"></a>动量梯度下降法（Gradient descent  with momentum）</h2><p>基本想法：计算梯度的指数加权平均数，并利用该梯度更新权值</p>
+<p>$$\left{ \begin{gathered}<br>  {v_{dw}} &#x3D; \beta {v_{dw}} + (1 - \beta )dw \hfill \<br>  {v_{db}} &#x3D; \beta {v_{db}} + (1 - \beta )db \hfill \<br>\end{gathered}  \right.$$</p>
+<p>$$\left{ \begin{gathered}<br>  w: &#x3D; w - \partial {v_{dw}} \hfill \<br>  b: &#x3D; b - \partial {v_{db}} \hfill \<br>\end{gathered}  \right.$$</p>
+<h2 id="RMSprop算法（RMS：root-mean-square均方根，标准差）"><a href="#RMSprop算法（RMS：root-mean-square均方根，标准差）" class="headerlink" title="RMSprop算法（RMS：root  mean  square均方根，标准差）"></a>RMSprop算法（RMS：root  mean  square均方根，标准差）</h2><p>$$\left{ \begin{gathered}<br>  {S_{dw}} &#x3D; \beta {S_{dw}} + (1 - \beta )(dw)^2 \hfill \<br>  {S_{db}} &#x3D; \beta {S_{db}} + (1 - \beta )(db)^2 \hfill \<br>\end{gathered}  \right.$$</p>
+<p>$$\left{ \begin{gathered}<br>  w: &#x3D; w - \partial \frac{dw}{\sqrt {S_{dw}} } \hfill \<br>  b: &#x3D; b - \partial \frac{db}{\sqrt {S_{db}} } \hfill \<br>\end{gathered}  \right.$$</p>
+<p>原理：<br><img src="/../../images/RMSprop%E7%AE%97%E6%B3%95%E7%A4%BA%E6%84%8F%E5%9B%BE.jpg" alt="RMSprop算法示意图"></p>
+<p>我们希望在横轴（w方向）学习速度快，纵轴（b方向）减缓摆动，所有有了$S_{dw}$,、$S_{db}$，w要除以一个较小的数（$S_{dw}$相对较小），b要除以一个相对较大的数（$S_{db}$较大）。</p>
+<h2 id="Adam优化算法（Momentum和RMSprop的结合）"><a href="#Adam优化算法（Momentum和RMSprop的结合）" class="headerlink" title="Adam优化算法（Momentum和RMSprop的结合）"></a>Adam优化算法（Momentum和RMSprop的结合）</h2><p>步骤：</p>
 <ol>
-<li>增加了漂流角类，属性和方法与书架、借还处、预定处这些类似</li>
-<li>图书馆里增加新请求类型的处理方法和整理图书的方法</li>
-<li>新增加了图书借阅期限，所以官方包里的LibraryBookId无法满足需求，于是新建了一个继承自LibraryBookId的Book类，记录每本书的借还时间</li>
-<li>图书管理容器的修改：由于第二次作业，每个图书副本可能会具有不同的属性，例如借阅次数、借阅日期、归还日期，所以原本的HashMap容器不能满足副本之间的差异管理，于是改用ArrayList，每个副本都对应一个图书对象。</li>
+<li><p>初始化：$v_{dw}&#x3D;0$ $S_{dw}&#x3D;0$ $v_{db}&#x3D;0$ $S_{db}&#x3D;0$</p>
+</li>
+<li><p>计算Momentum指数加权平均数：</p>
+<p>$$\left{ \begin{gathered}<br>  {v_{dw}} &#x3D; \beta_1 {v_{dw}} + (1 - \beta_1 )dw \hfill \<br>  {v_{db}} &#x3D; \beta_1 {v_{db}} + (1 - \beta_1 )db \hfill \<br>\end{gathered}  \right.$$</p>
+</li>
+<li><p>使用RMSprop进行更新</p>
+<p>$$\left{ \begin{gathered}<br>  {S_{dw}} &#x3D; \beta_2 {S_{dw}} + (1 - \beta_2 )(dw)^2 \hfill \<br>  {S_{db}} &#x3D; \beta_2 {S_{db}} + (1 - \beta_2 )(db)^2 \hfill \<br>\end{gathered}  \right.$$</p>
+</li>
+<li><p>使用Adam算法，一般要计算偏差修正</p>
+<p>$v_{dw}^{corrected} &#x3D; \frac{v_{dw}}{1 - \beta _1^t}$</p>
+<p>$v_{db}^{corrected} &#x3D; \frac{v_{db}}{1 - \beta _1^t}$</p>
+<p>$S_{dw}^{corrected} &#x3D; \frac{S_{dw}}{1 - \beta _2^t}$ </p>
+<p>$S_{db}^{corrected} &#x3D; \frac{S_{db}}{1 - \beta _2^t}$</p>
+</li>
+<li><p>更新权重</p>
+<p>$$\left{ \begin{gathered}<br>  w: &#x3D; w - \partial \frac{v_{dw}^{corrected}}{\sqrt {S_{dw}^{corrected}} + \epsilon } \hfill \<br>  b: &#x3D; b - \partial \frac{v_{db}^{corrected}}{\sqrt {S_{db}^{corrected}} + \epsilon } \hfill \<br>\end{gathered}  \right.$$</p>
+</li>
 </ol>
-<p><img src="D:\mynotes\images\OO\unit4-2.jpg" alt="unit4-2"></p>
-<h2 id="第三次作业"><a href="#第三次作业" class="headerlink" title="第三次作业"></a>第三次作业</h2><p>第三次作业的需求较为简单，几乎不需要怎么动架构，只需要在用户类（即Student）里增加积分属性和相应的调整动作即可，然后根据指导书添加处理方法，在恰当的时候调整用户的积分即可，不过还是有一些细节需要注意：</p>
-<ol>
-<li>积分有上限，这意味着不同的增、减顺序会导致积分结果不一样，最开始我忽略了这一点，不过改正也很简单，只要保证先减后增就行了</li>
-<li>积分为负才不能借阅、预约，而不是非正，也是刚开始没注意的点</li>
-</ol>
-<p><img src="D:\mynotes\images\OO\unit4-3.jpg" alt="unit4-3"></p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="架构设计思维的演进"><a href="#架构设计思维的演进" class="headerlink" title="架构设计思维的演进"></a>架构设计思维的演进</h2><p>第一单元表达式的架构设计是让我对面向过程和面向对象的两者区别有最深体会的时候，表达式处理所涉及到的递归下降和c语言里的递归函数很像，实验课给了一个很好的架构参考，让我对“递归”在面向对象里的应用有了具象化的认识。</p>
-<p>第二单元电梯的设计学习到了多线程的相关知识，与同步进行的OS很多知识相呼应，让我对线程间通信、生产者-消费者这样的问题有了更深的印象，也帮助了我第四单元的架构设计。</p>
-<p>第三单元的JML和第四单元的UML主要是对设计方面的训练，JML让我了解了规格化设计的过程，它很好的避免了二义性，并且给测试提供了思路。UML虽然作为一个单独的单元，但其实一直贯穿整个课程，每次作业之前都会画个粗略的类图帮助我理清思路，不过之前不太清楚每种元素的作用，连线比较随意，这个单元就更规范化了，并且还学习了状态图、顺序图，相信这些知识都会在未来帮助我更好地规范设计。</p>
-<p>总的来说，随着课程的深入，我对面向对象有了更清晰的认知，在了解了SOLID原则后，每次我的架构设计都尽可能往这上面靠，虽然可能并不完美，但是比学期初的我一定是有很大不同的。</p>
-<h2 id="测试思维的演进"><a href="#测试思维的演进" class="headerlink" title="测试思维的演进"></a>测试思维的演进</h2><p>我的测试思维演进应该说是一个从手动构造数据，到自动化评测，再到发现两者缺一不可的过程。首先，这学期我学会了自动化测试，在上学期的OOpre课程我只会手动构造数据，但这学期的作业仅靠手动构造数据是肯定不够的。</p>
-<p>第一单元我实现了一个比较完整的评测机，数据生成器部分比较难写，正确性的检验倒是挺好实现的。而到第二单元的时候就是数据生成器部分容易实现，而正确性检验比较难了，由于本人能力有限再加上时间不够，所以基本都是靠大佬的评测机活过来的（超级感谢）。第三单元又学会了Junit单元测试，上学期的OOpre课程已经有涉及，但当时我不能理解其妙义，这学期发现它和JML结合一起倒是非常好用。第四单元相对重视架构设计，所以在测试方面没有其他的变化。</p>
-<p>在这门课程中，我测试思维上最大的收获就是一定要格外重视高并发的情况，也是这个点让我觉得手动构造数据和自动化随机生成数据二者缺一不可。在第二单元，我发现仅靠评测机的随机数据是不行的，必须考虑一些高并发的极端情况，尤其是到了第三单元，这种现象也很明显，这让我意识到手动构造一些极端情况的数据也是十分有必要的。这两个单元都让我对高并发有了深刻的认识，想起之前老师在课上提到的12306，此刻对这个例子有了具象化的认知，以前的我只会觉得12306挺难用的，但现在从设计者的角度再看，不禁感叹12306要承担起节假日、春运时海量的访问还不崩，真的太不容易了。所以高并发在实际项目、工程中也是关键点，在以后的设计中，我也会把这点牢记在心，把极端情况考虑在内。</p>
-<h2 id="课程收获"><a href="#课程收获" class="headerlink" title="课程收获"></a>课程收获</h2><ol>
-<li>锻炼了我写代码、调试的能力。多线程单元debug的时候虽然痛苦，但收获颇丰。</li>
-<li>掌握了Java这门面向对象的语言。不仅学习了多线程、递归下降等知识，还学习到了很多设计方法、设计原则。</li>
-<li>每个单元迭代式的开发，让我学会了先设计再实现的开发方式。好的架构设计确实能提高效率，在实际应用中也能提高项目扩展性，方便增加需求。</li>
-<li>学会了自动化测试、单元测试等测试方法，对高并发的处理有了深刻认识。</li>
-</ol>
+<h2 id="学习率衰减（learning-rate-decay）"><a href="#学习率衰减（learning-rate-decay）" class="headerlink" title="学习率衰减（learning rate decay）"></a>学习率衰减（learning rate decay）</h2><p>加快学习算法的一个办法是随时间慢慢减少学习率</p>
+<p>$\partial  &#x3D; \frac{1}{1 + decayrate \cdot epoch - num}{\partial _0}$，epoch-num是训练的代数</p>
+<p>$\partial  &#x3D; {0.95^{epoch - num}}{\partial _0}$</p>
+<p>$\partial  &#x3D; \frac{k}{\sqrt {epoch - num} }{\partial _0}$</p>
+<p>$\partial  &#x3D; \frac{k}{\sqrt t }{\partial _0}$</p>
+<h2 id="局部最优问题"><a href="#局部最优问题" class="headerlink" title="局部最优问题"></a>局部最优问题</h2><p><img src="/../../images/%E5%B1%80%E9%83%A8%E6%9C%80%E4%BC%98%E9%97%AE%E9%A2%98.jpg" alt="局部最优问题"></p>
 
                 
             </div>
@@ -489,7 +615,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">fang</a>
+                    <a href="/about" rel="external nofollow noreferrer">CuberSugar</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -499,7 +625,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2024/06/11/OO/2024-06-11-OO-unit4/">http://example.com/2024/06/11/OO/2024-06-11-OO-unit4/</a>
+                    <a href="http://example.com/2024/02/17/deeplearning/2024-02-17-gai-shan-shen-ceng-shen-jing-wang-luo/">http://example.com/2024/02/17/deeplearning/2024-02-17-gai-shan-shen-ceng-shen-jing-wang-luo/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -512,7 +638,7 @@
                     All articles in this blog are used except for special statements
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     reprint polocy. If reproduced, please indicate source
-                    <a href="/about" target="_blank">fang</a>
+                    <a href="/about" target="_blank">CuberSugar</a>
                     !
                 </span>
             </div>
@@ -708,13 +834,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2024/06/28/deepLearning/question/">
+                <a href="/2024/02/24/deeplearning/2024-02-24-jie-gou-hua-ji-qi-xue-xi-xiang-mu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="结构化机器学习项目">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">结构化机器学习项目</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -725,12 +851,16 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-06-28
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-02-24
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            fang
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/deepLearning/" class="post-category">
+                                    deepLearning
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -745,13 +875,13 @@
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2024/05/27/OS/2024-05-27-OS-file-system/">
+                <a href="/2024/02/10/deeplearning/2024-02-10-nn-basic-kowledge/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="文件系统">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="神经网络基础知识">
                         
-                        <span class="card-title">文件系统</span>
+                        <span class="card-title">神经网络基础知识</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -762,14 +892,14 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-05-27
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-02-10
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/OS/" class="post-category">
-                                    OS
+                            <a href="/categories/deepLearning/" class="post-category">
+                                    deepLearning
                                 </a>
                             
                             
@@ -915,10 +1045,13 @@
                 <span id="year">2024</span>
             
             <span id="year">2024</span>
-            <a href="/about" target="_blank">fang</a>
+            <a href="/about" target="_blank">CuberSugar</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">50.2k</span>&nbsp;字
             
             
             
@@ -942,13 +1075,13 @@
             
         </div>
         <div class="col s12 m4 l4 social-link social-statis">
-    <a href="https://github.com/blinkfox" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <a href="https://github.com/slkfoiw" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
         <i class="fab fa-github"></i>
     </a>
 
 
 
-    <a href="mailto:1181062873@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+    <a href="mailto:wxbcly@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
         <i class="fas fa-envelope-open"></i>
     </a>
 
@@ -958,19 +1091,11 @@
 
 
 
-    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1181062873" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1181062873" data-position="top" data-delay="50">
-        <i class="fab fa-qq"></i>
-    </a>
 
 
 
 
 
-
-
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
 
 </div>
     </div>

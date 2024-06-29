@@ -29,7 +29,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 7.2.0"></head>
+<meta name="generator" content="Hexo 7.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 
@@ -57,7 +59,7 @@
       
       <i class="fas fa-home" style="zoom: 0.6;"></i>
       
-      <span>Index</span>
+      <span>Home</span>
     </a>
     
   </li>
@@ -138,7 +140,7 @@
 			
 			    <i class="fa-fw fas fa-home"></i>
 			
-			Index
+			Home
 		</a>
           
         </li>
@@ -190,7 +192,7 @@
         
         <li><div class="divider"></div></li>
         <li>
-            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+            <a href="https://github.com/slkfoiw/slkfoiw.github.io" class="waves-effect waves-light" target="_blank">
                 <i class="fab fa-github-square fa-fw"></i>Fork Me
             </a>
         </li>
@@ -247,7 +249,7 @@
     }
 </style>
 
-<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+<a href="https://github.com/slkfoiw/slkfoiw.github.io" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
    data-tooltip="Fork Me" data-position="left" data-delay="50">
     <svg viewBox="0 0 250 250" aria-hidden="true">
         <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
@@ -415,6 +417,11 @@
                 
 
                 
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
+                    877
+                </div>
+                
 
                 
 
@@ -424,6 +431,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -431,13 +441,13 @@
             <div id="articleContent">
                 <p>CLIP:Constrastive Language-Image Pre-training</p>
 <h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>embedding：一种将高维数据(如文本或图像)转换为较低维度的向量表示的技术</p>
-<h1 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h1><p><img src="/../..%5Cimages%5CdeepLearning%5CCLIP.png" alt="CLIP结构"></p>
+<h1 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h1><p><img src="/../../images/deepLearning/CLIP.png" alt="CLIP结构"></p>
 <h1 id="推理过程"><a href="#推理过程" class="headerlink" title="推理过程"></a>推理过程</h1><p>把需要分类的图片送入image encoder得到特征，拿图片的特征和所有文本特征算余弦相似性，选最相似的那个文本特征对应的句子，从而完成了分类任务</p>
 <h2 id="余弦相似度cosine-similarity"><a href="#余弦相似度cosine-similarity" class="headerlink" title="余弦相似度cosine similarity"></a>余弦相似度cosine similarity</h2><p>用来度量文本与图像之间的对应关系，值越大表示对应关系越强。其实就是计算两个向量夹角的余弦值。</p>
 <h1 id="训练过程"><a href="#训练过程" class="headerlink" title="训练过程"></a>训练过程</h1><p>图片和文字配对，分别输入到Image Encoder、Text Encoder得到特征。若每个training batch有n个图像-文本对，就可以得到n个图片-文本对。</p>
 <p>配对的图片-文本对就是正样本，描述的是同一个东西。特征矩阵里对角线上的都是正样本，矩阵中非对角线上的元素都是负样本。有了正负样本，模型就可以通过<strong>对比学习</strong>的方式去训练，不需要任何手工标注。</p>
 <h2 id="Image-Encoder：ViT"><a href="#Image-Encoder：ViT" class="headerlink" title="Image Encoder：ViT"></a>Image Encoder：ViT</h2><p>结构如图，概括一下就是一个Patch+Position Embedding加多个Transformer Encoder</p>
-<p><img src="/../..%5Cimages%5CdeepLearning%5CViT%E7%BB%93%E6%9E%84.png" alt="ViT结构"></p>
+<p><img src="/../../images/deepLearning/ViT%E7%BB%93%E6%9E%84.png" alt="ViT结构"></p>
 <h3 id="一个Patch-Position-Embedding"><a href="#一个Patch-Position-Embedding" class="headerlink" title="一个Patch+Position Embedding"></a>一个Patch+Position Embedding</h3><p>对输入图像进行卷积，得到的矩阵平铺展开为一个一维向量存储图片的序列信息（mx1)。向量中的每个值代表原图像中的一个卷积核大小的块状区域，代表一个序列单元。当然卷积核会有n个，所有是个mxn的特征矩阵</p>
 <blockquote>
 <p>平铺完成后，我们会在图片序列中添加上Cls Token，<strong>该Token会作为一个单位的序列信息</strong>一起进行特征提取，<strong>图中的这个0*就是Cls Token</strong></p>
@@ -476,7 +486,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">fang</a>
+                    <a href="/about" rel="external nofollow noreferrer">CuberSugar</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -486,7 +496,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2024/04/26/deepLearning/2024-04-26-CLIP/">http://example.com/2024/04/26/deepLearning/2024-04-26-CLIP/</a>
+                    <a href="http://example.com/2024/04/26/deeplearning/2024-04-26-clip/">http://example.com/2024/04/26/deeplearning/2024-04-26-clip/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -499,7 +509,7 @@
                     All articles in this blog are used except for special statements
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     reprint polocy. If reproduced, please indicate source
-                    <a href="/about" target="_blank">fang</a>
+                    <a href="/about" target="_blank">CuberSugar</a>
                     !
                 </span>
             </div>
@@ -695,7 +705,7 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2024/04/27/deepLearning/2024-04-27-Transformer/">
+                <a href="/2024/04/27/deeplearning/2024-04-27-transformer/">
                     <div class="card-image">
                         
                         
@@ -736,7 +746,7 @@
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2024/04/21/deepLearning/2024-04-21-FasterRCNN/">
+                <a href="/2024/04/21/deeplearning/2024-04-21-fasterrcnn/">
                     <div class="card-image">
                         
                         
@@ -913,10 +923,13 @@
                 <span id="year">2024</span>
             
             <span id="year">2024</span>
-            <a href="/about" target="_blank">fang</a>
+            <a href="/about" target="_blank">CuberSugar</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">50.2k</span>&nbsp;字
             
             
             
@@ -940,13 +953,13 @@
             
         </div>
         <div class="col s12 m4 l4 social-link social-statis">
-    <a href="https://github.com/blinkfox" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <a href="https://github.com/slkfoiw" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
         <i class="fab fa-github"></i>
     </a>
 
 
 
-    <a href="mailto:1181062873@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+    <a href="mailto:wxbcly@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
         <i class="fas fa-envelope-open"></i>
     </a>
 
@@ -956,19 +969,11 @@
 
 
 
-    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1181062873" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1181062873" data-position="top" data-delay="50">
-        <i class="fab fa-qq"></i>
-    </a>
 
 
 
 
 
-
-
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
 
 </div>
     </div>

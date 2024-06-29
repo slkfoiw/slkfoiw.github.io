@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="结构化机器学习项目, CuberSugar&#39;s Blog">
+    <meta name="keywords" content="视觉开发认知和检测, CuberSugar&#39;s Blog">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>结构化机器学习项目 | CuberSugar&#39;s Blog</title>
+    <title>视觉开发认知和检测 | CuberSugar&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -29,7 +29,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 7.2.0"></head>
+<meta name="generator" content="Hexo 7.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 
@@ -57,7 +59,7 @@
       
       <i class="fas fa-home" style="zoom: 0.6;"></i>
       
-      <span>Index</span>
+      <span>Home</span>
     </a>
     
   </li>
@@ -138,7 +140,7 @@
 			
 			    <i class="fa-fw fas fa-home"></i>
 			
-			Index
+			Home
 		</a>
           
         </li>
@@ -190,7 +192,7 @@
         
         <li><div class="divider"></div></li>
         <li>
-            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+            <a href="https://github.com/slkfoiw/slkfoiw.github.io" class="waves-effect waves-light" target="_blank">
                 <i class="fab fa-github-square fa-fw"></i>Fork Me
             </a>
         </li>
@@ -247,7 +249,7 @@
     }
 </style>
 
-<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+<a href="https://github.com/slkfoiw/slkfoiw.github.io" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
    data-tooltip="Fork Me" data-position="left" data-delay="50">
     <svg viewBox="0 0 250 250" aria-hidden="true">
         <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
@@ -266,12 +268,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">结构化机器学习项目</h1>
+                    <h1 class="description center-align post-title">视觉开发认知和检测</h1>
                 </div>
             </div>
         </div>
@@ -408,12 +410,17 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2024-02-24
+                    2024-04-20
                 </div>
                 
 
                 
 
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
+                    640
+                </div>
                 
 
                 
@@ -424,86 +431,34 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="正交化"><a href="#正交化" class="headerlink" title="正交化"></a>正交化</h1><p>正交化是指每个参数只控制一个维度的效果</p>
-<h1 id="单一数字评估标准"><a href="#单一数字评估标准" class="headerlink" title="单一数字评估标准"></a>单一数字评估标准</h1><p>评估分类器的一个合理方式：观察它的查准率(Precision)和查全率（Recall）</p>
+                <h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>zero-shot learning(零样本学习)：让机器具有推理能力，例如在目标检测中，希望模型可以对从未见过的类别进行分类</p>
+<p>开放世界目标检测：在每一个场景中检测每一个类别，应该有能力利用具有异构标签空间的多个来源的图像用于训练和推广到开放世界进行推理</p>
+<p>开放的含义：一般情况下，模型是根据预先打好的标签来检测目标，但是这样的模型能够检测的目标类型是有限的。“开放”就是希望模型不受预先定义好的标签类别限制。</p>
+<h2 id="多模态"><a href="#多模态" class="headerlink" title="多模态"></a>多模态</h2><p>概念：多种形态的信息（例如声音、文字、图像等）一起协作推理</p>
+<p>结合计算机视觉和自然语言处理领域的多模态任务：让机器通过构建能够联合多种模态信息的模型来捕捉不同模态之间的对应关系和语义特征，从而能够同时处理多种形式的数据（图像、音频、文本等），加深机器对现实世界的感知。例如图像描述，我们不仅希望机器识别出实体对象及其标签，还希望它能够描述图像中实体之间的关系，以文本的形式描述出来。</p>
+<h2 id="yolo-world：轻量级的开放词汇检测器"><a href="#yolo-world：轻量级的开放词汇检测器" class="headerlink" title="yolo-world：轻量级的开放词汇检测器"></a>yolo-world：轻量级的开放词汇检测器</h2><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv31740783/">参考</a></p>
+<p>没有使用在线词汇，而是提出了一种“先提示后检测”的推理范式。具体如下：</p>
 <ul>
-<li>查准率：衡量预测的准确性。如：分类器标记为猫的例子中，有多少真的是猫</li>
-<li>查全率：衡量发现所有正例的能力。如：对于所有真猫图片，分类器正确识别出了多少百分比</li>
+<li><p>使用在线词汇进行训练。在训练过程中，为每个包含4张图像的mosaic样本构建一个在线词汇T。具体做法是，从mosaic图像中抽样所有涉及的正面名词，并从相应的数据集中随机抽样一些负面名词。</p>
+</li>
+<li><p>随后使用离线词汇进行推理。在推理阶段，采用一种”先提示-再检测”的策略，使用离线词汇以提高效率。用户可以定义一系列自定义提示，然后利用文本编码器对这些提示进行编码，并获得离线词汇嵌入。</p>
+</li>
 </ul>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>预测为正例</th>
-<th>预测为负例</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>实际为正例</td>
-<td>TP</td>
-<td>FP</td>
-</tr>
-<tr>
-<td>实际为负例</td>
-<td>FN</td>
-<td>TN</td>
-</tr>
-</tbody></table>
-<p>$$<br>Precision &#x3D; \frac{TP}{TP + FP} \<br>Recall &#x3D; \frac{TP}{TP + FN}<br>$$</p>
-<p>两种指标都要顾及到，比较方法是F1分数，公式为$\frac{2}{\frac{1}{P}+\frac{1}{R}}$(越大越好)</p>
-<h1 id="mAP-mean-Average-Precision-评价指标"><a href="#mAP-mean-Average-Precision-评价指标" class="headerlink" title="mAP(mean Average Precision)评价指标"></a>mAP(mean Average Precision)评价指标</h1><p>mAP是目标检测模型中常用的评价指标。</p>
-<p>首先介绍一下交并比IoU(Intersection over union)的概念，它是用来度量预测边框与实际边框的重叠程度的。<br>$$<br>IoU &#x3D; \frac{预测边框与实际边框的交}{二者的并}<br>$$</p>
-<p>tips:在训练时，常常依据候选区域和标定区域 的IoU值来确定正负样本。</p>
+<p>架构：</p>
 <ol>
-<li><p>设置IoU阈值：在计算mAP之前，我们会先设置一个IoU（如0.5）阈值来判断预测是真阳性还是假阳性。</p>
-</li>
-<li><p>判断预测框的实际类别：对于一个预测框，与预测框所在图片里的所有标签框作比较，如果二者的IoU大于阈值，则认为该预测框为“实际为正例”，否则为“实际为负例”。</p>
-<p>如果是多分类任务，则找与预测框预测的类别相同的所有标签框比较</p>
-</li>
-<li><p>判断预测框的预测类别：设置不同的置信度阈值，对于每一个置信度阈值，若预测框的置信度大于该阈值，说明预测结果可信，预测结果为正例；小于该阈值，说明预测结构不可信，预测结果为负例。</p>
-</li>
-<li><p>一般会将预测框先按置信度降序排序，所以可以按把每个预测框的置信度都取一遍来获得不同的置信度阈值。对于相同的Recall，Precision取最高的一个值，然后画出P-R曲线。</p>
-</li>
-<li><p>P-R曲线围成的面积就是平均精度（AP）。</p>
-</li>
-<li><p>把每个类别的AP都计算出来之后求它们的平均值，即可得到mAP。</p>
-</li>
+<li>文本编码器对输入文本进行编码。</li>
+<li>图像编码器将输入图像编码为多尺度图像特征</li>
+<li>图像和文本特征利用RepVL-PAN实现多级跨模态融合。</li>
+<li>YOLO-World预测回归的边界框和对象嵌入，以匹配输入文本中出现的类别或名词。</li>
 </ol>
-<p>为何要使用AP&#x2F;mAP呢？因为我们通常希望模型的Precision和Recall值都很高，所有就需要把两个因素综合考虑。一种方法就是上节提到的F1分数，一种就是计算P-R曲线下的面积，越接近1越好。</p>
-<h1 id="满足和优化指标"><a href="#满足和优化指标" class="headerlink" title="满足和优化指标"></a>满足和优化指标</h1><ul>
-<li>优化指标optimizing metric:如准确率，越大越好</li>
-<li>满足指标satisficing metric:如运行时间，只需小于100ms就算足够好，达到之后不在乎这个指标有多好</li>
-</ul>
-<p>一般来说，如果要考虑n个指标，有时候选择其中一个做为优化指标是合理的，然后剩下都是满足指标，只需满足设定的阈值就好。</p>
-<h1 id="贝叶斯最优错误率：理论上限"><a href="#贝叶斯最优错误率：理论上限" class="headerlink" title="贝叶斯最优错误率：理论上限"></a>贝叶斯最优错误率：理论上限</h1><p>对于计算机视觉任务而言，常用人类水平的错误率估计或代替贝叶斯错误率&#x2F;贝叶斯最优错误率</p>
-<p>$$可避免误差&#x3D;贝叶斯错误率（的估计）-训练错误率$$<br>如果想要提升机器学习系统的性能，建议关注训练错误率和贝叶斯错误率的距离（可避免误差）以及开发错误率和训练错误率的距离（方差），然后针对不同的问题采用不同的策略</p>
-<p>解决可避免误差的常用方法：</p>
-<ul>
-<li>Train Bigger model</li>
-<li>Train longer&#x2F;better optimization algorithms:momentum, RMSprop, Adam</li>
-<li>NN archtecture &#x2F; hyperparameters search</li>
-</ul>
-<p>解决方差的常用方法:</p>
-<ul>
-<li>more data</li>
-<li>rugularization: L2 dropout, data augmentation</li>
-<li>NN archtecture &#x2F; hyperparameters search</li>
-</ul>
-<h1 id="进行错误分析-error-analysis"><a href="#进行错误分析-error-analysis" class="headerlink" title="进行错误分析(error analysis)"></a>进行错误分析(error analysis)</h1><p>找一组错误样本（可能是开发集或者测试集的），观察错误标记的样本，看看假阳性和假阴性，统计属于不同错误类型的错误数量。如此，可以知道哪些问题有改进的潜力</p>
-<h1 id="迁移学习"><a href="#迁移学习" class="headerlink" title="迁移学习"></a>迁移学习</h1><p>任务A –&gt; 任务B</p>
-<p>预训练    微调</p>
-<p>注：</p>
-<ul>
-<li>任务A与任务B有同样的输入时(例如都是图像、都是音频)，迁移学习是有意义的</li>
-<li>任务A比任务B的数据多得多时，迁移学习意义更大</li>
-</ul>
-<h1 id="多任务学习"><a href="#多任务学习" class="headerlink" title="多任务学习"></a>多任务学习</h1><p>同时开始学习，试图让单个神经网络做几件事情，并且希望这里每个任务都能帮到其他所有任务</p>
-<h1 id="端到端的深度学习"><a href="#端到端的深度学习" class="headerlink" title="端到端的深度学习"></a>端到端的深度学习</h1><p>$$X \xrightarrow{直接映射} Y$$<br>注：需要足够多的数据</p>
 
                 
             </div>
@@ -520,7 +475,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">fang</a>
+                    <a href="/about" rel="external nofollow noreferrer">CuberSugar</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -530,7 +485,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2024/02/24/deepLearning/2024-02-24-%E7%BB%93%E6%9E%84%E5%8C%96%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E9%A1%B9%E7%9B%AE/">http://example.com/2024/02/24/deepLearning/2024-02-24-%E7%BB%93%E6%9E%84%E5%8C%96%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E9%A1%B9%E7%9B%AE/</a>
+                    <a href="http://example.com/2024/04/20/deeplearning/2024-04-20-yolo-world/">http://example.com/2024/04/20/deeplearning/2024-04-20-yolo-world/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -543,7 +498,7 @@
                     All articles in this blog are used except for special statements
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     reprint polocy. If reproduced, please indicate source
-                    <a href="/about" target="_blank">fang</a>
+                    <a href="/about" target="_blank">CuberSugar</a>
                     !
                 </span>
             </div>
@@ -739,13 +694,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2024/03/01/OS/2024-03-07-OS%E6%A6%82%E8%BF%B0/">
+                <a href="/2024/04/20/oo/2024-04-20-oo-unit2-summary/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="OS概述">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="OO第二单元总结">
                         
-                        <span class="card-title">OS概述</span>
+                        <span class="card-title">OO第二单元总结</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -756,14 +711,14 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-03-01
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-04-20
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/OS/" class="post-category">
-                                    OS
+                            <a href="/categories/OO/" class="post-category">
+                                    OO
                                 </a>
                             
                             
@@ -780,13 +735,13 @@
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2024/02/17/deepLearning/2024-02-17-%E6%94%B9%E5%96%84%E6%B7%B1%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">
+                <a href="/2024/04/10/os/2024-04-10-os-jin-cheng/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="改善深层神经网络">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="进程管理">
                         
-                        <span class="card-title">改善深层神经网络</span>
+                        <span class="card-title">进程管理</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -797,14 +752,14 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-02-17
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-04-10
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/deepLearning/" class="post-category">
-                                    deepLearning
+                            <a href="/categories/OS/" class="post-category">
+                                    OS
                                 </a>
                             
                             
@@ -939,13 +894,6 @@
 </main>
 
 
-<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script>
-    MathJax.Hub.Config({
-        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
-    });
-</script>
-
 
 
     <footer class="page-footer bg-color">
@@ -957,10 +905,13 @@
                 <span id="year">2024</span>
             
             <span id="year">2024</span>
-            <a href="/about" target="_blank">fang</a>
+            <a href="/about" target="_blank">CuberSugar</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">50.2k</span>&nbsp;字
             
             
             
@@ -984,13 +935,13 @@
             
         </div>
         <div class="col s12 m4 l4 social-link social-statis">
-    <a href="https://github.com/blinkfox" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <a href="https://github.com/slkfoiw" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
         <i class="fab fa-github"></i>
     </a>
 
 
 
-    <a href="mailto:1181062873@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+    <a href="mailto:wxbcly@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
         <i class="fas fa-envelope-open"></i>
     </a>
 
@@ -1000,19 +951,11 @@
 
 
 
-    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1181062873" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1181062873" data-position="top" data-delay="50">
-        <i class="fab fa-qq"></i>
-    </a>
 
 
 
 
 
-
-
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
 
 </div>
     </div>
