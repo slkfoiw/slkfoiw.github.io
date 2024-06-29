@@ -4,19 +4,6 @@
   
     
     <entry>
-      <title></title>
-      <link href="/2024/06/28/deeplearning/question/"/>
-      <url>/2024/06/28/deeplearning/question/</url>
-      
-        <content type="html"><![CDATA[<p>这里为什么要除以embedding向量的开方？（似乎好多地方求embedding都有这个操作</p><p><img src="/../../images%5Ctmp%5Cimage-20240504102504742.png" alt="image-20240504102504742"></p><p>oake模块下base.py文件中Validator类有什么作用呢？我看了论文，这个模块里的objects.py、globals.py、blocks.py应该是三个蒸馏吧，三个文件里都继承了base.py里的DataSet类和Validator类。这三个文件里的DataSet类已经实现了蒸馏的图像处理部分，可是没懂这个Validator类在做什么。</p><p><img src="/../..%5Cimages%5Ctmp%5Cimage-20240504181309157.png" alt="image-20240504181309157"></p><p>oadp&#x2F;oake&#x2F;objects.py里Dataset类的_expand方法有什么用？为什么要扩大bbox，而且还分了很多种扩大模式？</p><p><img src="/../..%5Cimages%5Ctmp%5Cimage-20240505105718481.png" alt="image-20240505105718481"></p>]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>OO第三单元总结</title>
       <link href="/2024/06/11/oo/2024-06-11-oo-unit4-summary/"/>
       <url>/2024/06/11/oo/2024-06-11-oo-unit4-summary/</url>
@@ -46,25 +33,6 @@
       <categories>
           
           <category> OS </category>
-          
-      </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>prompt提示</title>
-      <link href="/2024/05/22/deeplearning/2024-05-22-prompt/"/>
-      <url>/2024/05/22/deeplearning/2024-05-22-prompt/</url>
-      
-        <content type="html"><![CDATA[<p>连续提示：使用可学习的向量，而非手工设计的向量</p><p>离散提示：手工设计的提示词</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> deepLearning </category>
           
       </categories>
       
