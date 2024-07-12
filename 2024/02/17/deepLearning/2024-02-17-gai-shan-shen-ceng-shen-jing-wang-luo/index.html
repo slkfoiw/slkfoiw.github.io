@@ -417,7 +417,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="深度学习的实践方面"><a href="#深度学习的实践方面" class="headerlink" title="深度学习的实践方面"></a>深度学习的实践方面</h1><h2 id="训练集-验证集-测试集-Train-Dev-Test-set"><a href="#训练集-验证集-测试集-Train-Dev-Test-set" class="headerlink" title="训练集&#x2F;验证集&#x2F;测试集(Train&#x2F;Dev&#x2F;Test set)"></a>训练集&#x2F;验证集&#x2F;测试集(Train&#x2F;Dev&#x2F;Test set)</h2><table>
+                <h1 id="深度学习的实践方面"><a href="#深度学习的实践方面" class="headerlink" title="深度学习的实践方面"></a>深度学习的实践方面</h1><h2 id="训练集-验证集-测试集-Train-Dev-Test-set"><a href="#训练集-验证集-测试集-Train-Dev-Test-set" class="headerlink" title="训练集/验证集/测试集(Train/Dev/Test set)"></a>训练集/验证集/测试集(Train/Dev/Test set)</h2><table>
 <thead>
 <tr>
 <th align="left"></th>
@@ -496,20 +496,20 @@
 <td></td>
 </tr>
 </tbody></table>
-<p>以上分析基于：human&#x3D;0% (optimal&#x2F;base error 理想误差&#x2F;基误差)</p>
+<p>以上分析基于：human=0% (optimal/base error 理想误差/基误差)</p>
 <p>解决办法</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">graph TD;</span><br><span class="line">    A[high bias]--&gt;B&#123;判断&#125;;</span><br><span class="line">    B--&gt;|no|C[high varience];</span><br><span class="line">    B--&gt;|yes|D[bigger network\n train longer\n NN architecture search];</span><br><span class="line">    D--&gt;A;</span><br><span class="line">    C--&gt;|no|E[Done];</span><br><span class="line">    C--&gt;|yes|F[more data\n regularization正则化\n NN architecture search];</span><br><span class="line">    F--&gt;A;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">graph TD;</span><br><span class="line">    A[high bias]--&gt;B{判断};</span><br><span class="line">    B--&gt;|no|C[high varience];</span><br><span class="line">    B--&gt;|yes|D[bigger network\n train longer\n NN architecture search];</span><br><span class="line">    D--&gt;A;</span><br><span class="line">    C--&gt;|no|E[Done];</span><br><span class="line">    C--&gt;|yes|F[more data\n regularization正则化\n NN architecture search];</span><br><span class="line">    F--&gt;A;</span><br></pre></td></tr></tbody></table></figure>
 
-<h2 id="正则化"><a href="#正则化" class="headerlink" title="正则化"></a>正则化</h2><h3 id="L2-regularization"><a href="#L2-regularization" class="headerlink" title="L2 regularization"></a>L2 regularization</h3><p>逻辑回归中：$J\left( {w,b} \right) &#x3D; \frac{1}{m}\sum\limits_{i &#x3D; 1}^m {L({\hat{y}^{(i)}},\mathop y\nolimits^{(i)} )} + \frac{\lambda}{2m}|w|^2$      $|w|^2&#x3D;\sum\limits_{j&#x3D;1}^{n_x}w_j^2&#x3D;w^Tw$</p>
-<p>神经网络中：$J\left( {w^{[1]},b^{[1]}, …, w^{[l]},b^{[l]}} \right) &#x3D; \frac{1}{m}\sum\limits_{i &#x3D; 1}^m {L({\hat{y}^{(i)}},\mathop y\nolimits^{(i)} )} + \frac{\lambda}{2m}|w^{[l]}|^2$      $|w^{[l]}|^2&#x3D;\sum\limits_{i&#x3D;1}^{n^{[l-1]}}\sum\limits_{j&#x3D;1}^{n^{[l]}}{w_{ij}^{[l]}}^2$</p>
-<p>用backprop计算dw的值：${\text{w}}^{[l]}: &#x3D; {\text{w}}^{[l]} - \partial (dw + \frac{\lambda }{m}{w^{[l]}}) &#x3D; (1 - \frac{\partial \lambda }{m}){w^{[l]}} - \partial dw$</p>
+<h2 id="正则化"><a href="#正则化" class="headerlink" title="正则化"></a>正则化</h2><h3 id="L2-regularization"><a href="#L2-regularization" class="headerlink" title="L2 regularization"></a>L2 regularization</h3><p>逻辑回归中：$J\left( {w,b} \right) = \frac{1}{m}\sum\limits_{i = 1}^m {L({\hat{y}^{(i)}},\mathop y\nolimits^{(i)} )} + \frac{\lambda}{2m}|w|^2$      $|w|^2=\sum\limits_{j=1}^{n_x}w_j^2=w^Tw$</p>
+<p>神经网络中：$J\left( {w^{[1]},b^{[1]}, …, w^{[l]},b^{[l]}} \right) = \frac{1}{m}\sum\limits_{i = 1}^m {L({\hat{y}^{(i)}},\mathop y\nolimits^{(i)} )} + \frac{\lambda}{2m}|w^{[l]}|^2$      $|w^{[l]}|^2=\sum\limits_{i=1}^{n^{[l-1]}}\sum\limits_{j=1}^{n^{[l]}}{w_{ij}^{[l]}}^2$</p>
+<p>用backprop计算dw的值：${\text{w}}^{[l]}: = {\text{w}}^{[l]} - \partial (dw + \frac{\lambda }{m}{w^{[l]}}) = (1 - \frac{\partial \lambda }{m}){w^{[l]}} - \partial dw$</p>
 <p>正则化减少过拟合的原因：$\lambda$增大，新的${\text{w}}^{[l]}$减小，隐藏单元的影响减小，存在一个$\lambda$的中间值使得接近”just right”的中间状态</p>
 <h3 id="随机失活正则化（Dropout-regularization-设置消除神经网络中节点的概率"><a href="#随机失活正则化（Dropout-regularization-设置消除神经网络中节点的概率" class="headerlink" title="随机失活正则化（Dropout regularization): 设置消除神经网络中节点的概率"></a>随机失活正则化（Dropout regularization): 设置消除神经网络中节点的概率</h3><p>在神经网络的训练过程中，随机地丢弃（屏蔽）一部分神经元的输出，即将它们的权重置为零。通过这种方式，可以防止神经网络过度依赖某些特征，从而提高模型的泛化能力和鲁棒性。Dropout技术通常应用于神经网络的隐藏层上，并按照一定的概率p随机失活部分节点，在后向传播时进行相应的参数更新</p>
 <p>最常用的实施方法：反向随机失活</p>
 <p>e.g.: 以一个三层随即网络为例</p>
 <ol>
 <li><p>定义向量d</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">d3=np.random.rand(a3.shape[0], a3.shape[1]) &lt; keep-prob</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">d3=np.random.rand(a3.shape[0], a3.shape[1]) &lt; keep-prob</span><br></pre></td></tr></tbody></table></figure>
 
 <p>keep-prop表示保留某个隐藏单元的概率</p>
 </li>
@@ -517,16 +517,16 @@
 <h2 id="归一化输入（normalizing-inputs）-可以加速训练方法"><a href="#归一化输入（normalizing-inputs）-可以加速训练方法" class="headerlink" title="归一化输入（normalizing inputs）:可以加速训练方法"></a>归一化输入（normalizing inputs）:可以加速训练方法</h2><p>将所有图像的像素值缩放到一个特定的范围（通常是 [0, 1] 或 [-1, 1]）</p>
 <p>step：</p>
 <ol>
-<li>零均值化：${M_j} &#x3D; \frac{1}{m}\sum\limits_{i &#x3D; 1}^m {x_j^{(i)}}$     $x_j:&#x3D;x_j-\mu _j$</li>
-<li>归一化方差：${\sigma ^2} &#x3D; \frac{1}{m}{\sum\limits_{i &#x3D; 1}^m {({x^{(i)}})} ^2}$       ${x_j}: &#x3D; \frac{x_j}{\sigma }$</li>
+<li>零均值化：${M_j} = \frac{1}{m}\sum\limits_{i = 1}^m {x_j^{(i)}}$     $x_j:=x_j-\mu _j$</li>
+<li>归一化方差：${\sigma ^2} = \frac{1}{m}{\sum\limits_{i = 1}^m {({x^{(i)}})} ^2}$       ${x_j}: = \frac{x_j}{\sigma }$</li>
 </ol>
 <h2 id="梯度消失和梯度爆炸"><a href="#梯度消失和梯度爆炸" class="headerlink" title="梯度消失和梯度爆炸"></a>梯度消失和梯度爆炸</h2><p>梯度爆炸：各层权重w都大于1，层数很大</p>
 <p>梯度消失：各层权重w都小于1，层数很大</p>
-<h2 id="神经网络的权重初始化"><a href="#神经网络的权重初始化" class="headerlink" title="神经网络的权重初始化"></a>神经网络的权重初始化</h2><p>${w^{[l]}} &#x3D; np.random.randn({n^{[l]}},{n^{[l - 1]}}.*np.sqrt(1&#x2F;{n^{[l - 1]}}))$</p>
+<h2 id="神经网络的权重初始化"><a href="#神经网络的权重初始化" class="headerlink" title="神经网络的权重初始化"></a>神经网络的权重初始化</h2><p>${w^{[l]}} = np.random.randn({n^{[l]}},{n^{[l - 1]}}.*np.sqrt(1/{n^{[l - 1]}}))$</p>
 <p>$n^{[l - 1]}$表示第l-1层神经元的数量；如果用的Relu激活函数，sqrt中的1改为2更好</p>
-<h2 id="梯度检验：确保backprop正确实施"><a href="#梯度检验：确保backprop正确实施" class="headerlink" title="梯度检验：确保backprop正确实施"></a>梯度检验：确保backprop正确实施</h2><p>${\theta _{\text{i}}} &#x3D; (w_i^{[1]},b_i^{[1]},…,w_i^{[l]},b_i^{[l]})$连接成一个超大向量</p>
-<p>$d{\theta _{approx[i]}} &#x3D; \frac{J({\theta _1},{\theta _2},…,{\theta _i} + \epsilon ,..) - J({\theta _1},{\theta _2},…,{\theta _i} - \epsilon ,..)}{2\epsilon }$验证是否逼近$d{\theta _{[i]}} &#x3D; \frac{\partial J}{\partial {\theta _i}}$</p>
-<p>验证方法：计算两个向量的欧式距离$\frac{||d{\theta _{approx[i]} - d{\theta _{[i]}}||{^2}}}{||d{\theta _{approx[i]}}||{^2} + ||d{\theta _{[i]}}||{^2}}$,$\leqslant {10^{ - 7}}$没问题，$\approx {10^{ - 5}}$可能有问题&#x2F;bug，$\approx {10^{ - 3}}$有问题</p>
+<h2 id="梯度检验：确保backprop正确实施"><a href="#梯度检验：确保backprop正确实施" class="headerlink" title="梯度检验：确保backprop正确实施"></a>梯度检验：确保backprop正确实施</h2><p>${\theta _{\text{i}}} = (w_i^{[1]},b_i^{[1]},…,w_i^{[l]},b_i^{[l]})$连接成一个超大向量</p>
+<p>$d{\theta _{approx[i]}} = \frac{J({\theta _1},{\theta _2},…,{\theta _i} + \epsilon ,..) - J({\theta _1},{\theta _2},…,{\theta _i} - \epsilon ,..)}{2\epsilon }$验证是否逼近$d{\theta _{[i]}} = \frac{\partial J}{\partial {\theta _i}}$</p>
+<p>验证方法：计算两个向量的欧式距离$\frac{||d{\theta _{approx[i]} - d{\theta _{[i]}}||{^2}}}{||d{\theta _{approx[i]}}||{^2} + ||d{\theta _{[i]}}||{^2}}$,$\leqslant {10^{ - 7}}$没问题，$\approx {10^{ - 5}}$可能有问题/bug，$\approx {10^{ - 3}}$有问题</p>
 <p>注：</p>
 <ol>
 <li>不要在训练中使用grad check，它只用于调试</li>
@@ -541,41 +541,41 @@
 <li>m&lt;2000时，直接batch gradient descent(就是之前讲的常规梯度下降法)</li>
 <li>m很大时，建议分成$2^n$倍（跟电脑内存存储方式有关）</li>
 </ul>
-<h2 id="指数加权平均（Exponentially-weighted-averages）-统计学中称为指数加权移动平均"><a href="#指数加权平均（Exponentially-weighted-averages）-统计学中称为指数加权移动平均" class="headerlink" title="指数加权平均（Exponentially weighted averages）(统计学中称为指数加权移动平均)"></a>指数加权平均（Exponentially weighted averages）(统计学中称为指数加权移动平均)</h2><p>关键公式：${v_t} &#x3D; \beta {v_{t - 1}} + (1 - \beta ){\theta _t}$</p>
+<h2 id="指数加权平均（Exponentially-weighted-averages）-统计学中称为指数加权移动平均"><a href="#指数加权平均（Exponentially-weighted-averages）-统计学中称为指数加权移动平均" class="headerlink" title="指数加权平均（Exponentially weighted averages）(统计学中称为指数加权移动平均)"></a>指数加权平均（Exponentially weighted averages）(统计学中称为指数加权移动平均)</h2><p>关键公式：${v_t} = \beta {v_{t - 1}} + (1 - \beta ){\theta _t}$</p>
 <p>其中$\theta_t$是实际值，整个式子可以看成$v_t$是$\frac{1}{1-\beta}$个数据的平均值</p>
 <p>指数加权平均的偏差修正（bias correction）在预估初期，不用$v_t$，而用$\frac{v_t}{1-\beta^t}$</p>
 <h2 id="动量梯度下降法（Gradient-descent-with-momentum）"><a href="#动量梯度下降法（Gradient-descent-with-momentum）" class="headerlink" title="动量梯度下降法（Gradient descent  with momentum）"></a>动量梯度下降法（Gradient descent  with momentum）</h2><p>基本想法：计算梯度的指数加权平均数，并利用该梯度更新权值</p>
-<p>$$\left{ \begin{gathered}<br>  {v_{dw}} &#x3D; \beta {v_{dw}} + (1 - \beta )dw \hfill \<br>  {v_{db}} &#x3D; \beta {v_{db}} + (1 - \beta )db \hfill \<br>\end{gathered}  \right.$$</p>
-<p>$$\left{ \begin{gathered}<br>  w: &#x3D; w - \partial {v_{dw}} \hfill \<br>  b: &#x3D; b - \partial {v_{db}} \hfill \<br>\end{gathered}  \right.$$</p>
-<h2 id="RMSprop算法（RMS：root-mean-square均方根，标准差）"><a href="#RMSprop算法（RMS：root-mean-square均方根，标准差）" class="headerlink" title="RMSprop算法（RMS：root  mean  square均方根，标准差）"></a>RMSprop算法（RMS：root  mean  square均方根，标准差）</h2><p>$$\left{ \begin{gathered}<br>  {S_{dw}} &#x3D; \beta {S_{dw}} + (1 - \beta )(dw)^2 \hfill \<br>  {S_{db}} &#x3D; \beta {S_{db}} + (1 - \beta )(db)^2 \hfill \<br>\end{gathered}  \right.$$</p>
-<p>$$\left{ \begin{gathered}<br>  w: &#x3D; w - \partial \frac{dw}{\sqrt {S_{dw}} } \hfill \<br>  b: &#x3D; b - \partial \frac{db}{\sqrt {S_{db}} } \hfill \<br>\end{gathered}  \right.$$</p>
+<p>$$\left{ \begin{gathered}<br>  {v_{dw}} = \beta {v_{dw}} + (1 - \beta )dw \hfill \<br>  {v_{db}} = \beta {v_{db}} + (1 - \beta )db \hfill \<br>\end{gathered}  \right.$$</p>
+<p>$$\left{ \begin{gathered}<br>  w: = w - \partial {v_{dw}} \hfill \<br>  b: = b - \partial {v_{db}} \hfill \<br>\end{gathered}  \right.$$</p>
+<h2 id="RMSprop算法（RMS：root-mean-square均方根，标准差）"><a href="#RMSprop算法（RMS：root-mean-square均方根，标准差）" class="headerlink" title="RMSprop算法（RMS：root  mean  square均方根，标准差）"></a>RMSprop算法（RMS：root  mean  square均方根，标准差）</h2><p>$$\left{ \begin{gathered}<br>  {S_{dw}} = \beta {S_{dw}} + (1 - \beta )(dw)^2 \hfill \<br>  {S_{db}} = \beta {S_{db}} + (1 - \beta )(db)^2 \hfill \<br>\end{gathered}  \right.$$</p>
+<p>$$\left{ \begin{gathered}<br>  w: = w - \partial \frac{dw}{\sqrt {S_{dw}} } \hfill \<br>  b: = b - \partial \frac{db}{\sqrt {S_{db}} } \hfill \<br>\end{gathered}  \right.$$</p>
 <p>原理：<br><img src="/../../images/RMSprop%E7%AE%97%E6%B3%95%E7%A4%BA%E6%84%8F%E5%9B%BE.jpg" alt="RMSprop算法示意图"></p>
 <p>我们希望在横轴（w方向）学习速度快，纵轴（b方向）减缓摆动，所有有了$S_{dw}$,、$S_{db}$，w要除以一个较小的数（$S_{dw}$相对较小），b要除以一个相对较大的数（$S_{db}$较大）。</p>
 <h2 id="Adam优化算法（Momentum和RMSprop的结合）"><a href="#Adam优化算法（Momentum和RMSprop的结合）" class="headerlink" title="Adam优化算法（Momentum和RMSprop的结合）"></a>Adam优化算法（Momentum和RMSprop的结合）</h2><p>步骤：</p>
 <ol>
-<li><p>初始化：$v_{dw}&#x3D;0$ $S_{dw}&#x3D;0$ $v_{db}&#x3D;0$ $S_{db}&#x3D;0$</p>
+<li><p>初始化：$v_{dw}=0$ $S_{dw}=0$ $v_{db}=0$ $S_{db}=0$</p>
 </li>
 <li><p>计算Momentum指数加权平均数：</p>
-<p>$$\left{ \begin{gathered}<br>  {v_{dw}} &#x3D; \beta_1 {v_{dw}} + (1 - \beta_1 )dw \hfill \<br>  {v_{db}} &#x3D; \beta_1 {v_{db}} + (1 - \beta_1 )db \hfill \<br>\end{gathered}  \right.$$</p>
+<p>$$\left{ \begin{gathered}<br>  {v_{dw}} = \beta_1 {v_{dw}} + (1 - \beta_1 )dw \hfill \<br>  {v_{db}} = \beta_1 {v_{db}} + (1 - \beta_1 )db \hfill \<br>\end{gathered}  \right.$$</p>
 </li>
 <li><p>使用RMSprop进行更新</p>
-<p>$$\left{ \begin{gathered}<br>  {S_{dw}} &#x3D; \beta_2 {S_{dw}} + (1 - \beta_2 )(dw)^2 \hfill \<br>  {S_{db}} &#x3D; \beta_2 {S_{db}} + (1 - \beta_2 )(db)^2 \hfill \<br>\end{gathered}  \right.$$</p>
+<p>$$\left{ \begin{gathered}<br>  {S_{dw}} = \beta_2 {S_{dw}} + (1 - \beta_2 )(dw)^2 \hfill \<br>  {S_{db}} = \beta_2 {S_{db}} + (1 - \beta_2 )(db)^2 \hfill \<br>\end{gathered}  \right.$$</p>
 </li>
 <li><p>使用Adam算法，一般要计算偏差修正</p>
-<p>$v_{dw}^{corrected} &#x3D; \frac{v_{dw}}{1 - \beta _1^t}$</p>
-<p>$v_{db}^{corrected} &#x3D; \frac{v_{db}}{1 - \beta _1^t}$</p>
-<p>$S_{dw}^{corrected} &#x3D; \frac{S_{dw}}{1 - \beta _2^t}$ </p>
-<p>$S_{db}^{corrected} &#x3D; \frac{S_{db}}{1 - \beta _2^t}$</p>
+<p>$v_{dw}^{corrected} = \frac{v_{dw}}{1 - \beta _1^t}$</p>
+<p>$v_{db}^{corrected} = \frac{v_{db}}{1 - \beta _1^t}$</p>
+<p>$S_{dw}^{corrected} = \frac{S_{dw}}{1 - \beta _2^t}$ </p>
+<p>$S_{db}^{corrected} = \frac{S_{db}}{1 - \beta _2^t}$</p>
 </li>
 <li><p>更新权重</p>
-<p>$$\left{ \begin{gathered}<br>  w: &#x3D; w - \partial \frac{v_{dw}^{corrected}}{\sqrt {S_{dw}^{corrected}} + \epsilon } \hfill \<br>  b: &#x3D; b - \partial \frac{v_{db}^{corrected}}{\sqrt {S_{db}^{corrected}} + \epsilon } \hfill \<br>\end{gathered}  \right.$$</p>
+<p>$$\left{ \begin{gathered}<br>  w: = w - \partial \frac{v_{dw}^{corrected}}{\sqrt {S_{dw}^{corrected}} + \epsilon } \hfill \<br>  b: = b - \partial \frac{v_{db}^{corrected}}{\sqrt {S_{db}^{corrected}} + \epsilon } \hfill \<br>\end{gathered}  \right.$$</p>
 </li>
 </ol>
 <h2 id="学习率衰减（learning-rate-decay）"><a href="#学习率衰减（learning-rate-decay）" class="headerlink" title="学习率衰减（learning rate decay）"></a>学习率衰减（learning rate decay）</h2><p>加快学习算法的一个办法是随时间慢慢减少学习率</p>
-<p>$\partial  &#x3D; \frac{1}{1 + decayrate \cdot epoch - num}{\partial _0}$，epoch-num是训练的代数</p>
-<p>$\partial  &#x3D; {0.95^{epoch - num}}{\partial _0}$</p>
-<p>$\partial  &#x3D; \frac{k}{\sqrt {epoch - num} }{\partial _0}$</p>
-<p>$\partial  &#x3D; \frac{k}{\sqrt t }{\partial _0}$</p>
+<p>$\partial  = \frac{1}{1 + decayrate \cdot epoch - num}{\partial _0}$，epoch-num是训练的代数</p>
+<p>$\partial  = {0.95^{epoch - num}}{\partial _0}$</p>
+<p>$\partial  = \frac{k}{\sqrt {epoch - num} }{\partial _0}$</p>
+<p>$\partial  = \frac{k}{\sqrt t }{\partial _0}$</p>
 <h2 id="局部最优问题"><a href="#局部最优问题" class="headerlink" title="局部最优问题"></a>局部最优问题</h2><p><img src="/../../images/%E5%B1%80%E9%83%A8%E6%9C%80%E4%BC%98%E9%97%AE%E9%A2%98.jpg" alt="局部最优问题"></p>
 
                 
@@ -1029,7 +1029,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">51.3k</span>&nbsp;字
+                class="white-color">50.8k</span>&nbsp;字
             
             
             

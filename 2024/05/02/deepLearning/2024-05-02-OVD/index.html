@@ -442,7 +442,7 @@
 <td>软标签包含了样本与多个类别之间的相似度信息，因此它们可以使模型更加平滑地处理类别之间的边界，并减少对单一类别的过度依赖</td>
 </tr>
 </tbody></table>
-<h2 id="蒸馏温度"><a href="#蒸馏温度" class="headerlink" title="蒸馏温度"></a>蒸馏温度</h2><p>知识蒸馏中的一个超参数，它控制了模型预测的软标签分布的“软化”程度。蒸馏温度的作用是在生成软标签时引入一个温度参数，从而调整标签的相对概率分布。这个温度参数通常是一个正的实数。例如分类问题最后总是用softmax函数将输出转化为概率分布，用上蒸馏温度就变成如下形式：<br>$$<br>softmax(z&#x2F;T)_i &#x3D; \frac{e^{z_i&#x2F;T}}{\sum_j e^{z_j&#x2F;T}}<br>$$</p>
+<h2 id="蒸馏温度"><a href="#蒸馏温度" class="headerlink" title="蒸馏温度"></a>蒸馏温度</h2><p>知识蒸馏中的一个超参数，它控制了模型预测的软标签分布的“软化”程度。蒸馏温度的作用是在生成软标签时引入一个温度参数，从而调整标签的相对概率分布。这个温度参数通常是一个正的实数。例如分类问题最后总是用softmax函数将输出转化为概率分布，用上蒸馏温度就变成如下形式：<br>$$<br>softmax(z/T)_i = \frac{e^{z_i/T}}{\sum_j e^{z_j/T}}<br>$$</p>
 <p>作用：</p>
 <p>软标签的平滑性： 增加蒸馏温度会使软标签的概率分布更平滑。较高的温度将导致更平缓的概率曲线，使得模型更容易学到相对均匀的分布。这对于小型模型的训练过程中更容易捕捉大型模型的知识，因为软标签的平滑性有助于抑制训练时的过拟合。</p>
 <p>控制标签的尖峰性： 较低的温度会使软标签的分布更接近硬标签，即更尖锐，更接近确定性。这可能使得模型更注重大型模型中预测概率最高的类别，但相对容易受到噪声的影响。</p>
@@ -490,10 +490,10 @@
 <li><strong>evaluation</strong> 为评估模型性能提供不同的指标。</li>
 <li><strong>visualization</strong> 用于可视化检测结果。</li>
 </ul>
-<h2 id="faster-RCNN核心代码"><a href="#faster-RCNN核心代码" class="headerlink" title="faster RCNN核心代码"></a>faster RCNN核心代码</h2><p>mmdet&#x2F;models&#x2F;backbones&#x2F;resnet.py</p>
-<p>mmdet&#x2F;models&#x2F;necks&#x2F;fpn.py</p>
-<p>mmdet&#x2F;models&#x2F;dense_heads&#x2F;rpn_head.py</p>
-<p>mmdet&#x2F;models&#x2F;roi_heads&#x2F;standard_roi_head.py</p>
+<h2 id="faster-RCNN核心代码"><a href="#faster-RCNN核心代码" class="headerlink" title="faster RCNN核心代码"></a>faster RCNN核心代码</h2><p>mmdet/models/backbones/resnet.py</p>
+<p>mmdet/models/necks/fpn.py</p>
+<p>mmdet/models/dense_heads/rpn_head.py</p>
+<p>mmdet/models/roi_heads/standard_roi_head.py</p>
 <h2 id="疑问"><a href="#疑问" class="headerlink" title="疑问"></a>疑问</h2><p>teacher甚至student是指代什么？</p>
 <blockquote>
 <p>知识蒸馏里的术语</p>
@@ -505,7 +505,7 @@
 <p>nn.BatchNorm2d和nn.LayerNorm有什么区别和联系？</p>
 <blockquote>
 <ol>
-<li><p>计算<br>$$<br>nn.BatchNorm2d : \text{E}[x]c &#x3D; \frac{1}{N \times H \times W} \sum_{n&#x3D;1}^N \sum_{h&#x3D;1}^{H} \sum_{w&#x3D;1}^{W} x_{n,c,h,w} \nn.LayerNorm : \text{E}[x]{c} &#x3D; \frac{1}{H \times W}\sum_{h&#x3D;1}^{H} \sum_{w&#x3D;1}^{W} x_{c,h,w}<br>$$</p>
+<li><p>计算<br>$$<br>nn.BatchNorm2d : \text{E}[x]c = \frac{1}{N \times H \times W} \sum_{n=1}^N \sum_{h=1}^{H} \sum_{w=1}^{W} x_{n,c,h,w} \nn.LayerNorm : \text{E}[x]{c} = \frac{1}{H \times W}\sum_{h=1}^{H} \sum_{w=1}^{W} x_{c,h,w}<br>$$</p>
 </li>
 <li><p>应用场景</p>
 <ul>
@@ -535,7 +535,7 @@
 <blockquote>
 <p>OKAE这三文件都可以单独运行，独立的把需要的特征提取出来保存。因为OADP中global、block和object使用的蒸馏特征在提取的时候会特别耗时，所以作者把这三个蒸馏特征的提取过程单独用这三个文件预先生成之后保存起来了，后面DP部分训练时候是直接读取的这些特征</p>
 </blockquote>
-<p>oadp&#x2F;oake&#x2F;objects.py里Dataset类的_expand方法有什么用？为什么要扩大bbox，而且还分了很多种扩大模式？</p>
+<p>oadp/oake/objects.py里Dataset类的_expand方法有什么用？为什么要扩大bbox，而且还分了很多种扩大模式？</p>
 <blockquote>
 <p>为了把proposal的不规则区域转化成正方形，因为CLIP的输入是224*224的正方形，可以认为这样expand之后有助于减小输入CLIP特征的形变</p>
 </blockquote>
@@ -557,14 +557,14 @@
 <li>使用方式：Compose通常与图像数据集一起使用，用于在将数据输入到神经网络之前进行预处理。而nn.Sequential则直接定义了一个神经网络模型，可以通过前向传播函数将数据传递给模型并获得输出。</li>
 </ul>
 </blockquote>
-<p>oadp&#x2F;dp&#x2F;classifiers.py的BaseClassifier类中的bg_embedding是什么？</p>
+<p>oadp/dp/classifiers.py的BaseClassifier类中的bg_embedding是什么？</p>
 <p>mixin是什么意思？</p>
 <blockquote>
 <p>Mixin实质上是一个带有部分或全部实现的接口或类，它可以被其他类继承或混入，从而将这些功能组合到子类中。Mixin模式的主要作用是代码复用，通过减少代码冗余度，使代码更加清晰、可维护和易于扩展。</p>
 </blockquote>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="http://t.csdnimg.cn/RGdL1">知识蒸馏</a></p>
 <p><code>zip</code> 是 Python 的一个内置函数，用于将可迭代的对象作为参数，将对象中对应的元素打包成一个个元组，然后返回由这些元组组成的对象</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for foreground, bbox in zip(foregrounds, bboxes):  </span><br><span class="line">    objects.append(self._object(image, bbox))  </span><br><span class="line">    masks.append(self._mask(foreground, bbox))</span><br><span class="line">//zip 在这里用于并行地遍历两个列表（或任何可迭代对象），确保在每次迭代中，foregrounds 和 bboxes 的对应元素都被一起处理</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">for foreground, bbox in zip(foregrounds, bboxes):  </span><br><span class="line">    objects.append(self._object(image, bbox))  </span><br><span class="line">    masks.append(self._mask(foreground, bbox))</span><br><span class="line">//zip 在这里用于并行地遍历两个列表（或任何可迭代对象），确保在每次迭代中，foregrounds 和 bboxes 的对应元素都被一起处理</span><br></pre></td></tr></tbody></table></figure>
 
 
                 
@@ -1025,7 +1025,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">51.3k</span>&nbsp;字
+                class="white-color">50.8k</span>&nbsp;字
             
             
             

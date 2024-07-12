@@ -397,7 +397,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    959
+                    940
                 </div>
                 
 
@@ -429,17 +429,17 @@
 <h2 id="CHS模式"><a href="#CHS模式" class="headerlink" title="CHS模式"></a>CHS模式</h2><p>柱面数NC：最大1024（10位）</p>
 <p>磁头数NH：表示硬盘总共有几个磁头，也就是几个盘片，最多256个（8位）</p>
 <p>扇区数NS：表示每一条磁道上有几个扇区，由于所有的0扇区用于存放固件以及一些硬盘的专用的文件，最大为<strong>63</strong> (用 6 位存储)。用户可见扇区从1开始</p>
-<p>8.46GB问题:<br>$$<br>1024 \times 256 \times 63 &#x3D; 16,515,072 \<br>\text{这个扇区之前的所有物理扇区所包含的字节数} &#x3D;  16,515,072 \times 512B &#x3D; 8.46GB<br>$$</p>
+<p>8.46GB问题:<br>$$<br>1024 \times 256 \times 63 = 16,515,072 \<br>\text{这个扇区之前的所有物理扇区所包含的字节数} =  16,515,072 \times 512B = 8.46GB<br>$$</p>
 <h2 id="LBA模式"><a href="#LBA模式" class="headerlink" title="LBA模式"></a>LBA模式</h2><p>Logic Block Address，将磁盘驱动器可以看做一个一维的逻辑块的数组，逻辑块是最小的传输单位</p>
-<p>CHS与LBA地址转换<br>$$<br>LBA &#x3D; (NH×NS×C) + (NS×H) + (S-1)\<br>\<br>C &#x3D; LBA &#x2F; (NS×NH)\<br>H &#x3D; (LBA &#x2F; NS) mod NH\<br>S &#x3D; (LBA mod NS) + 1<br>$$</p>
+<p>CHS与LBA地址转换<br>$$<br>LBA = (NH×NS×C) + (NS×H) + (S-1)\<br>\<br>C = LBA / (NS×NH)\<br>H = (LBA / NS) mod NH\<br>S = (LBA mod NS) + 1<br>$$</p>
 <h1 id="磁盘空间的管理"><a href="#磁盘空间的管理" class="headerlink" title="磁盘空间的管理"></a>磁盘空间的管理</h1><p>位图：空闲为1，已分配为0</p>
 <p>空闲表法：将所有空闲块记录在一个表中。主要记录两项内容：起始块号，块数</p>
 <p>空闲链表法：把所有空闲块链成一个表，链会很长</p>
 <p>成组链接法：把空白物理块分成组，再通过指针把组与组之间链接起来</p>
-<h1 id="磁盘访问时间"><a href="#磁盘访问时间" class="headerlink" title="磁盘访问时间"></a>磁盘访问时间</h1><p>寻道时间：指的是把磁臂（磁头）从当前位置移动到指定磁道上所经历的时间。<strong>Ts</strong>&#x3D;启动磁盘的时间s + 磁头移动n条磁道所花费的时间之和（m x n, m为常数）</p>
-<p>旋转延迟时间：平均旋转延迟时间<strong>Tr</strong>&#x3D;转一圈所需时间&#x2F;2&#x3D;1&#x2F;（2*转速r）</p>
-<p>传输时间：把数据从磁盘读出，或向磁盘写入数据所经历的时间，<strong>Tt</strong> &#x3D; 每次所读&#x2F;写的字节数b&#x2F;（转速r*磁道上的字节数）</p>
-<p>总访问时间Ta &#x3D; Ts + Tr + Tt</p>
+<h1 id="磁盘访问时间"><a href="#磁盘访问时间" class="headerlink" title="磁盘访问时间"></a>磁盘访问时间</h1><p>寻道时间：指的是把磁臂（磁头）从当前位置移动到指定磁道上所经历的时间。<strong>Ts</strong>=启动磁盘的时间s + 磁头移动n条磁道所花费的时间之和（m x n, m为常数）</p>
+<p>旋转延迟时间：平均旋转延迟时间<strong>Tr</strong>=转一圈所需时间/2=1/（2*转速r）</p>
+<p>传输时间：把数据从磁盘读出，或向磁盘写入数据所经历的时间，<strong>Tt</strong> = 每次所读/写的字节数b/（转速r*磁道上的字节数）</p>
+<p>总访问时间Ta = Ts + Tr + Tt</p>
 <h1 id="磁盘调度算法"><a href="#磁盘调度算法" class="headerlink" title="磁盘调度算法"></a>磁盘调度算法</h1><ol>
 <li>先来先服务算法（FCFS）</li>
 <li>最短寻道时间优先算法（SSTF，Shortest Seek Time First）：优先选择距当前磁头最近的访问请求进行服务，主要考虑寻道优先。可能出现饥饿现象</li>
@@ -448,7 +448,7 @@
 <li>LOOK</li>
 <li>C-LOOK</li>
 </ol>
-<h1 id="提高磁盘I-O性能"><a href="#提高磁盘I-O性能" class="headerlink" title="提高磁盘I&#x2F;O性能"></a>提高磁盘I&#x2F;O性能</h1><ul>
+<h1 id="提高磁盘I-O性能"><a href="#提高磁盘I-O性能" class="headerlink" title="提高磁盘I/O性能"></a>提高磁盘I/O性能</h1><ul>
 <li><p>缓存</p>
 </li>
 <li><p>优化数据布局</p>
@@ -922,7 +922,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">51.3k</span>&nbsp;字
+                class="white-color">50.8k</span>&nbsp;字
             
             
             

@@ -388,7 +388,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    3k
+                    2.9k
                 </div>
                 
 
@@ -408,7 +408,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="I-O管理概述"><a href="#I-O管理概述" class="headerlink" title="I&#x2F;O管理概述"></a>I&#x2F;O管理概述</h1><h2 id="I-O设备分类"><a href="#I-O设备分类" class="headerlink" title="I&#x2F;O设备分类"></a>I&#x2F;O设备分类</h2><p>按 数据组织&#x2F;信息交换的单位 分类：</p>
+                <h1 id="I-O管理概述"><a href="#I-O管理概述" class="headerlink" title="I/O管理概述"></a>I/O管理概述</h1><h2 id="I-O设备分类"><a href="#I-O设备分类" class="headerlink" title="I/O设备分类"></a>I/O设备分类</h2><p>按 数据组织/信息交换的单位 分类：</p>
 <ul>
 <li>块设备：传输快，可寻址</li>
 <li>字符设备：传输慢，不可寻址，常采用中断驱动方式</li>
@@ -425,69 +425,69 @@
 <li>传输设备：网卡，Modem；</li>
 <li>人机交互设备：显示器、键盘、鼠标。</li>
 </ul>
-<h2 id="I-O管理示意"><a href="#I-O管理示意" class="headerlink" title="I&#x2F;O管理示意"></a>I&#x2F;O管理示意</h2><ul>
-<li>逻辑I&#x2F;O :完成设备无关的操作，如设备分配，设备回收，数据准备等；</li>
+<h2 id="I-O管理示意"><a href="#I-O管理示意" class="headerlink" title="I/O管理示意"></a>I/O管理示意</h2><ul>
+<li>逻辑I/O :完成设备无关的操作，如设备分配，设备回收，数据准备等；</li>
 <li>设备驱动程序：负责对设备控制器进行控制（通过读写其中的寄存器）。</li>
 <li>中断服务程序：设备工作结束后负责向 CPU 发中断信号,中断服务程序完成相应处理。</li>
 </ul>
-<h1 id="I-O硬件组成"><a href="#I-O硬件组成" class="headerlink" title="I&#x2F;O硬件组成"></a>I&#x2F;O硬件组成</h1><h2 id="设备控制器"><a href="#设备控制器" class="headerlink" title="设备控制器"></a>设备控制器</h2><h3 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h3><ul>
+<h1 id="I-O硬件组成"><a href="#I-O硬件组成" class="headerlink" title="I/O硬件组成"></a>I/O硬件组成</h1><h2 id="设备控制器"><a href="#设备控制器" class="headerlink" title="设备控制器"></a>设备控制器</h2><h3 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h3><ul>
 <li>接受和识别CPU命令：用控制寄存器</li>
 <li>数据交换：在CPU与控制器、控制器与设备之间，用数据寄存器</li>
 <li>设备状态的了解和报告：用状态寄存器</li>
-<li>设备地址识别：识别CPU要读写哪个寄存器，要实现I&#x2F;O地址（见下“I&#x2F;O端口地址”）</li>
+<li>设备地址识别：识别CPU要读写哪个寄存器，要实现I/O地址（见下“I/O端口地址”）</li>
 <li>缓冲区</li>
 <li>对设备传来的数据进行差错检测</li>
 </ul>
-<h3 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h3><p>控制器与CPU接口：数据寄存器、控制寄存器、状态寄存器，采用内存映射或专门的I&#x2F;O指令</p>
+<h3 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h3><p>控制器与CPU接口：数据寄存器、控制寄存器、状态寄存器，采用内存映射或专门的I/O指令</p>
 <p>控制器与设备接口：数据信号、控制信号、状态信号</p>
-<p>I&#x2F;O逻辑：用于实现CPU对I&#x2F;O设备的控制</p>
-<h3 id="I-O端口地址"><a href="#I-O端口地址" class="headerlink" title="I&#x2F;O端口地址"></a>I&#x2F;O端口地址</h3><p>定义：接口电路中每个寄存器具有唯一的地址</p>
-<p>所有I&#x2F;O端口地址形成I&#x2F;O端口的地址空间，I&#x2F;O指令形式与I&#x2F;O地址相互关联，主要有以下形式：</p>
+<p>I/O逻辑：用于实现CPU对I/O设备的控制</p>
+<h3 id="I-O端口地址"><a href="#I-O端口地址" class="headerlink" title="I/O端口地址"></a>I/O端口地址</h3><p>定义：接口电路中每个寄存器具有唯一的地址</p>
+<p>所有I/O端口地址形成I/O端口的地址空间，I/O指令形式与I/O地址相互关联，主要有以下形式：</p>
 <ol>
-<li><p>内存映像地址–&gt;内存映像I&#x2F;O模式：控制器的内存&#x2F;寄存器作为物理内存空间的一部分</p>
+<li><p>内存映像地址–&gt;内存映像I/O模式：控制器的内存/寄存器作为物理内存空间的一部分</p>
 <p>优点：</p>
 <ul>
-<li>不需要特殊的保护机制来阻止用户进程进行相应的I&#x2F;O 操作。操作系统要避免把包含了控制寄存器的那部分地址空间放入用户的虚拟地址空间中</li>
+<li>不需要特殊的保护机制来阻止用户进程进行相应的I/O 操作。操作系统要避免把包含了控制寄存器的那部分地址空间放入用户的虚拟地址空间中</li>
 <li>引用内存的每一条指令都适用于引用控制寄存器</li>
 </ul>
 <p>缺点：不允许对一个控制寄存器的内容进行高速缓存（如果我们把设备控制寄存器进行了高速缓存，那么第一次引用的时候就把它 放入了高速缓存。以后再对它的引用都是从高速缓存当中取值，而不会再去对设备进行相应的检测）</p>
 </li>
-<li><p>I&#x2F;O独立编址–&gt;I&#x2F;O专用指令：Intel体系架构in&#x2F;out指令</p>
+<li><p>I/O独立编址–&gt;I/O专用指令：Intel体系架构in/out指令</p>
 <p>优点：</p>
 <ul>
 <li>外设不占用内存的地址空间</li>
-<li>编程时易于区分是对内存操作还是对I&#x2F;O操作</li>
+<li>编程时易于区分是对内存操作还是对I/O操作</li>
 </ul>
-<p>缺点：I&#x2F;O端口操作的指令类型少，操作不灵活</p>
+<p>缺点：I/O端口操作的指令类型少，操作不灵活</p>
 </li>
 </ol>
-<h2 id="I-O控制方式！"><a href="#I-O控制方式！" class="headerlink" title="I&#x2F;O控制方式！"></a>I&#x2F;O控制方式！</h2><h3 id="程序控制I-O-PIO-Programmed-I-O"><a href="#程序控制I-O-PIO-Programmed-I-O" class="headerlink" title="程序控制I&#x2F;O(PIO,Programmed I&#x2F;O)"></a>程序控制I&#x2F;O(PIO,Programmed I&#x2F;O)</h3><p>CPU<strong>轮询</strong>检查状态寄存器</p>
-<h3 id="中断驱动方式-Interrupt-driven-I-O"><a href="#中断驱动方式-Interrupt-driven-I-O" class="headerlink" title="中断驱动方式(Interrupt-driven I&#x2F;O)"></a>中断驱动方式(Interrupt-driven I&#x2F;O)</h3><ol>
-<li>CPU发出读&#x2F;写命令后，将等待I&#x2F;O的进程阻塞，切换到其他进程。</li>
-<li>当I&#x2F;O完成后，设备控制器向CPU发出中断信号。</li>
+<h2 id="I-O控制方式！"><a href="#I-O控制方式！" class="headerlink" title="I/O控制方式！"></a>I/O控制方式！</h2><h3 id="程序控制I-O-PIO-Programmed-I-O"><a href="#程序控制I-O-PIO-Programmed-I-O" class="headerlink" title="程序控制I/O(PIO,Programmed I/O)"></a>程序控制I/O(PIO,Programmed I/O)</h3><p>CPU<strong>轮询</strong>检查状态寄存器</p>
+<h3 id="中断驱动方式-Interrupt-driven-I-O"><a href="#中断驱动方式-Interrupt-driven-I-O" class="headerlink" title="中断驱动方式(Interrupt-driven I/O)"></a>中断驱动方式(Interrupt-driven I/O)</h3><ol>
+<li>CPU发出读/写命令后，将等待I/O的进程阻塞，切换到其他进程。</li>
+<li>当I/O完成后，设备控制器向CPU发出中断信号。</li>
 <li>CPU在每个指令周期的<strong>末尾</strong>检查中断，若检测到中断信号，则保存当前进程的运行环境信息，转去执行中断处理程序处理该中断。</li>
 <li>处理中断的过程中，CPU从控制器读<strong>一个字</strong>的数据传送到CPU寄存器，再写入主存</li>
-<li>CPU恢复等待I&#x2F;O的进程的运行环境，继续执行</li>
+<li>CPU恢复等待I/O的进程的运行环境，继续执行</li>
 </ol>
-<h3 id="直接存储访问方式-DMA-Direct-Memory-Access"><a href="#直接存储访问方式-DMA-Direct-Memory-Access" class="headerlink" title="直接存储访问方式(DMA, Direct Memory Access)"></a>直接存储访问方式(DMA, Direct Memory Access)</h3><p>主要用于<strong>块设备</strong>的I&#x2F;O控制，不再一个字一个字传送，但是块必须是<strong>连续的</strong>。CPU仅在传送开始和结束时进行干预，I&#x2F;O设备与内存可以直接交互，不需要经过CPU</p>
+<h3 id="直接存储访问方式-DMA-Direct-Memory-Access"><a href="#直接存储访问方式-DMA-Direct-Memory-Access" class="headerlink" title="直接存储访问方式(DMA, Direct Memory Access)"></a>直接存储访问方式(DMA, Direct Memory Access)</h3><p>主要用于<strong>块设备</strong>的I/O控制，不再一个字一个字传送，但是块必须是<strong>连续的</strong>。CPU仅在传送开始和结束时进行干预，I/O设备与内存可以直接交互，不需要经过CPU</p>
 <p>过程：</p>
 <ol>
-<li><p>由程序设置DMA控制器中的若干寄存器值（如内存始址，传送字节数），然后发起I&#x2F;O操作；</p>
+<li><p>由程序设置DMA控制器中的若干寄存器值（如内存始址，传送字节数），然后发起I/O操作；</p>
 </li>
 <li><p>DMA控制器完成内存与外设的成批数据交换；</p>
 </li>
 <li><p>在操作完成时由DMA控制器向CPU发出中断</p>
 </li>
 </ol>
-<p>DMA控制器和I&#x2F;O控制器类似，有如下寄存器：</p>
+<p>DMA控制器和I/O控制器类似，有如下寄存器：</p>
 <ul>
-<li>命令&#x2F;状态寄存器（CR）：用于接收从CPU发送来的I&#x2F;O命令，或有关控制信息，或设备的状态。</li>
+<li>命令/状态寄存器（CR）：用于接收从CPU发送来的I/O命令，或有关控制信息，或设备的状态。</li>
 <li>内存地址寄存器（MAR）：在输入时，它存放把数据从设备传送到内存的起始目标地址，在输出时，它存放由内存到设备的内存源地址。</li>
 <li>数据寄存器（DR）：用于暂存从设备到内存，或从内存到设备的数据。</li>
 <li>数据计数器（DC）：存放本次CPU要读或写的字（节）数。</li>
 </ul>
 <p>优点：</p>
-<p>CPU只需干预I&#x2F;O操作的开始和结束，而后续成批的数据读写则无需CPU控制，适于高速设备。</p>
+<p>CPU只需干预I/O操作的开始和结束，而后续成批的数据读写则无需CPU控制，适于高速设备。</p>
 <p>缺点：</p>
 <ul>
 <li>数据传送的方向、存放数据的内存地址及传送数据的长度等都由CPU控制，占用了CPU时间。</li>
@@ -509,7 +509,7 @@
 <tr>
 <td>谁控制数据传送？</td>
 <td>CPU控制完成数据传送，涉及程序切换，需要保护和恢复现场</td>
-<td>由DMA控制器控制完成的，在传输过程中不需要CPU干预，DMA控制器直接在主存和I&#x2F;O设备之间传送数据，只有开始和结束才需要CPU干预</td>
+<td>由DMA控制器控制完成的，在传输过程中不需要CPU干预，DMA控制器直接在主存和I/O设备之间传送数据，只有开始和结束才需要CPU干预</td>
 </tr>
 <tr>
 <td></td>
@@ -517,8 +517,8 @@
 <td>适用于数据块的传输</td>
 </tr>
 </tbody></table>
-<h3 id="通道技术（Channel）"><a href="#通道技术（Channel）" class="headerlink" title="通道技术（Channel）"></a>通道技术（Channel）</h3><p>I&#x2F;O通道是专门负责输入输出的处理器，独立于CPU。</p>
-<p>与DMA的原理几乎是一样的，通道是一个特殊功能的处理器，它有自己的指令和程序专门负责数据输入输出的传输控制。CPU将“传输控制”的功能下放给通道后只负责“数据处理”功能。这样，通道与CPU分时使用内存，实现了CPU内部运算与I&#x2F;O设备的并行工作</p>
+<h3 id="通道技术（Channel）"><a href="#通道技术（Channel）" class="headerlink" title="通道技术（Channel）"></a>通道技术（Channel）</h3><p>I/O通道是专门负责输入输出的处理器，独立于CPU。</p>
+<p>与DMA的原理几乎是一样的，通道是一个特殊功能的处理器，它有自己的指令和程序专门负责数据输入输出的传输控制。CPU将“传输控制”的功能下放给通道后只负责“数据处理”功能。这样，通道与CPU分时使用内存，实现了CPU内部运算与I/O设备的并行工作</p>
 <table>
 <thead>
 <tr>
@@ -530,7 +530,7 @@
 <tbody><tr>
 <td></td>
 <td>数据的传送方向、存放数据的内存起始地址和数据块长度都由CPU控制</td>
-<td>是一个特殊的处理器，有自己的指令和程序，通过执行通道程序实现对数据传输的控制，所以通道具有更强的独立处理I&#x2F;O的功能</td>
+<td>是一个特殊的处理器，有自己的指令和程序，通过执行通道程序实现对数据传输的控制，所以通道具有更强的独立处理I/O的功能</td>
 </tr>
 <tr>
 <td></td>
@@ -538,39 +538,39 @@
 <td>一个通道可同时控制多种设备</td>
 </tr>
 </tbody></table>
-<h2 id="I-O软件组成"><a href="#I-O软件组成" class="headerlink" title="I&#x2F;O软件组成"></a>I&#x2F;O软件组成</h2><p><img src="/../../images/OS/IO%E8%BD%AF%E4%BB%B6%E7%BB%84%E6%88%90" alt="I/O软件组成"></p>
+<h2 id="I-O软件组成"><a href="#I-O软件组成" class="headerlink" title="I/O软件组成"></a>I/O软件组成</h2><p><img src="/../../images/OS/IO%E8%BD%AF%E4%BB%B6%E7%BB%84%E6%88%90" alt="I/O软件组成"></p>
 <h3 id="逻辑设备表LUT-Logical-Unit-Table"><a href="#逻辑设备表LUT-Logical-Unit-Table" class="headerlink" title="逻辑设备表LUT(Logical Unit Table)"></a>逻辑设备表LUT(Logical Unit Table)</h3><p>为了实现设备的独立性，系统必须设置一张逻辑设备表，用于将应用程序中所使用的逻辑设备名映射为物理设备名。</p>
 <p>该表的每个表目中包含了三项，逻辑设备名（设备类型）、物理设备名、设备驱动程序的入口地址</p>
-<h1 id="I-O缓冲管理"><a href="#I-O缓冲管理" class="headerlink" title="I&#x2F;O缓冲管理"></a>I&#x2F;O缓冲管理</h1><h1 id="I-O设备管理"><a href="#I-O设备管理" class="headerlink" title="I&#x2F;O设备管理"></a>I&#x2F;O设备管理</h1><h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><p>通道可以有多个，一个通道管理多个控制器，一个控制器管理多个设备</p>
+<h1 id="I-O缓冲管理"><a href="#I-O缓冲管理" class="headerlink" title="I/O缓冲管理"></a>I/O缓冲管理</h1><h1 id="I-O设备管理"><a href="#I-O设备管理" class="headerlink" title="I/O设备管理"></a>I/O设备管理</h1><h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><p>通道可以有多个，一个通道管理多个控制器，一个控制器管理多个设备</p>
 <h3 id="设备控制表DCT"><a href="#设备控制表DCT" class="headerlink" title="设备控制表DCT"></a>设备控制表DCT</h3><p>每个设备一张DCT，用于记录设备情况</p>
 <ul>
 <li>设备队列队首指针：凡因为请求本设备而未得到满足的进程，其PCB都应按照一定的策略排成一个队，称该队列为设备请求队列或简称设备队列，其队首指针指向队首PCB；</li>
-<li>设备状态：当设备处于使用状态时，应该把设备忙&#x2F;闲标志置为1；</li>
+<li>设备状态：当设备处于使用状态时，应该把设备忙/闲标志置为1；</li>
 <li>控制器表指针：该指针指向该设备所连接的控制器的控制表；</li>
 <li>重复执行次数：外部设备在传送数据时，较容易发生数据传送错误。在许多系统中，如果发生传送错误，并不立即认为传送失败，而是令它重传，并由系统规定设备在工作中发生错误时应重复执行的次数</li>
 </ul>
 <h3 id="控制器控制表CCT"><a href="#控制器控制表CCT" class="headerlink" title="控制器控制表CCT"></a>控制器控制表CCT</h3><h3 id="通道控制表CHCT"><a href="#通道控制表CHCT" class="headerlink" title="通道控制表CHCT"></a>通道控制表CHCT</h3><h3 id="系统设备表SDT"><a href="#系统设备表SDT" class="headerlink" title="系统设备表SDT"></a>系统设备表SDT</h3><p>记录了系统中全部设备的情况，每个设备对应一个表目</p>
-<h2 id="假脱机技术（SPOOLing技术）"><a href="#假脱机技术（SPOOLing技术）" class="headerlink" title="假脱机技术（SPOOLing技术）"></a>假脱机技术（SPOOLing技术）</h2><p>用户空间的I&#x2F;O软件</p>
+<h2 id="假脱机技术（SPOOLing技术）"><a href="#假脱机技术（SPOOLing技术）" class="headerlink" title="假脱机技术（SPOOLing技术）"></a>假脱机技术（SPOOLing技术）</h2><p>用户空间的I/O软件</p>
 <p>也称为虚拟设备技术，可把独享设备转变成具有共享特征的虚拟设备，从而提高设备利用率</p>
-<h3 id="SPOOLing程序和外设进行数据交换：实际I-O"><a href="#SPOOLing程序和外设进行数据交换：实际I-O" class="headerlink" title="SPOOLing程序和外设进行数据交换：实际I&#x2F;O"></a>SPOOLing程序和外设进行数据交换：实际I&#x2F;O</h3><ul>
+<h3 id="SPOOLing程序和外设进行数据交换：实际I-O"><a href="#SPOOLing程序和外设进行数据交换：实际I-O" class="headerlink" title="SPOOLing程序和外设进行数据交换：实际I/O"></a>SPOOLing程序和外设进行数据交换：实际I/O</h3><ul>
 <li>SPOOLing程序预先从外设读取数据并加以缓冲，在以后需要的时候输入到应用程序</li>
 <li>SPOOLing程序接受应用程序的输出数据并加以缓冲，在以后适当的时候输出到外设</li>
 </ul>
-<h3 id="应用程序和SPOOLing程序交换数据：虚拟I-O"><a href="#应用程序和SPOOLing程序交换数据：虚拟I-O" class="headerlink" title="应用程序和SPOOLing程序交换数据：虚拟I&#x2F;O"></a>应用程序和SPOOLing程序交换数据：虚拟I&#x2F;O</h3><p>应用程序进行I&#x2F;O操作时，实际上是从SPOOLing程序的缓冲池中读出数据或把数据送入缓冲池，而不是跟实际的外设进行I&#x2F;O操作</p>
-<h1 id="I-O性能问题"><a href="#I-O性能问题" class="headerlink" title="I&#x2F;O性能问题"></a>I&#x2F;O性能问题</h1><h2 id="两个途径"><a href="#两个途径" class="headerlink" title="两个途径"></a>两个途径</h2><ul>
-<li>使CPU利用率尽可能不被I&#x2F;O降低：可以使用缓冲技术减少或缓解速度差异，同时使用异步I&#x2F;O使CPU不等待 I&#x2F;O</li>
-<li>使CPU尽可能摆脱I&#x2F;O：使用DMA、通道等I&#x2F;O部件让CPU摆脱I&#x2F;O操作的影响</li>
+<h3 id="应用程序和SPOOLing程序交换数据：虚拟I-O"><a href="#应用程序和SPOOLing程序交换数据：虚拟I-O" class="headerlink" title="应用程序和SPOOLing程序交换数据：虚拟I/O"></a>应用程序和SPOOLing程序交换数据：虚拟I/O</h3><p>应用程序进行I/O操作时，实际上是从SPOOLing程序的缓冲池中读出数据或把数据送入缓冲池，而不是跟实际的外设进行I/O操作</p>
+<h1 id="I-O性能问题"><a href="#I-O性能问题" class="headerlink" title="I/O性能问题"></a>I/O性能问题</h1><h2 id="两个途径"><a href="#两个途径" class="headerlink" title="两个途径"></a>两个途径</h2><ul>
+<li>使CPU利用率尽可能不被I/O降低：可以使用缓冲技术减少或缓解速度差异，同时使用异步I/O使CPU不等待 I/O</li>
+<li>使CPU尽可能摆脱I/O：使用DMA、通道等I/O部件让CPU摆脱I/O操作的影响</li>
 </ul>
-<h2 id="I-O操作的两个步骤"><a href="#I-O操作的两个步骤" class="headerlink" title="I&#x2F;O操作的两个步骤"></a>I&#x2F;O操作的两个步骤</h2><ol>
+<h2 id="I-O操作的两个步骤"><a href="#I-O操作的两个步骤" class="headerlink" title="I/O操作的两个步骤"></a>I/O操作的两个步骤</h2><ol>
 <li>把磁盘数据装载进内核的内存空间</li>
 <li>把内核内存空间的数据copy到用户内存空间中</li>
 </ol>
 <h2 id="五种模型"><a href="#五种模型" class="headerlink" title="五种模型"></a>五种模型</h2><ol>
-<li>阻塞I&#x2F;O：指I&#x2F;O调用结果返回之前,当前进程会被挂起(进入睡眠状态) ，只有在得到返回结果后, 才能继续执行。</li>
-<li>I&#x2F;O多路复用：进程调用一个管理I&#x2F;O的特殊库函数，此库函数可以接受并管理多个I&#x2F;O请求，进程则可以同时等待多个I&#x2F;O请求，可以提高效率。第二阶段依然需要工作进程参与库函数把内核空间数据复制到用户空间，第二阶段依旧阻塞</li>
-<li>非阻塞I&#x2F;O：进程发起I&#x2F;O调用，I&#x2F;O自己知道需过一段时间完成，就立即通知进程进行别的操作，则为非阻塞I&#x2F;O</li>
-<li>事件（信号）驱动I&#x2F;O：进程发起调用,通过回调函数, 内核会记住是哪个进程申请的,一旦第一阶段完成了,就可以向这个进程发起通知,这样第一阶段就是非阻塞的,进程不需要忙等了, 但是第二阶段依然是阻塞的</li>
-<li>异步I&#x2F;O：无论第一第二段, 不再向系统调用提出任何反馈, 只有数据完全复制到服务进程内存中后, 才向服务进程返回ok的信息,其它时间,进程可以随意做自己的事情,直到内核通知ok信息</li>
+<li>阻塞I/O：指I/O调用结果返回之前,当前进程会被挂起(进入睡眠状态) ，只有在得到返回结果后, 才能继续执行。</li>
+<li>I/O多路复用：进程调用一个管理I/O的特殊库函数，此库函数可以接受并管理多个I/O请求，进程则可以同时等待多个I/O请求，可以提高效率。第二阶段依然需要工作进程参与库函数把内核空间数据复制到用户空间，第二阶段依旧阻塞</li>
+<li>非阻塞I/O：进程发起I/O调用，I/O自己知道需过一段时间完成，就立即通知进程进行别的操作，则为非阻塞I/O</li>
+<li>事件（信号）驱动I/O：进程发起调用,通过回调函数, 内核会记住是哪个进程申请的,一旦第一阶段完成了,就可以向这个进程发起通知,这样第一阶段就是非阻塞的,进程不需要忙等了, 但是第二阶段依然是阻塞的</li>
+<li>异步I/O：无论第一第二段, 不再向系统调用提出任何反馈, 只有数据完全复制到服务进程内存中后, 才向服务进程返回ok的信息,其它时间,进程可以随意做自己的事情,直到内核通知ok信息</li>
 </ol>
 
                 
@@ -1024,7 +1024,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">51.3k</span>&nbsp;字
+                class="white-color">50.8k</span>&nbsp;字
             
             
             

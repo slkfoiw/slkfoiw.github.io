@@ -397,7 +397,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    2.9k
+                    2.8k
                 </div>
                 
 
@@ -438,7 +438,7 @@
 <li>命令接口：联机命令接口（一句一句执行），脱机命令接口（一批一起执行）</li>
 </ul>
 </li>
-<li>给软件&#x2F;程序员使用的：程序接口（即系统调用）</li>
+<li>给软件/程序员使用的：程序接口（即系统调用）</li>
 </ul>
 </li>
 <li>对硬件机器的扩展：虚拟机</li>
@@ -464,12 +464,12 @@
 </li>
 <li><p>批处理阶段</p>
 <ol>
-<li>单道批处理系统（引入脱机输入输出技术，即输入&#x2F;输出脱离主机控制）</li>
-<li>多道批处理系统（操作系统开始出现）<br>多道程序设计技术，就是指允许多个程序同时进入内存并运行。即同时把多个程序放入内存中（前提是内存放的下），并允许它们交替在CPU中运行，它们共享系统中的各种硬、软件资源。当一道程序因<strong>I&#x2F;O请求</strong>而暂停运行时，CPU便立即转去运行另一道程序。<br>引入多道程序设计技术后形成多道批处理系统<br>优点：系统吞吐量大，资源利用率高<br>缺点：平均周转时间长，不能交互（上面所说的<strong>I&#x2F;O请求</strong>是指请求“读取文件”之类的操作，需要等待直到I&#x2F;O操作完成，所以不是在和用户交互）</li>
+<li>单道批处理系统（引入脱机输入输出技术，即输入/输出脱离主机控制）</li>
+<li>多道批处理系统（操作系统开始出现）<br>多道程序设计技术，就是指允许多个程序同时进入内存并运行。即同时把多个程序放入内存中（前提是内存放的下），并允许它们交替在CPU中运行，它们共享系统中的各种硬、软件资源。当一道程序因<strong>I/O请求</strong>而暂停运行时，CPU便立即转去运行另一道程序。<br>引入多道程序设计技术后形成多道批处理系统<br>优点：系统吞吐量大，资源利用率高<br>缺点：平均周转时间长，不能交互（上面所说的<strong>I/O请求</strong>是指请求“读取文件”之类的操作，需要等待直到I/O操作完成，所以不是在和用户交互）</li>
 </ol>
 </li>
 <li><p>分时操作系统</p>
-<p>分时系统：将CPU处理时间分割为多个时间片，将时间片分给不同程序，达到多个程序“同时”运行的效果<br>两种典型分时操作系统：(1) Multics&#x2F;Unix (1968&#x2F;1970) (2) IBM VM 360&#x2F;370</p>
+<p>分时系统：将CPU处理时间分割为多个时间片，将时间片分给不同程序，达到多个程序“同时”运行的效果<br>两种典型分时操作系统：(1) Multics/Unix (1968/1970) (2) IBM VM 360/370</p>
 </li>
 <li><p>实时操作系统：能优先处理紧急任务，一般用于嵌入式</p>
 <ul>
@@ -513,8 +513,8 @@
 <li>非特权指令</li>
 </ul>
 <h2 id="两种处理器状态"><a href="#两种处理器状态" class="headerlink" title="两种处理器状态"></a>两种处理器状态</h2><ul>
-<li>内核态&#x2F;核心态&#x2F;管态</li>
-<li>用户态&#x2F;目态</li>
+<li>内核态/核心态/管态</li>
+<li>用户态/目态</li>
 </ul>
 <h2 id="内核"><a href="#内核" class="headerlink" title="内核"></a>内核</h2><p>是操作系统最重要最核心的部分，由很多内核程序组成操作系统内核</p>
 <p>如何改变CPU状态？</p>
@@ -535,7 +535,7 @@
 </li>
 <li>中断（外中断）<ul>
 <li>时钟中断</li>
-<li>I&#x2F;O中断请求</li>
+<li>I/O中断请求</li>
 </ul>
 </li>
 </ul>
@@ -552,7 +552,7 @@
 </li>
 </ol>
 <h1 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h1><ol>
-<li><p>定义：操作系统对应用程序&#x2F;程序员提供的接口</p>
+<li><p>定义：操作系统对应用程序/程序员提供的接口</p>
 </li>
 <li><p>系统调用和库函数的关系：有的库函数是对系统调用的进一步封装，有的库函数没有使用系统调用</p>
 </li>
@@ -658,8 +658,8 @@
 </li>
 </ol>
 <h2 id="MIPS下Linux系统引导过程"><a href="#MIPS下Linux系统引导过程" class="headerlink" title="MIPS下Linux系统引导过程"></a>MIPS下Linux系统引导过程</h2><p>BootLoader将Linux内核映像拷贝到RAM中</p>
-<p>&#x2F;arch&#x2F;mips&#x2F;kernel&#x2F;head.s  kernel_entry(): 初始化内核堆栈段，为创建系统中的第一个进程进行准备，接着用另一段循环将内核映像的未初始化数据段清零，最后跳转到start_kernel()</p>
-<p>&#x2F;init&#x2F;main.c  start_kernel(): 初始化硬件平台相关代码</p>
+<p>/arch/mips/kernel/head.s  kernel_entry(): 初始化内核堆栈段，为创建系统中的第一个进程进行准备，接着用另一段循环将内核映像的未初始化数据段清零，最后跳转到start_kernel()</p>
+<p>/init/main.c  start_kernel(): 初始化硬件平台相关代码</p>
 <h2 id="计算机的启动过程（x86"><a href="#计算机的启动过程（x86" class="headerlink" title="计算机的启动过程（x86)"></a>计算机的启动过程（x86)</h2><p><img src="/../../images/OS/x86%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B.png" alt="x86启动过程"></p>
 <ol>
 <li>加载BIOS   BIOS v.s. UEFI(统一可扩展固件接口)</li>
@@ -673,8 +673,8 @@
 <li>init进程执行rc.sysinit</li>
 <li>启动内核模块</li>
 <li>执行不同运行级别的脚本程序</li>
-<li>执行&#x2F;etc&#x2F;rc.d&#x2F;rc.local(留给用户个性化的地方)</li>
-<li>执行&#x2F;bin&#x2F;login程序，进入登录状态</li>
+<li>执行/etc/rc.d/rc.local(留给用户个性化的地方)</li>
+<li>执行/bin/login程序，进入登录状态</li>
 </ol>
 <h1 id="虚拟机"><a href="#虚拟机" class="headerlink" title="虚拟机"></a>虚拟机</h1><table>
 <thead>
@@ -1167,7 +1167,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">51.3k</span>&nbsp;字
+                class="white-color">50.8k</span>&nbsp;字
             
             
             

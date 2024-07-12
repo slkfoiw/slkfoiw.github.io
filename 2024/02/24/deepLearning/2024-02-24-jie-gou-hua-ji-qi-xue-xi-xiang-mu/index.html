@@ -442,10 +442,10 @@
 <td>TN</td>
 </tr>
 </tbody></table>
-<p>$$<br>Precision &#x3D; \frac{TP}{TP + FP} \<br>Recall &#x3D; \frac{TP}{TP + FN}<br>$$</p>
+<p>$$<br>Precision = \frac{TP}{TP + FP} \<br>Recall = \frac{TP}{TP + FN}<br>$$</p>
 <p>两种指标都要顾及到，比较方法是F1分数，公式为$\frac{2}{\frac{1}{P}+\frac{1}{R}}$(越大越好)</p>
 <h1 id="mAP-mean-Average-Precision-评价指标"><a href="#mAP-mean-Average-Precision-评价指标" class="headerlink" title="mAP(mean Average Precision)评价指标"></a>mAP(mean Average Precision)评价指标</h1><p>mAP是目标检测模型中常用的评价指标。</p>
-<p>首先介绍一下交并比IoU(Intersection over union)的概念，它是用来度量预测边框与实际边框的重叠程度的。<br>$$<br>IoU &#x3D; \frac{预测边框与实际边框的交}{二者的并}<br>$$</p>
+<p>首先介绍一下交并比IoU(Intersection over union)的概念，它是用来度量预测边框与实际边框的重叠程度的。<br>$$<br>IoU = \frac{预测边框与实际边框的交}{二者的并}<br>$$</p>
 <p>tips:在训练时，常常依据候选区域和标定区域 的IoU值来确定正负样本。</p>
 <ol>
 <li><p>设置IoU阈值：在计算mAP之前，我们会先设置一个IoU（如0.5）阈值来判断预测是真阳性还是假阳性。</p>
@@ -462,25 +462,25 @@
 <li><p>把每个类别的AP都计算出来之后求它们的平均值，即可得到mAP。</p>
 </li>
 </ol>
-<p>为何要使用AP&#x2F;mAP呢？因为我们通常希望模型的Precision和Recall值都很高，所有就需要把两个因素综合考虑。一种方法就是上节提到的F1分数，一种就是计算P-R曲线下的面积，越接近1越好。</p>
+<p>为何要使用AP/mAP呢？因为我们通常希望模型的Precision和Recall值都很高，所有就需要把两个因素综合考虑。一种方法就是上节提到的F1分数，一种就是计算P-R曲线下的面积，越接近1越好。</p>
 <h1 id="满足和优化指标"><a href="#满足和优化指标" class="headerlink" title="满足和优化指标"></a>满足和优化指标</h1><ul>
 <li>优化指标optimizing metric:如准确率，越大越好</li>
 <li>满足指标satisficing metric:如运行时间，只需小于100ms就算足够好，达到之后不在乎这个指标有多好</li>
 </ul>
 <p>一般来说，如果要考虑n个指标，有时候选择其中一个做为优化指标是合理的，然后剩下都是满足指标，只需满足设定的阈值就好。</p>
-<h1 id="贝叶斯最优错误率：理论上限"><a href="#贝叶斯最优错误率：理论上限" class="headerlink" title="贝叶斯最优错误率：理论上限"></a>贝叶斯最优错误率：理论上限</h1><p>对于计算机视觉任务而言，常用人类水平的错误率估计或代替贝叶斯错误率&#x2F;贝叶斯最优错误率</p>
-<p>$$可避免误差&#x3D;贝叶斯错误率（的估计）-训练错误率$$<br>如果想要提升机器学习系统的性能，建议关注训练错误率和贝叶斯错误率的距离（可避免误差）以及开发错误率和训练错误率的距离（方差），然后针对不同的问题采用不同的策略</p>
+<h1 id="贝叶斯最优错误率：理论上限"><a href="#贝叶斯最优错误率：理论上限" class="headerlink" title="贝叶斯最优错误率：理论上限"></a>贝叶斯最优错误率：理论上限</h1><p>对于计算机视觉任务而言，常用人类水平的错误率估计或代替贝叶斯错误率/贝叶斯最优错误率</p>
+<p>$$可避免误差=贝叶斯错误率（的估计）-训练错误率$$<br>如果想要提升机器学习系统的性能，建议关注训练错误率和贝叶斯错误率的距离（可避免误差）以及开发错误率和训练错误率的距离（方差），然后针对不同的问题采用不同的策略</p>
 <p>解决可避免误差的常用方法：</p>
 <ul>
 <li>Train Bigger model</li>
-<li>Train longer&#x2F;better optimization algorithms:momentum, RMSprop, Adam</li>
-<li>NN archtecture &#x2F; hyperparameters search</li>
+<li>Train longer/better optimization algorithms:momentum, RMSprop, Adam</li>
+<li>NN archtecture / hyperparameters search</li>
 </ul>
 <p>解决方差的常用方法:</p>
 <ul>
 <li>more data</li>
 <li>rugularization: L2 dropout, data augmentation</li>
-<li>NN archtecture &#x2F; hyperparameters search</li>
+<li>NN archtecture / hyperparameters search</li>
 </ul>
 <h1 id="进行错误分析-error-analysis"><a href="#进行错误分析-error-analysis" class="headerlink" title="进行错误分析(error analysis)"></a>进行错误分析(error analysis)</h1><p>找一组错误样本（可能是开发集或者测试集的），观察错误标记的样本，看看假阳性和假阴性，统计属于不同错误类型的错误数量。如此，可以知道哪些问题有改进的潜力</p>
 <h1 id="迁移学习"><a href="#迁移学习" class="headerlink" title="迁移学习"></a>迁移学习</h1><p>任务A –&gt; 任务B</p>
@@ -951,7 +951,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">51.3k</span>&nbsp;字
+                class="white-color">50.8k</span>&nbsp;字
             
             
             

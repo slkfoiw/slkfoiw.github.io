@@ -432,7 +432,7 @@
 <li><p>增加reset处理：本来尝试新增SafeResetRqst类，增加ArrayList&lt;SafeResetRqst&gt;  resetRequests对象，作为InputThread和ElevatorThread之间的一个托盘，但是导致ScheduleThread不太好分配（可能出现检测到某个电梯的resetRqst为空，然后在往该电梯的请求队列中分配请求时该电梯的resetRqst不为空的清空）。</p>
 <p>于是换成新增ResetTable类，每个电梯都可以与InputThread、ScheduleThread共享resetTable对象，但是只改变自己对应的resetRequest，然后ScheduleThread中多电梯调度通过调用resetTable类中的dispatch方法实现。</p>
 </li>
-<li><p>结束条件改变：因为waitQueue会重新接受来自电梯乘客表、等待队列的请求，所以ScheduleThread、ElevatorThread结束条件改变。我参考了往年学长的方法，用了单例模式设置一个Counter类的counter对象来计数，当InputThread结束且总请求数sum&#x3D;&#x3D;完成请求数finished时，则可以结束ScheduleThread、ElevatorThread。</p>
+<li><p>结束条件改变：因为waitQueue会重新接受来自电梯乘客表、等待队列的请求，所以ScheduleThread、ElevatorThread结束条件改变。我参考了往年学长的方法，用了单例模式设置一个Counter类的counter对象来计数，当InputThread结束且总请求数sum==完成请求数finished时，则可以结束ScheduleThread、ElevatorThread。</p>
 </li>
 </ol>
 <h3 id="第三次作业"><a href="#第三次作业" class="headerlink" title="第三次作业"></a>第三次作业</h3><p><img src="/../../images/OO/unit2-3.png" alt="unit2-3"></p>
@@ -484,9 +484,9 @@
 <p>可以看出来，这个分配策略非常粗糙，处处透着不严谨：时间计算不严谨，不考虑同步问题，只看开始计算这一瞬间电梯状态如何；权重赋值不严谨，对于重置、请求队列人数过多、不能直接运送到目的地这些特殊情况我都直接当成效果差不多的不利条件，都把score分翻倍，没有赋予不同的权值。但是最终分配策略的效果似乎还可以？反正强测性能分还不错，挺让我意外的。但是其实这个分配策略对高并发的处理依旧不完善（见bug分析）</p>
 <h2 id="bug分析"><a href="#bug分析" class="headerlink" title="bug分析"></a>bug分析</h2><p>第一次作业没用LOOK写单电梯调度策略，然后自己设计的策略逻辑又非常复杂，导致电梯出现移动到非法楼层的问题，bug出现在中测，强测、互测没出问题。</p>
 <p>第二次作业在互测被高并发的数据点hack到了，因为如果某一时刻重置的电梯很多，并且这一时刻来了大量请求，就会出现所有请求都被分配给那个没重置的电梯的情况。于是修改成每个电梯请求队列设置一个上限，超过了就不再分配，同时让重置的电梯可以接受请求者。</p>
-<p>第三次作业再次被高并发的数据点hack（<del>有时候真的被自己蠢笑了</del>），因为我调度策略大改，然后这个地方又没考虑周全，当时想着我重置状态的电梯可以分配请求应该就没问题吧，就没细想，然后再次被hackT_T。原因就出在我的score在“请求队列人数多”这个特殊情况只是简单的翻倍，bug修复我把这里改成score *&#x3D; 请求队列人数 &#x2F; 该电梯最大限乘人数。</p>
+<p>第三次作业再次被高并发的数据点hack（<del>有时候真的被自己蠢笑了</del>），因为我调度策略大改，然后这个地方又没考虑周全，当时想着我重置状态的电梯可以分配请求应该就没问题吧，就没细想，然后再次被hackT_T。原因就出在我的score在“请求队列人数多”这个特殊情况只是简单的翻倍，bug修复我把这里改成score *= 请求队列人数 / 该电梯最大限乘人数。</p>
 <h2 id="心得体会"><a href="#心得体会" class="headerlink" title="心得体会"></a>心得体会</h2><p>其实很喜欢这个单元结合实际、贴近生活的题目，虽然刚开始写多线程非常地痛苦，因为无法单步调试，debug十分困难，尤其是在第二次作业，需要把未完成的请求者扔回总请求队列，并且ScheduleThread、ElevatorThread线程的结束条件要改变，稍有不甚就死锁了，我反复删删改改才比较完美地实现了线程控制。不过虽然过程很痛苦，结果还是不错的，至少这个单元我在强测没有因为同步控制不当出现线程不安全的bug。</p>
-<p>以下是一些个人实现同步控制过程中困惑&#x2F;不理解的概念的总结。</p>
+<p>以下是一些个人实现同步控制过程中困惑/不理解的概念的总结。</p>
 <p>synchronized修饰方法的理解：</p>
 <ul>
 <li>如果一个类A里有多个synchronized修饰的方法，对于这个类的一个实例对象a，同一时刻只有一个synchronized方法可能被访问。因为锁的是这个实例对象。</li>
@@ -962,7 +962,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">51.3k</span>&nbsp;字
+                class="white-color">50.8k</span>&nbsp;字
             
             
             
