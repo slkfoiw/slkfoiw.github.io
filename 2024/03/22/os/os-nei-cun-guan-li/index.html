@@ -1,0 +1,1475 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="内存管理, CuberSugar&#39;s Blog">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>内存管理 | CuberSugar&#39;s Blog</title>
+    <link rel="icon" type="image/png" href="/favicon_cube.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 7.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/cube.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">CuberSugar&#39;s Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>Home</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>Categories</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>Archives</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>About</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="Search" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/cube.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">CuberSugar&#39;s Blog</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			Home
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			Categories
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			Archives
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			About
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/slkfoiw/slkfoiw.github.io" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/slkfoiw/slkfoiw.github.io" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">内存管理</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                          <div class="article-tag">
+                            <span class="chip bg-color">No tag</span>
+                          </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/OS/" class="post-category">
+                                OS
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
+                    2024-03-22
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
+                    6.4k
+                </div>
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="预备知识：链接与装载"><a href="#预备知识：链接与装载" class="headerlink" title="预备知识：链接与装载"></a>预备知识：链接与装载</h1><p>gcc调用包含的几个工具</p>
+<ul>
+<li>cc1: 预处理和编译器</li>
+<li>as: 汇编器</li>
+<li>collect2: 链接器</li>
+</ul>
+<p>ELF(Executable and Linkable Format)——可执行文件格式</p>
+<p><img src="/../../images/OS/ELF%E7%BB%93%E6%9E%84.png" alt="ELF结构图"></p>
+<p><strong>几个重要节头：</strong></p>
+<ul>
+<li>.bss: 存储未初始化的全局变量和静态变量。此节类型是SHT_NOBITS,因此不占⽂件空间</li>
+<li>.data: 存储已初始化的全局变量和静态变量。</li>
+<li>.text: 存放正文，也称程序的执行指令</li>
+</ul>
+<p>.bss、.data节是数据段的组成部分</p>
+<p>ELF文件头</p>
+<ul>
+<li>e_ident： 这一部分是文件的标志，用于表明该文件是一个ELF文件。ELF文件的头四个字节为magic number。</li>
+<li>e_type： 用于标明该文件的类型，如可执行文件、动态连接库、可重定位文件等。</li>
+<li>e_machine： 表明体系结构，如x86，x86_64，MIPS，PowerPC等等。</li>
+<li>e_version： 文件版本</li>
+<li>e_entry： 程序入口的虚拟地址</li>
+<li>e_phoff： 程序头表在该ELF文件中的位置(具体地说是偏移)。ELF文件可以没有程序头表。</li>
+<li>e_shoff： 节头表的位置。</li>
+<li>e_eflags： 针对具体处理器的标志。</li>
+<li>e_ehsize： ELF 头的大小。</li>
+<li><strong>e_phentsize： 程序头表（段头表）每项的大小。</strong></li>
+<li><strong>e_phnum： 程序头表项的个数。</strong></li>
+<li><strong>e_shentsize： 节头表每项的大小。</strong></li>
+<li><strong>e_shnum： 节头表项的个数。</strong></li>
+<li>e_shstrndx： 与节名字符串表相关的节头表。</li>
+</ul>
+<p>节头表更关注于文件内部各个节的<strong>属性</strong>信息，而程序（段）头表则关注于程序<strong>执行时</strong>的段信息。</p>
+<p>段是由多个节组成的，多个节经过重定位后形成一个段。段主要用于描述程序在内存中的布局和加载方式。例如，在创建两个汇编文件时，每个文件都有自己的数据节（.data）。当这两个文件链接在一起时，它们的数据节会组合在一起形成一个数据段。同样，代码节也会组合形成代码段。</p>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p>将.o文件链接到一起，形成最终的可执行文件</p>
+<ul>
+<li>E重定位目标文件</li>
+<li>U未解析符号</li>
+<li>D已定义符号</li>
+</ul>
+<p>程序入口点：_start函数</p>
+<p>三种链接方式</p>
+<ul>
+<li>静态链接：装入前连接成一个完整装入模块</li>
+<li>装入时动态链接：运行前边装入边链接</li>
+<li>运行时动态链接：运行时需要目标模块才装入并链接</li>
+</ul>
+<p>三种装入方式</p>
+<ol>
+<li>绝对装入：编译时产生绝对地址（单道程序阶段，无操作系统）</li>
+<li>可重定位装入：装入时将逻辑地址转换为物理地址（早期多道批处理阶段）</li>
+<li>动态运行时装入：运行时将逻辑地址转换为物理地址，需设置重定位寄存器（现代操作系统）</li>
+</ol>
+<h2 id="装载和运行"><a href="#装载和运行" class="headerlink" title="装载和运行"></a>装载和运行</h2><ul>
+<li>shell调用fork()系统调用，创建出一个子进程（装载前的工作）</li>
+<li>子进程调用execve()加载program（开始装载）</li>
+<li>读取ELF头部的魔数(Magic Number)，以确认该文件确实是ELF文件</li>
+<li>找到段表项</li>
+<li>对于每个段表项解析出各个段应当被加载的虚地址，在文件中的偏移。以及在内存中的大小和在文件中的大小。（段在文件中的大小 &lt;= 内存中的大小）</li>
+<li>对于每一个段，根据其在内存中的大小，为其分配足够的物理页，并映射到指定的虚地址上。再将文件中的内容拷贝到内存中</li>
+<li>若ELF中记录的段在内存中的大小大于在文件中的大小，则多出来的部分用0进行填充。</li>
+<li>设置进程控制块中的PC为ELF文件中记载的入口地址</li>
+<li>控制权交给进程开始执行！</li>
+</ul>
+<h1 id="存储管理基础"><a href="#存储管理基础" class="headerlink" title="存储管理基础"></a>存储管理基础</h1><h2 id="存储保护"><a href="#存储保护" class="headerlink" title="存储保护"></a>存储保护</h2><p>保证各进程在自己的内存空间内运行，不会越界访问</p>
+<p>两种方法：</p>
+<ol>
+<li><p>界限寄存器方法</p>
+<p>两种方式：</p>
+<ul>
+<li>设置上下限寄存器</li>
+<li>利用重定位寄存器（基址寄存器）、界地址寄存器（限长寄存器）进行判断</li>
+</ul>
+</li>
+<li><p>存储保护键方法<br>给每个存储块分配一个单独的保护键，它相当于一把锁。进入系统的每个作业也赋予一个保护键，它相当于一把钥匙。当作业运行时，检查钥匙和锁是否匹配，如果不匹配，则系统发出保护性中断信号，停止作业运行</p>
+</li>
+</ol>
+<h2 id="覆盖与交换：解决分区管理问题"><a href="#覆盖与交换：解决分区管理问题" class="headerlink" title="覆盖与交换：解决分区管理问题"></a>覆盖与交换：解决分区管理问题</h2><h3 id="覆盖技术（主要用于早期的OS）"><a href="#覆盖技术（主要用于早期的OS）" class="headerlink" title="覆盖技术（主要用于早期的OS）"></a>覆盖技术（主要用于早期的OS）</h3><ol>
+<li>一个固定区：存放最活跃的程序段，固定区中的程序段在运行中不会调入调出</li>
+<li>若干个覆盖区：不可能同时被访问程序段可共享一个覆盖区，覆盖区中的程序段在运行过程中会根据需要调入调出</li>
+</ol>
+<p>必须由程序员声明覆盖结构，操作系统完成自动覆盖</p>
+<p>缺点：对用户不透明，增加了用户编程负担</p>
+<h4 id="补充：计算机领域“透明”的含义"><a href="#补充：计算机领域“透明”的含义" class="headerlink" title="补充：计算机领域“透明”的含义"></a>补充：计算机领域“透明”的含义</h4><p>在计算机术语中，”透明”通常指的是一种操作或过程对用户或其他系统的影响被隐藏或减轻到最小程度，以使其表现为<strong>无缝、不可察觉或无需用户干预</strong>。这种透明性的目标是使系统<strong>更易于使用、更具可靠性，并减少对终端用户或其他系统组件的干扰</strong>。</p>
+<p>通俗来讲：看不见，不用管它（系统管理员或者开发者无需显式干预和管理）。那么“不透明”就是指开发人员要考虑怎么用它。</p>
+<h3 id="交换技术"><a href="#交换技术" class="headerlink" title="交换技术"></a>交换技术</h3><p>内存紧张时，换出某些进程以腾出内存空间，再换入某些进程。</p>
+<p>磁盘分为文件区和对换区，换出的进程放在对换区。</p>
+<h3 id="覆盖与交换的区别"><a href="#覆盖与交换的区别" class="headerlink" title="覆盖与交换的区别"></a>覆盖与交换的区别</h3><ul>
+<li>覆盖：同一个程序或进程中的</li>
+<li>交换：不同进程（或作业）之间的</li>
+</ul>
+<h2 id="连续分配管理"><a href="#连续分配管理" class="headerlink" title="连续分配管理"></a>连续分配管理</h2><h3 id="单一连续分配：只支持单道程序，内存分为系统区和用户区，用户程序放在用户区。"><a href="#单一连续分配：只支持单道程序，内存分为系统区和用户区，用户程序放在用户区。" class="headerlink" title="单一连续分配：只支持单道程序，内存分为系统区和用户区，用户程序放在用户区。"></a>单一连续分配：只支持单道程序，内存分为系统区和用户区，用户程序放在用户区。</h3><p>无外部碎片，有内部碎片</p>
+<h3 id="固定分区分配：支持多道程序，内存用户空间分为若干个固定大小的分区，每个分区只能装一道作业"><a href="#固定分区分配：支持多道程序，内存用户空间分为若干个固定大小的分区，每个分区只能装一道作业" class="headerlink" title="固定分区分配：支持多道程序，内存用户空间分为若干个固定大小的分区，每个分区只能装一道作业"></a>固定分区分配：支持多道程序，内存用户空间分为若干个固定大小的分区，每个分区只能装一道作业</h3><p>无外部碎片，有内部碎片</p>
+<p>两种分区方式</p>
+<ul>
+<li>分区大小相同</li>
+<li>分区大小不同</li>
+</ul>
+<p>两种分配方式</p>
+<ul>
+<li>单一队列的分配方式：当需要加载程序时，选择一个当前闲置且容量足够大的分区进行加载，可采用共享队列的固定分区（多个用户程序排在一个共同的队列里面等待分区）分配</li>
+<li>多队列分配方式：给每个分区一个队列，程序按照所需内存的大小排在相应的队列里。避免小程序占用大分区，导致大程序无法加载。</li>
+</ul>
+<h3 id="可变式分区（动态分区分配）：支持多道程序，在进程装入内存时，根据进程动态地建立分区"><a href="#可变式分区（动态分区分配）：支持多道程序，在进程装入内存时，根据进程动态地建立分区" class="headerlink" title="可变式分区（动态分区分配）：支持多道程序，在进程装入内存时，根据进程动态地建立分区"></a>可变式分区（动态分区分配）：支持多道程序，在进程装入内存时，根据进程动态地建立分区</h3><p>无内部碎片，有外部碎片。外部碎片可用<strong>紧凑</strong>技术解决</p>
+<h2 id="闲置空间管理"><a href="#闲置空间管理" class="headerlink" title="闲置空间管理"></a>闲置空间管理</h2><p>在管理内存时，OS需要知道内存空间有多少空闲。这就必须跟踪内存的使用，跟踪的办法有两种：</p>
+<ul>
+<li><p>位图表示法（分区表）</p>
+<ul>
+<li><p>空间开销固定：不依赖于内存中的程序数量。</p>
+</li>
+<li><p>时间开销低：操作简单，直接修改其位图值即可。</p>
+</li>
+<li><p>没有容错能力：如果一个分配单元对应的标志位为1，不能确定是否因错误变成1。</p>
+</li>
+</ul>
+</li>
+<li><p>链表表示法（分区链表）</p>
+<ul>
+<li><p>空间开销：取决于程序的数量。</p>
+</li>
+<li><p>时间开销：链表扫描速度较慢，还要进行链表项的插入、删除和修改</p>
+</li>
+<li><p>有一定容错能力：因为链表有被占空间和闲置空间的表项，可相互验证</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="分配内存"><a href="#分配内存" class="headerlink" title="分配内存"></a>分配内存</h2><p>若m.size（空闲分区的大小）- u.size（请求的分区大小）≤size （规定当剩余空闲分区≤ size时，不再进一步分割），将整个分区分配给请求者。否则，从该分区中按请求的大小划分出一块内存空间分配出去，余下的部分仍留在空闲分区表/链中</p>
+<h2 id="回收内存"><a href="#回收内存" class="headerlink" title="回收内存"></a>回收内存</h2><ol>
+<li>待回收分区与前一个空闲分区邻接：合并后首地址为空闲分区的首地址，大小为二者之和。</li>
+<li>待回收分区与后一个空闲分区邻接：合并后首地址为回收分区的首地址，大小为二者之和。</li>
+<li>待回收分区与前后两个空闲分区邻接：合并后首地址为前一个空闲分区的首地址，大小为三者之和。</li>
+<li>待回收分区不与空闲分区邻接：在空闲分区表中新建</li>
+</ol>
+<h2 id="分配算法"><a href="#分配算法" class="headerlink" title="分配算法"></a>分配算法</h2><h3 id="基于顺序搜索的分配算法：适合于较小的系统"><a href="#基于顺序搜索的分配算法：适合于较小的系统" class="headerlink" title="基于顺序搜索的分配算法：适合于较小的系统"></a>基于顺序搜索的分配算法：适合于较小的系统</h3><ul>
+<li><p>首次适应：每个空闲区按其在存储空间中地址递增的顺序连在一起。为作业分配存储空间时，从这个空闲区域链始端开始查找，选择第一个满足的空白块</p>
+<p>缺点：留下碎片，查找时间开销大</p>
+</li>
+<li><p>下次适应：把空闲区构建成一个循环链表。每次从上次查找结束的地方开始，只要找到能装的就分配出去</p>
+<p>优点：存储空间利用更均衡</p>
+<p>缺点：缺乏大的空闲分区</p>
+</li>
+<li><p>最佳适应：找大小与作业所需存储区域最接近的</p>
+<p>缺点：留下碎片</p>
+</li>
+<li><p>最坏适应：每次都找最大空闲区</p>
+<p>优点：分给一个作业后剩下的空闲分区也较大，可以装下其他作业</p>
+<p>缺点：大作业的空间申请难以满足</p>
+</li>
+</ul>
+<h3 id="基于索引搜索的分配算法：大中型系统，提高搜索空闲分区的速度"><a href="#基于索引搜索的分配算法：大中型系统，提高搜索空闲分区的速度" class="headerlink" title="基于索引搜索的分配算法：大中型系统，提高搜索空闲分区的速度"></a>基于索引搜索的分配算法：大中型系统，提高搜索空闲分区的速度</h3><ul>
+<li><p>快速适应算法（/分类搜索法）：把空闲分区按容量大小进行分类，常用大小的空闲区设立单独的空闲区链表。系统为多个空闲链表设立一张管理索引表</p>
+<p>优点：查找效率高；保留大分区，不会产生内存碎片</p>
+<p>缺点：分区回收算法复杂</p>
+</li>
+<li><p><strong>伙伴系统</strong>（Linux系统采用）：在分配存储块时将一个大的存储块分裂成两个大小相等的小块，这两个小块就称为“伙伴”。介于固定分区与可变分区之间的动态分区技术</p>
+</li>
+</ul>
+<h3 id="紧凑技术"><a href="#紧凑技术" class="headerlink" title="紧凑技术"></a>紧凑技术</h3><p>实现支撑：动态重定位（作业在内存中的位置发生了变化，这就必须对其地址加以修改或变换。）</p>
+<h3 id="可重定位分区分配"><a href="#可重定位分区分配" class="headerlink" title="可重定位分区分配"></a>可重定位分区分配</h3><p>结合紧凑技术的动态分区技术</p>
+<p><img src="/../../images/OS/%E5%8F%AF%E9%87%8D%E5%AE%9A%E4%BD%8D%E5%88%86%E5%8C%BA%E5%88%86%E9%85%8D%E7%AE%97%E6%B3%95%E7%A4%BA%E6%84%8F%E5%9B%BE.png" alt="算法示意图"></p>
+<h3 id="多重分区分配"><a href="#多重分区分配" class="headerlink" title="多重分区分配"></a>多重分区分配</h3><p>为了支持结构化程序设计，操作系统往往把一道作业分成若干片段（如子程序、主程序、数据组等）。这样，片段之间就不需要连续了。只要增加一些重定位寄存器，就可以有效地控制一道作业片段之间的调用</p>
+<h1 id="页式内存管理"><a href="#页式内存管理" class="headerlink" title="页式内存管理"></a>页式内存管理</h1><p>基本思想：把一个逻辑地址连续的程序分散存放到若干个不连续的内存区域，并保证程序的正确执行。</p>
+<p>纯分页/基本分页存储管理方式：在调度一个作业时，必须把它的所有页一次装到主存的页框内；如果当时页框数不足，则该作业必须等待，系统再调度另外作业。不具备页面对换功能，不支持虚拟存储器功能。</p>
+<h2 id="补充知识：作业、进程和程序"><a href="#补充知识：作业、进程和程序" class="headerlink" title="补充知识：作业、进程和程序"></a>补充知识：作业、进程和程序</h2><p>作业通常包括程序、数据和操作说明书三部分。</p>
+<p>每一个进程由进程控制块PCB、程序和数据集合组成。这说明程序是进程的一部分，是进程的实体。</p>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ul>
+<li>页面/页：逻辑地址空间</li>
+<li>页框/存储块：物理内存的存储空间，与页面相同大小的片</li>
+<li>页表项：每个页面到页框的映射</li>
+<li>页表：分页系统为每个进程配置的一张表，页表项的集合。存放在内存中</li>
+</ul>
+<p>页面大小</p>
+<ul>
+<li>小：页内碎片少，利于提高内存利用率；页表占用内存较大；页面换进换出速度降低</li>
+<li>大：与小相反</li>
+</ul>
+<h2 id="地址变换机构"><a href="#地址变换机构" class="headerlink" title="地址变换机构"></a>地址变换机构</h2><ol>
+<li>内存系统区的PCB（进程控制块）将页表信息传给页表寄存器（存储<u>页表起始地址+页表长度</u>信息）</li>
+<li>根据逻辑地址计算页号、页内偏移量</li>
+<li>判断是否越界：页号 &lt;= 页表长度 ？</li>
+<li>查询页表，找到页号对应的页表项，确定页号对应的页框号</li>
+<li>用页框号+页内偏移量计算出物理地址</li>
+<li>访问目标内存单元</li>
+</ol>
+<h2 id="二级页表"><a href="#二级页表" class="headerlink" title="二级页表"></a>二级页表</h2><p>目录-页表-偏移量</p>
+<h3 id="多级页表为什么省空间"><a href="#多级页表为什么省空间" class="headerlink" title="多级页表为什么省空间"></a>多级页表为什么省空间</h3><p>因为多级页表允许操作系统根据进程实际使用的内存量来动态分配页表空间（想想实验课的MOS）</p>
+<p>多级页表的设计允许操作系统在创建进程时只需为每个进程分配一个一级页表，然后根据进程申请的内存空间，再为进程分配二级页表。这种按需分配的方式避免了单级页表在进程创建时为可能用到的所有页表项分配空间，从而减少了不必要的内存占用。</p>
+<h2 id="快表-TLB（转换表查找缓冲区）-联想存储器"><a href="#快表-TLB（转换表查找缓冲区）-联想存储器" class="headerlink" title="快表/TLB（转换表查找缓冲区）/联想存储器"></a>快表/TLB（转换表查找缓冲区）/联想存储器</h2><p>为了解决页表机制带来的内存访问效率严重下降问题</p>
+<p>快表一种特殊的cache，内容是页表中的一部分或全部内容</p>
+<p>结构：Valid + Virtual page + Modified + Protection + Page frame</p>
+<h2 id="哈希页表：处理超过32位地址空间的一种常用方法"><a href="#哈希页表：处理超过32位地址空间的一种常用方法" class="headerlink" title="哈希页表：处理超过32位地址空间的一种常用方法"></a>哈希页表：处理超过32位地址空间的一种常用方法</h2><p>将虚拟页号转换为哈希值，据此访问哈希表的表项（链表）。用虚拟页号与链表中的元素的第一个域相比较。如果匹配，那么相应的页框号（第二个域）就用来形成物理地址；如果不匹配，那么就进一步比较链表的下一个节点，以找到匹配</p>
+<h2 id="反置页表"><a href="#反置页表" class="headerlink" title="反置页表"></a>反置页表</h2><p>页表按页框号排序，页表项内容是逻辑页号+隶属进程标识符</p>
+<p>优点：页表占用的内存空间小</p>
+<h2 id="页共享与保护"><a href="#页共享与保护" class="headerlink" title="页共享与保护"></a>页共享与保护</h2><p>保护：</p>
+<ul>
+<li>地址越界保护</li>
+<li>在页表中设置保护位（定义操作权限：只读，读写，执行等）</li>
+</ul>
+<p>共享：分段存储管理（解决共享数据和不共享数据出现在同一个页框的问题）</p>
+<h1 id="段式内存管理（类比页式）"><a href="#段式内存管理（类比页式）" class="headerlink" title="段式内存管理（类比页式）"></a>段式内存管理（类比页式）</h1><p>将地址空间按照程序自身的逻辑关系划分为若干个段（类比页式的”分成若干页面“）。</p>
+<p>段表项：段号（隐含在地址下标）、<strong>段长</strong>+基址（区别于页式，段的长度不固定，页的大小固定）</p>
+<p>地址变换（类比页式的地址变换，需增加一步：根据段表内的段长检查段内地址/偏移是否越界）</p>
+<h2 id="分段和分页对比"><a href="#分段和分页对比" class="headerlink" title="分段和分页对比"></a>分段和分页对比</h2><table>
+<thead>
+<tr>
+<th></th>
+<th>分段</th>
+<th>分页</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>对用户</td>
+<td>可见</td>
+<td>不可见</td>
+</tr>
+<tr>
+<td>地址空间</td>
+<td>二维</td>
+<td>一维</td>
+</tr>
+<tr>
+<td>信息共享和保护实现难易程度</td>
+<td>更容易实现</td>
+<td>更难实现</td>
+</tr>
+<tr>
+<td>长度</td>
+<td>不固定</td>
+<td>固定</td>
+</tr>
+<tr>
+<td>都需要两次访存，都可引入快表机构</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="段页式内存管理"><a href="#段页式内存管理" class="headerlink" title="段页式内存管理"></a>段页式内存管理</h2><p>段里再分页</p>
+<p>逻辑地址结构：段号+页号+页内偏移量</p>
+<p>段表项：段号（隐含在地址下标）、页表长度（一个段里有几页）+页表存放块号（页表起始地址）</p>
+<p>页表项：页号（隐含在地址下标）、页框号</p>
+<p>地址变换机构：段式和页式的结合，三次访存，可引入快表机构（段号+页号）</p>
+<h1 id="虚拟内存管理"><a href="#虚拟内存管理" class="headerlink" title="虚拟内存管理"></a>虚拟内存管理</h1><h2 id="局部性原理"><a href="#局部性原理" class="headerlink" title="局部性原理"></a>局部性原理</h2><p>时间局部性：程序中存在大量循环</p>
+<p>空间局部性：很多数据在内存中是连续存放的</p>
+<p>基于局部性原理产生了高速缓存技术</p>
+<h2 id="虚拟内存的定义和特征"><a href="#虚拟内存的定义和特征" class="headerlink" title="虚拟内存的定义和特征"></a>虚拟内存的定义和特征</h2><p>定义：程序不需全部装入即可运行，运行时根据需要动态调入数据，若内存不够，还需换出一些数据</p>
+<table>
+<thead>
+<tr>
+<th>特征比较</th>
+<th>虚拟内存</th>
+<th>传统存储管理方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td>多次性</td>
+<td>一次性</td>
+</tr>
+<tr>
+<td></td>
+<td>对换性</td>
+<td>驻留性</td>
+</tr>
+<tr>
+<td></td>
+<td>虚拟性</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>离散性</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="虚拟内存的实现"><a href="#虚拟内存的实现" class="headerlink" title="虚拟内存的实现"></a>虚拟内存的实现</h2><ul>
+<li>请求分页式存储</li>
+<li>请求分段式存储</li>
+<li>请求段页式存储</li>
+</ul>
+<p>操作系统要提供请求调页（调段）功能，页面置换（段置换）功能</p>
+<h2 id="请求分页管理方式"><a href="#请求分页管理方式" class="headerlink" title="请求分页管理方式"></a>请求分页管理方式</h2><h3 id="一些基本概念"><a href="#一些基本概念" class="headerlink" title="一些基本概念"></a>一些基本概念</h3><ol>
+<li><p>进程的逻辑空间：一个进程的逻辑空间的建立是通过链接器（Linker），将构成进程所需要的所有程序及运行所需环境，按照某种规则装配链接而形成的一种规范格式(布局)，这种格式按字节从0开始编址所形成的空间也称为该进程的逻辑地址空间</p>
+</li>
+<li><p>虚拟地址空间和虚拟存储空间：进程的虚拟地址空间即为进程在内存中存放的逻辑视图。因此，一个进程的虚拟地址空间的大小与该进程的虚拟存储空间的大小相同，都从0开始编址。</p>
+</li>
+<li><p>交换分区（交换文件）：一段连续的磁盘空间（按页划分的），并且对用户不可见。</p>
+<p>功能：在物理内存不够的情况下，OS先把内存中暂时不用的数据，存到磁盘的交换空间，腾出物理内存来让别的程序运行。</p>
+<p>在Linux系统中，交换分区为swap；在Windows系统中则以文件的形式存在（pagefile.sys)。</p>
+<p>交换分区的大小：应当与系统物理内存（M）的大小保持线性比例关系(Linux中）：</p>
+<p>If (M &lt; 2GB) swap = 2*M</p>
+<p>else swap = M + 2GB</p>
+</li>
+</ol>
+<h3 id="请求式分页管理的页表项"><a href="#请求式分页管理的页表项" class="headerlink" title="请求式分页管理的页表项"></a>请求式分页管理的页表项</h3><ul>
+<li>逻辑页号（隐含）</li>
+<li>访问位（用于页面置换算法）</li>
+<li>修改位（表明此页在内存中是否被修改过）</li>
+<li>保护位（只读、可写、可执行）</li>
+<li>驻留位（1：该页位于内存中；2：该页还在外存中）</li>
+<li>物理页帧号</li>
+</ul>
+<h2 id="页面调入策略"><a href="#页面调入策略" class="headerlink" title="页面调入策略"></a>页面调入策略</h2><ol>
+<li><p>按需调页/请求式调页：当且仅当需要某页时才将其调入内存的技术</p>
+</li>
+<li><p>预调页：同时将所需要的所有页一起调入内存</p>
+<p>优缺点：与按需调页相比，阻止了大量的页错误（也叫缺页异常）；但若程序执行的局部性较差，则预先装入的很多页面不会很快被引用，并会占用大量的内存空间，反而降低系统的效率。</p>
+<p>实际应用中，可以为每个进程维护一个当前工作集（<strong>进程运行正在使用的页面集合</strong>）中的页的列表，如果进程在暂停之后需要重启时，根据这个列表使用预调页将所有工作集合中的页一次性调入内存</p>
+</li>
+</ol>
+<h2 id="页面置换策略"><a href="#页面置换策略" class="headerlink" title="页面置换策略"></a>页面置换策略</h2><table>
+<thead>
+<tr>
+<th>算法</th>
+<th>算法规则</th>
+<th>优缺点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>最优置换（OPT）</td>
+<td>从主存中移出永远不再需要的页面，如这样的页面不存在，则应选择最长时间不需要访问的页面。</td>
+<td>所有页置换算法中页错误率最低<br>但它需要引用串（即页面访问序列）的先验知识，因此无法实现。但通常用于比较性研究，衡量其他页置换算法的效果</td>
+</tr>
+<tr>
+<td>先进先出（FIFO）</td>
+<td>优先淘汰最先进入的页面</td>
+<td>性能较差，较早调入的页往往是经常被访问的页，导致它们被反复调入调出，可能出现belady异常（在使用FIFO算法作为缺页置换算法时，随着分配的页框增多，缺页率反而提高）</td>
+</tr>
+<tr>
+<td>Second Chance（改进的FIFO算法）</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Clock（改进的FIFO算法&amp;Second Chance）</td>
+<td>通过一个环形队列，避免将数据在FIFO队列中移动</td>
+<td></td>
+</tr>
+<tr>
+<td>最近最少使用（LRU）</td>
+<td>选择最近一段时间最久不用的页面去置换</td>
+<td>是局部性原理的合理近似，性能接近OPT算法<br>但需记录页面使用的先后关系，实现开销大</td>
+</tr>
+<tr>
+<td>*老化算法（AGING，LRU近似）</td>
+<td>为每个页面设置一个移位寄存器，每隔一段时间（clocktick），所有寄存器右移1位，并将访问位R值从左移入。淘汰寄存器中数值最小的页面</td>
+<td></td>
+</tr>
+<tr>
+<td>*工作集算法</td>
+<td>给定一个进程，记录其工作集，当需要进行页面替换时，选择不在工作集中的页面进行替</td>
+<td></td>
+</tr>
+<tr>
+<td>WSClock工作集时钟页面置换算法</td>
+<td>和时钟算法很像，将页框组成一个循环表，每个表项包含来自基本工作集算法的上次使用时间</td>
+<td></td>
+</tr>
+</tbody></table>
+<hr>
+<p>前面是从一个进程的角度讨论虚存管理的相关问题，下面是从系统管理者（OS）的角度讨论多个进程情况下虚存管理的问题</p>
+<h3 id="概念：工作集和驻留集"><a href="#概念：工作集和驻留集" class="headerlink" title="概念：工作集和驻留集"></a>概念：工作集和驻留集</h3><ul>
+<li>进程的工作集（working set）：当前正在使用的页面的集合。</li>
+<li>进程的驻留集（resident set ）：虚拟存储系统中，每个进程驻留在内存的页面集合，或进程分到的物理页框集合。</li>
+</ul>
+<h2 id="多进程页面分配策略"><a href="#多进程页面分配策略" class="headerlink" title="多进程页面分配策略"></a>多进程页面分配策略</h2><ul>
+<li>固定：每个进程分配固定数量的页框</li>
+<li>可变</li>
+</ul>
+<h2 id="多进程页面置换策略"><a href="#多进程页面置换策略" class="headerlink" title="多进程页面置换策略"></a>多进程页面置换策略</h2><ul>
+<li>局部：系统在进程自身的驻留集中判断当前是否存在空闲页框，并在其中进行置换</li>
+<li>全局</li>
+</ul>
+<h2 id="分配与置换的搭配"><a href="#分配与置换的搭配" class="headerlink" title="分配与置换的搭配"></a>分配与置换的搭配</h2><figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">graph LR;</span><br><span class="line">    A[固定分配策略]--&gt;C[局部置换策略];</span><br><span class="line">    B[可变分配策略]--&gt;C;</span><br><span class="line">    B--&gt;D[全局置换策略];</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="抖动问题（thrashing）"><a href="#抖动问题（thrashing）" class="headerlink" title="抖动问题（thrashing）"></a>抖动问题（thrashing）</h2><p>随着驻留内存的进程数目增加，即进程并发程度的提高，处理器利用率先上升，然后下降。因为每个进程的驻留集不断减小，当驻留集小于工作集后，缺页率急剧上升，频繁调页使得调页开销增大。</p>
+<h3 id="抖动的消除与预防"><a href="#抖动的消除与预防" class="headerlink" title="抖动的消除与预防"></a>抖动的消除与预防</h3><p>局部置换策略：使抖动局限在一个小的范围内，但是并未消除抖动的方式。</p>
+<p>引入工作集算法</p>
+<p>预留部分页面</p>
+<p>挂起若干进程</p>
+<h3 id="负载控制"><a href="#负载控制" class="headerlink" title="负载控制"></a>负载控制</h3><p>主要解决系统应当保持多少个活动进程驻留在内存的问题，即控制多道程序系统的度。当内存中的活动进程数太少时，负载控制将增加新进程或激活一些挂起进程进入内存；反之，当内存中的进程数太多时，负载控制将暂时挂起一些进程，减少内存中的活动进程数。</p>
+<h3 id="页面缓冲算法"><a href="#页面缓冲算法" class="headerlink" title="页面缓冲算法"></a>页面缓冲算法</h3><p>对FIFO算法的发展</p>
+<p>被置换页面的选择和处理：用FIFO算法选择被置换页，把被置换的页面放入两个链表之一。即：如果页面未被修改，就将其归入到空闲页面链表的末尾，否则将其归入到已修改页面链表。</p>
+<h3 id="写时复制技术"><a href="#写时复制技术" class="headerlink" title="写时复制技术"></a>写时复制技术</h3><p>两个进程共享同一块物理内存，每个页面都被标志成了写时复制。共享的物理内存中每个页面都是只读的。如果某个进程想改变某个页面时，就会与只读标记冲突，而系统在检测出页面是写时复制的，则会在内存中复制一个页框，然后进行写操作。新复制的页框对执行写操作的进程是私有的，对其他共享写时复制页面的进程是不可见的。</p>
+<p>优点：</p>
+<p>传统的fork()系统调用直接把所有的资源复制给新创建的进程。这种实现过于简单而效率低下，因为它拷贝的数据也许并不共享，如果新进程打算立即执行一个新的映像，那么所有的拷贝都将前功尽弃。</p>
+<p>Linux的fork()使用写时复制实现，它<strong>可以推迟甚至免除拷贝数据的技术</strong>。内核此时并不复制整个进程地址空间，而是让父进程和子进程共享同一个拷贝。只有在需要写入的时候，数据才会复制，从而使各个进程都拥有各自的拷贝。也就是说，资源的复制只有在需要写入的时候才进行。</p>
+<h1 id="页目录自映射"><a href="#页目录自映射" class="headerlink" title="页目录自映射"></a>页目录自映射</h1><p>以二级页表为例：设页表基址$ PT_{base} $（4MB对齐，即低22位为0，非必须，这是为了让页目录表在一个单独页表内，也可以简化计算），则页目录表基址$ PD_{base}=PT_{base} | (PT_{base} &gt;&gt; 10) $，自映射目录表项$ PDE_{self-mapping}=PT_{base} | (PT_{base} &gt;&gt; 10) | (PT_{base} &gt;&gt; 20) $。可推广到多级页表。</p>
+<p>自映射的数学意义：手持北京地图在北京，必有地图上一点与其表示的地理位置与该点的实际地理位置重合。(压缩映像)</p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        Author:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">CuberSugar</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        Link:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://slkfoiw.github.io/2024/03/22/os/os-nei-cun-guan-li/">https://slkfoiw.github.io/2024/03/22/os/os-nei-cun-guan-li/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        Reprint policy:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    All articles in this blog are used except for special statements
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    reprint polocy. If reproduced, please indicate source
+                    <a href="/about" target="_blank">CuberSugar</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>Copied successfully, please follow the reprint policy of this article</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">more</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            <span class="chip bg-color">No tag</span>
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
+            <div class="card">
+                <a href="/2024/04/10/os/os-jin-cheng/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="进程管理">
+                        
+                        <span class="card-title">进程管理</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-04-10
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/OS/" class="post-category">
+                                    OS
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                Next&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2024/03/19/oo/oo-unit1-summary/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="OO第一单元总结">
+                        
+                        <span class="card-title">OO第一单元总结</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-03-19
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/OO/" class="post-category">
+                                    OO
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;TOC</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('4'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2024</span>
+            
+            <span id="year">2024</span>
+            <a href="/about" target="_blank">CuberSugar</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">50.9k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/slkfoiw" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:wxbcly@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;Search</span>
+            <input type="search" id="searchInput" name="s" placeholder="Please enter a search keyword"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
