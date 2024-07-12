@@ -449,31 +449,31 @@
 <p><img src="/../../images/deepLearning/FasterRCNN%E5%85%B7%E4%BD%93%E7%BB%93%E6%9E%84.png" alt="FasterRCNN具体结构"></p>
 <h3 id="conv-layers"><a href="#conv-layers" class="headerlink" title="conv layers"></a>conv layers</h3><p>特征提取网络，用于提取特征。通过一组conv+relu+pooling层来提取图像的feature maps。</p>
 <ol>
-<li>13个conv层：kernel_size&#x3D;3,  padding&#x3D;1,  stride&#x3D;1。因为$n &#x3D; \frac{n + 2p - f}{s} + 1$，所以经过每个卷积层后feature map维度不变。</li>
+<li>13个conv层：kernel_size=3,  padding=1,  stride=1。因为$n = \frac{n + 2p - f}{s} + 1$，所以经过每个卷积层后feature map维度不变。</li>
 <li>13个relu层：不改变特征图维度</li>
-<li>4个pooling层：kernel_size&#x3D;2,  padding&#x3D;0,  stride&#x3D;2。每池化一次，特征图维度变为原来的1&#x2F;2，最终变为原来的1&#x2F;16</li>
+<li>4个pooling层：kernel_size=2,  padding=0,  stride=2。每池化一次，特征图维度变为原来的1/2，最终变为原来的1/16</li>
 </ol>
 <h3 id="RPN"><a href="#RPN" class="headerlink" title="RPN"></a>RPN</h3><p>区域候选网络，提前做了一部分检测，完成了目标定位，但还没分出具体类别。流程如下：</p>
-<p>![FasterRCNN RPN部分](..&#x2F;..&#x2F;images&#x2F;deepLearning&#x2F;FasterRCNN RPN部分.png)</p>
-<p>拿到conv layers的feature map（M&#x2F;16 x N&#x2F;16）后，先经过一个3x3卷积，卷积核个数为256，所以通过这个卷积层后feature map的通道数也是256(M&#x2F;16 x N&#x2F;16 x 256)。</p>
+<p>![FasterRCNN RPN部分](../../images/deepLearning/FasterRCNN RPN部分.png)</p>
+<p>拿到conv layers的feature map（M/16 x N/16）后，先经过一个3x3卷积，卷积核个数为256，所以通过这个卷积层后feature map的通道数也是256(M/16 x N/16 x 256)。</p>
 <p>之后分成两个任务：</p>
 <ul>
 <li><p>上部分cls layer分类：判断所有预设anchor内是否有目标（二分类），即是正样本（positive）还是负样本（negative）。</p>
 <blockquote>
-<p>补充anchor：对于feature maps的每一个像素点，设置3 x 3种预设anchor，比例3种：1:1、1:2、2:1；边长3种：按原始目标大小灵活设置。这样比例和边长一一配对就可以得到3x3&#x3D;9种预设锚框。</p>
+<p>补充anchor：对于feature maps的每一个像素点，设置3 x 3种预设anchor，比例3种：1:1、1:2、2:1；边长3种：按原始目标大小灵活设置。这样比例和边长一一配对就可以得到3x3=9种预设锚框。</p>
 </blockquote>
 <ol>
-<li>设anchor种类为k(即上文的9个)。M&#x2F;16 x N&#x2F;16 x 256的特征经过1x1卷积就得到了(M&#x2F;16)x(N&#x2F;16)x2k的输出.“2”是因为这里做的是一个二分类且用的softmax，所以feature map上每个点的每个anchor对应2个值。</li>
+<li>设anchor种类为k(即上文的9个)。M/16 x N/16 x 256的特征经过1x1卷积就得到了(M/16)x(N/16)x2k的输出.“2”是因为这里做的是一个二分类且用的softmax，所以feature map上每个点的每个anchor对应2个值。</li>
 <li>reshape层对feature map进行维度变换，使得有一个单独的维度为2 ，方便在softmax进行操作</li>
 <li>softmax进行分类</li>
 <li>reshape恢复原状</li>
 </ol>
 </li>
 <li><p>下部分reg layer回归：bbox regression(边界框修正)，修正anchors得到较为准确的proposals</p>
-<p>(M&#x2F;16)x(N&#x2F;16)x256的特征通过1x1卷积得到(M&#x2F;16)x(N&#x2F;16)x4k的输出，“4”是因为这里是生成每个anchor的坐标偏移量（用于修正anchor），[tx,ty,tw,th]共4个所以是4k。注意，这里输出的是<strong>坐标偏移量</strong>，不是坐标本身，要得到修正后的anchor还要用原坐标和这个偏移量运算一下才行。</p>
+<p>(M/16)x(N/16)x256的特征通过1x1卷积得到(M/16)x(N/16)x4k的输出，“4”是因为这里是生成每个anchor的坐标偏移量（用于修正anchor），[tx,ty,tw,th]共4个所以是4k。注意，这里输出的是<strong>坐标偏移量</strong>，不是坐标本身，要得到修正后的anchor还要用原坐标和这个偏移量运算一下才行。</p>
 </li>
 </ul>
-<p>两个任务再proposal层合并，proposal层负责综合正样本positive anchor和对应bbox修正后得到的proposals，输出一系列proposals左上角和右下角坐标轴，同时剔除太小和超出边界的proposal。</p>
+<p>两个任务在proposal层合并，proposal层负责综合正样本positive anchor和对应bbox修正后得到的proposals，输出一系列proposals左上角和右下角坐标轴，同时剔除太小和超出边界的proposal。</p>
 <h3 id="RoI-Pooling（兴趣域池化）"><a href="#RoI-Pooling（兴趣域池化）" class="headerlink" title="RoI Pooling（兴趣域池化）"></a>RoI Pooling（兴趣域池化）</h3><ol>
 <li><p>收集RPN生成的proposals，并将每个proposal映射到对应feature map中的区域</p>
 </li>
@@ -952,7 +952,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">50.1k</span>&nbsp;字
+                class="white-color">51.3k</span>&nbsp;字
             
             
             
