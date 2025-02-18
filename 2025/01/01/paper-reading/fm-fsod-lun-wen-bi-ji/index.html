@@ -430,7 +430,7 @@
 <h3 id="LLM"><a href="#LLM" class="headerlink" title="LLM"></a>LLM</h3><p>其次，对object proposals的小样本分类是FSOD的另一个关键组件。我们建议通过在查询图像特征和类原型之间应用交叉注意来生成支持类感知的proposals。但这些proposals仍然有噪声。<strong>FSOD的关键挑战是带有噪声的proposals的小样本学习</strong>。之前的工作针对这个问题提出了几种方法，从简单的点积到更复杂的深度神经网络，目的是改进有噪声proposal的少镜头分类。</p>
 <p>在本文中，我们建议利用预先训练好的LLMs的强大的上下文学习能力来进行FSOD中上下文化的小样本proposal分类。受最近的多模态LLMs的启发，我们仔细设计了语言指令，以提示LLM对每个proposal进行分类，并提供类别和它们的视觉原型之间的映射作为输入指令的一部分。我们的模型可以通过LLM自动利用proposal和类之间的各种上下文信息，包括proposal-propasal关系、proposal-class关系和class-class关系。提取的上下文信息可以在很大程度上促进对同一查询图像的小样本proposal分类。对于模型训练，我们使用元学习对LLM进行了微调。在每个训练过程中，我们为每个类别随机抽取一些视觉样本来计算原型，这在模型训练过程中作为强大的数据增强。</p>
 <h2 id="提出的方法"><a href="#提出的方法" class="headerlink" title="提出的方法"></a>提出的方法</h2><h3 id="任务定义"><a href="#任务定义" class="headerlink" title="任务定义"></a>任务定义</h3><p>在FSDOD中，我们有两个类集合$C = C_{base} \cup C_{novel}, C_{base} \cap C_{novel} = \emptyset$。$C_{novel}$<strong>也叫做support classess，其中的样本叫support images</strong>。K-shot目标检测就是每个新类都有K个边界框注释作为训练数据。FSOD的目标是在数据丰富的基类训练数据的帮助下，使用少量的视觉示例来检测新的类，并在基类上保持良好的性能。</p>
-<h3 id="模型结构"><a href="#模型结构" class="headerlink" title="模型结构"></a>模型结构</h3><p><img src="D:\mynotes\source\images\deepLearning\FM-FSOD2.png" alt="2"> </p>
+<h3 id="模型结构"><a href="#模型结构" class="headerlink" title="模型结构"></a>模型结构</h3><p><img src="/../../images/deepLearning/FM-FSOD2.png" alt="2"> </p>
 <p>如图2所示，我们的模型主要由以下三个子模块：</p>
 <h4 id="Visual-Feature-Extraction"><a href="#Visual-Feature-Extraction" class="headerlink" title="Visual Feature Extraction"></a>Visual Feature Extraction</h4><p>为query images和support images提取特征表示。</p>
 <p>在FSOD中，query image $I_q \in \mathbb{R}^{H_{I_q} * W_{I_q} * 3}$和N-way K-shot support set $S = { { {I_{S}^{j,i}} } <em>{i=1}^{K}}</em>{j=1}^{N}$作为输入，$I_S^{j,i} \in \mathbb{R}^{H_{I_q} * W_{I_q} * 3}$。</p>
@@ -469,9 +469,9 @@
 <li>MSCOCO</li>
 </ul>
 <h3 id="主要结果"><a href="#主要结果" class="headerlink" title="主要结果"></a>主要结果</h3><p>MSCOCO数据集上的：</p>
-<p><img src="D:\mynotes\source\images\deepLearning\FM-FSOD-t1.png" alt="t1"></p>
+<p><img src="/../../images/deepLearning/FM-FSOD-t1.png" alt="t1"></p>
 <p>PASCAL VOC数据集上的</p>
-<p><img src="D:\mynotes\source\images\deepLearning\FM-FSOD-t3.png" alt="t3"></p>
+<p><img src="/../../images/deepLearning/FM-FSOD-t3.png" alt="t3"></p>
 <p>从表1中可以发现，本文的方法明显优于传统的基于Faster R-CNN的FSOD模型，特别是对于shot数量相对较多的设置。这验证了对FSOD使用大型基础模型的有效性。基于DETR的方法通常比基于Faster R-CNN的方法有更好的结果。同样地，我们在更大数量的shot中观察到较大的性能提高，但是也有两种方法（FS-DETR、Meta-DETR）在1次和2次shot上AP50都优于我们的模型。我们认为，这是因为LLM很难用如此少的训练数据进行调整，而且我们不像FS-DETR那样使用外部数据集来进行FSOD训练。未来可能的工作是引入外部数据集用于检测训练，并探索在小数据下使用LLM的有效训练。类似的性能比较见表3。</p>
 
                 
@@ -749,13 +749,13 @@
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2025/01/01/paper-reading/instrucblip-lun-wen-bi-ji/">
+                <a href="/2025/01/01/paper-reading/id-like-prompt-learning-for-few-shot-out-of-distribution-detection-lun-wen-bi-ji/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="InstructBLIP论文笔记">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="ID-like Prompt Learning for Few-Shot Out-of-Distribution Detection论文笔记">
                         
-                        <span class="card-title">InstructBLIP论文笔记</span>
+                        <span class="card-title">ID-like Prompt Learning for Few-Shot Out-of-Distribution Detection论文笔记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -925,7 +925,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">99k</span>&nbsp;字
+                class="white-color">94.9k</span>&nbsp;字
             
             
             

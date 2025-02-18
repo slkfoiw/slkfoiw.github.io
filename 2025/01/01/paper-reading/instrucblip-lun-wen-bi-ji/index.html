@@ -440,7 +440,7 @@
 </ol>
 <p>由于held in数据集和held out数据集之间的数据分布会发生变化， 因此处理第一种类型的held out评估并非易事。对于第二种类型，我们完全保留了几项任务，包括 visual reasoning, video question answering, visual conversational QA和image classification</p>
 <h3 id="指令感知视觉特征提取"><a href="#指令感知视觉特征提取" class="headerlink" title="指令感知视觉特征提取"></a>指令感知视觉特征提取</h3><p>包括 BLIP-2 在内的现有零样本 图像到文本 生成方法在提取视觉特征时采用了与指令<strong>无关</strong>的方法。这 就导致无论任务是什么，都会有一组静态的视觉表征被输入到 LLM 中。相比之下，指令感知视觉模型可以<strong>适应</strong>任务指令，生成最有利于手头任务的视觉表征。如果我们预计同一输入图像的任务指令会有很大变化，那么这显然是有利的。</p>
-<p><img src="D:\mynotes\source\images\deepLearning\InstructBLIP.png" alt="image-20241213110132976"></p>
+<p><img src="/../../images/deepLearning/InstructBLIP.png" alt="image-20241213110132976"></p>
 <p>InstructBLIP 利用 Q Former从冻结的图像编码器中提取视觉特征。Q-Former 的输入包含一组 K 个可学习的查询embeddings， 通过交叉注意与图像编码器的输出进行交互。Q-Former 的输出由 K 个编码的视觉向量组成，每个查询embedding一个，然后经过线性投影，送到冻结的 LLM。</p>
 <p>与 BLIP-2 一样，Q-Former在指令调整前分两个阶段使用image-caption数据进行预训练（第一阶段使用冻结图像编码器对 Q-Former 进行预训练，以进行视觉语言表征学习 ；第二阶段利用冻结的 LLM 将 Q-Former 的输出调整为文本生成的软视觉提示）在预训练之后，我们通过指令调整对 Q-Former 进行微调，其中 LLM 接收来自 Q-Former 的视觉编码和任务指令作为输入。</p>
 <p>在扩展 BLIP-2 的基础上，InstructBLIP 提出了一个指令感知 Q-former模块，该模块将指令文本标记作为额外输入。指令通过 Q-Former的自注意力层与查询embedding进行交互，并鼓励提取与任务相关的图特征。因此，LLM 接收到了有利于指令跟踪的视觉信息。</p>
@@ -698,13 +698,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2025/01/01/paper-reading/fm-fsod-lun-wen-bi-ji/">
+                <a href="/2025/01/01/paper-reading/id-like-prompt-learning-for-few-shot-out-of-distribution-detection-lun-wen-bi-ji/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="FM-FSOD论文笔记">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="ID-like Prompt Learning for Few-Shot Out-of-Distribution Detection论文笔记">
                         
-                        <span class="card-title">FM-FSOD论文笔记</span>
+                        <span class="card-title">ID-like Prompt Learning for Few-Shot Out-of-Distribution Detection论文笔记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -739,13 +739,13 @@
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2025/01/01/paper-reading/id-like-prompt-learning-for-few-shot-out-of-distribution-detection-lun-wen-bi-ji/">
+                <a href="/2025/01/01/paper-reading/mesed-lun-wen-bi-ji/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="ID-like Prompt Learning for Few-Shot Out-of-Distribution Detection论文笔记">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="MESED论文笔记">
                         
-                        <span class="card-title">ID-like Prompt Learning for Few-Shot Out-of-Distribution Detection论文笔记</span>
+                        <span class="card-title">MESED论文笔记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -915,7 +915,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">99k</span>&nbsp;字
+                class="white-color">94.9k</span>&nbsp;字
             
             
             

@@ -462,7 +462,7 @@
 <p>设 B 为 Batch Size，从代码中可以看出最终的预测维度是 [3B, 2]，标签维度是 3B，前 B 个样本都是正样本，其余 2B 都是负样本。</p>
 </blockquote>
 <h3 id="动量蒸馏"><a href="#动量蒸馏" class="headerlink" title="动量蒸馏"></a>动量蒸馏</h3><p>解决的问题：从网上收集的数据存在噪声。对于ITC学习，图像的负文本也可能与图像的内容相匹配。对于MLM，可能存在其他不同于描述图像但描述得同样好（或更好）的注释的词。然而，ITC和MLM的one-hot标签惩罚所有负面预测，不管它们的正确性。</p>
-<p><img src="D:\mynotes\source\images\deepLearning\ALBEF动量蒸馏部分.png" alt="动量蒸馏部分"></p>
+<p><img src="/../../images/deepLearning/ALBEF%E5%8A%A8%E9%87%8F%E8%92%B8%E9%A6%8F%E9%83%A8%E5%88%86.png" alt="动量蒸馏部分"></p>
 <p>解决办法：从动量模型产生的伪目标中学习。动量模型是一个连续发展的<strong>教师</strong>模型，它由单模态和多模态编码器的指数-移动平均版本组成。在训练过程中，我们<strong>训练base模型，使其预测与动量模型的预测相匹配</strong>。具体来说，对于ITC，我们首先使用动量单模态编码器的特征来计算图像-文本相似度，即$s^{‘}(I, T) = g_v^{‘}(v_{cls})^T g_w^{‘}(w^{‘}<em>{cls})$和$s^{‘}(T, I) = g_w^{‘}(w</em>{cls})^T g_v^{‘}(v^{‘}<em>{cls})$。然后把方程1中的$s$替换成$s^{‘}$来计算软伪目标$q^{i2t}$和$q^{t2i}$。$ITC</em>{MoD}$损失的定义为：<br>$$<br>L_{itc}^{mod} = (1- \alpha)L_{itc} + \frac{\alpha}{2}E_{(I,T) \sim D}[KL(q^{i2t}(I) || p^{i2t}(I)) + KL(q^{t2i}(T) || p^{t2i}(T))]<br>$$<br>类似的，$MLM_{MoD}$损失的定义为：<br>$$<br>L_{mlm}^{mod} = (1- \alpha)L_{mlm} + \alpha E_{(I,\hat{T}) \sim D}KL(q^{msk}(I, \hat{T}) || p^{msk}(I, \hat{T}))<br>$$</p>
 <blockquote>
 <p>KL:KL散度计算，又称相对熵或信息散度。我们设定两个概率分布分别为P和Q，在设定为连续随机变量的前提下，他们对应的概率密度函数分别为p(x)和q(x)。如果我们用p(x)去近似q(x)，则KL散度可以表示为：</p>
@@ -703,13 +703,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2025/01/01/paper-reading/blip2-lun-wen-bi-ji/">
+                <a href="/2025/01/09/dl/yolov7-xue-xi-bi-ji/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="BLIP2论文笔记">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
                         
-                        <span class="card-title">BLIP2论文笔记</span>
+                        <span class="card-title"></span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -720,16 +720,12 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2025-01-01
+                            <i class="far fa-clock fa-fw icon-date"></i>2025-01-09
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/paper-reading/" class="post-category">
-                                    paper-reading
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            CuberSugar
                             
                         </span>
                     </div>
@@ -744,13 +740,13 @@
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2025/01/01/paper-reading/efficient-teacher/">
+                <a href="/2025/01/01/paper-reading/blip2-lun-wen-bi-ji/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="Efficient Teacher">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="BLIP2论文笔记">
                         
-                        <span class="card-title">Efficient Teacher</span>
+                        <span class="card-title">BLIP2论文笔记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -920,7 +916,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">99k</span>&nbsp;字
+                class="white-color">94.9k</span>&nbsp;字
             
             
             

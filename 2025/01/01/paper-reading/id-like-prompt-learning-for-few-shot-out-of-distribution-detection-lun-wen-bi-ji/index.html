@@ -436,7 +436,7 @@
 <p>具体来说，我们将额外的提示与<code>1</code>中构建的具有挑战性的OOD 相匹配，创造出与 ID 提示类似的 OOD 提示，从而有效识别具有挑战性的 OOD 样本。</p>
 </li>
 </ol>
-<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p><img src="D:\mynotes\source\images\deepLearning\ID-likePromptLearning3" alt="ID-like3"></p>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p><img src="/../../images/deepLearning/ID-likePromptLearning3" alt="ID-like3"></p>
 <h3 id="从ID样本中构建离群值"><a href="#从ID样本中构建离群值" class="headerlink" title="从ID样本中构建离群值"></a>从ID样本中构建离群值</h3><p>定义训练集$D = {(x_1, y_1), (x_2, y_2), …, (x_N, y_N)}$，N表示样本数。</p>
 <p>为了充分探索训练样本的临近空间，我们对每个 ID 样本$x_i$进行多次随机裁剪，得到集合$X_{i}^{crop} = {x_{i,1}^{crop}, x_{i,2}^{crop}, …, x_{i,M}^{crop}}$​，M表示裁剪次数。同时，我们使用预先定义的模板（如a photo of a &lt;$y_k$&gt;， $y_k$表示类名）创建相应的类别描述文本$t_k$。</p>
 <p>然后利用预先训练好的 CLIP 模型来计算样本集$X_{i}^{crop}$与描述$t_k$之间的余弦相似度。根据余弦相似度的强弱，从高、低相似度段分别提取ID、OOD样本，记做$X_{i}^{in} = {x_{i,1}^{in}, x_{i,2}^{in}, …,x_{i,Q}^{in}}$和$X_{i}^{out} = {x_{i,1}^{out}, x_{i,2}^{out}, …,x_{i,Q}^{out}}$。于是得到$D^{in} = {(x_{1,1}^{in}, y_1), (x_{1,2}^{in}, y_1), …, (x_{N,Q}^{in}, y_N)}$、$D^{out} = {(x_{1,1}^{out}, y_1), (x_{1,2}^{out}, y_1), …, (x_{N,Q}^{out}, y_N)}$</p>
@@ -482,11 +482,11 @@ $$
 <h3 id="实施细节"><a href="#实施细节" class="headerlink" title="实施细节"></a>实施细节</h3><p>对于少样本训练，需要在完整的训练数据中的每个类中随机选择一定数量的样本来形成训练集。例如，我们从ImageNet-1k中的每个类中随机选择一个（一次）或四个样本（四次）。在构建ID和OOD数据时，我们对每个样本进行M（我们实验中256）次随机裁剪，并根据与手工提示的相似度选择最高的Q（我们实验中32）个和最低的Q个样本。对于ID提示，每个类只有一个可学习的提示，并且保留了类名信息。对于OOD提示，我们将它们的总数设置为C（在我们的实验中为100），并且不保留类名信息。我们将λ1设置为0.3，λ2设置为0.2，并使用AdamW作为优化器。其他超参数设置如下：训练epoch = 3，学习率= 0.005，批量大小=1，token长度L = 16。</p>
 <h3 id="评估指标"><a href="#评估指标" class="headerlink" title="评估指标"></a>评估指标</h3><p>我们采用以下OOD检测常用的评价指标：(1)分布样本真阳性率为95%时OOD样本的假阳性率（FPR95）；(2)受试者工作特征曲线下面积（AUROC）；(3) ID分类精度（ID ACC）。</p>
 <h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><p>表1是比较结果，表明使用我们的方法可以获得更好的 OOD 检测性能，优于大多数比较结果。更重要的是，即使与那些需要完整数据的方法相比，我们的方法在one shot中仍然有很好的效果。具体地说，在four shot设置中，我们平均获得了 26.08% 的 FPR95 和94.36% 的 AUROC，与相同设置下表现最好的方法相比，分别降低了 12.16% 和提高了 2.76%。</p>
-<p><img src="D:\mynotes\source\images\deepLearning\ID-likePromptLearning-t1.png" alt="t1"></p>
+<p><img src="/../../images/deepLearning/ID-likePromptLearning-t1.png" alt="t1"></p>
 <p>图 4 显示了我们的方法与 MCM 在 iNaturalist 数据集上的比较。我们的方法性能更优，ID 和 OOD 之间的差异明显更大。这表明，在区分 ID 和 OOD 时，MCM 对阈值更敏感，而我们的方法能更直观地区分 ID 和 OOD。</p>
-<p><img src="D:\mynotes\source\images\deepLearning\ID-likePromptLearning4" alt="image-20250123155828480"></p>
+<p><img src="/../../images/deepLearning/ID-likePromptLearning4" alt="image-20250123155828480"></p>
 <p>如表2所示，我们的方法优于其他少样本方法，在ID数据上获得了更好的分类结果，为68.28%。</p>
-<p><img src="D:\mynotes\source\images\deepLearning\ID-likePromptLearning-t2.png" alt="image-20250122161453748"></p>
+<p><img src="/../../images/deepLearning/ID-likePromptLearning-t2.png" alt="image-20250122161453748"></p>
 <h2 id="消融研究"><a href="#消融研究" class="headerlink" title="消融研究"></a>消融研究</h2><p>离群值的有效性</p>
 <p>即时学习的有效性</p>
 <p>不同数量的ID-like提示（OOD 提示）的有效性</p>
@@ -725,13 +725,13 @@ $$
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2025/01/01/paper-reading/instrucblip-lun-wen-bi-ji/">
+                <a href="/2025/01/01/paper-reading/fm-fsod-lun-wen-bi-ji/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="InstructBLIP论文笔记">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="FM-FSOD论文笔记">
                         
-                        <span class="card-title">InstructBLIP论文笔记</span>
+                        <span class="card-title">FM-FSOD论文笔记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -766,13 +766,13 @@ $$
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2025/01/01/paper-reading/mesed-lun-wen-bi-ji/">
+                <a href="/2025/01/01/paper-reading/instrucblip-lun-wen-bi-ji/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="MESED论文笔记">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="InstructBLIP论文笔记">
                         
-                        <span class="card-title">MESED论文笔记</span>
+                        <span class="card-title">InstructBLIP论文笔记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -942,7 +942,7 @@ $$
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">99k</span>&nbsp;字
+                class="white-color">94.9k</span>&nbsp;字
             
             
             

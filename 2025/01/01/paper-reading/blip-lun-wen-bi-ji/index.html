@@ -417,7 +417,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="预训练"><a href="#预训练" class="headerlink" title="预训练"></a>预训练</h2><p><img src="D:\mynotes\source\images\deepLearning\BLIP框架图.png" alt="BLIP框架图"></p>
+                <h2 id="预训练"><a href="#预训练" class="headerlink" title="预训练"></a>预训练</h2><p><img src="/../../images/deepLearning/BLIP%E6%A1%86%E6%9E%B6%E5%9B%BE.png" alt="BLIP框架图"></p>
 <ol>
 <li>图像编码器：ViT的架构。将输入图像分割成一个个的 Patch 并将它们编码为一系列 Image Embedding，并使用额外的 [CLS] token 来表示全局的图像特征。</li>
 <li>文本编码器：BERT 的架构。[CLS] token 附加到文本输入的开头以总结句子。作用是提取文本特征做对比学习。</li>
@@ -429,7 +429,7 @@
 <h4 id="图像-文本匹配损失-Image-Text-Matching-Loss-ITM"><a href="#图像-文本匹配损失-Image-Text-Matching-Loss-ITM" class="headerlink" title="图像-文本匹配损失(Image-Text Matching Loss, ITM)"></a>图像-文本匹配损失(Image-Text Matching Loss, ITM)</h4><p>目标是学习图像文本的联合表征，以捕获视觉和语言之间的细粒度对齐。ITM 是一个二分类任务，使用一个分类头来预测图像文本对是正样本还是负样本。使用了 ALBEF 中的 hard negative mining 技术。</p>
 <h4 id="语言模型损失-Language-Modeling-Loss-LM"><a href="#语言模型损失-Language-Modeling-Loss-LM" class="headerlink" title="语言模型损失 (Language Modeling Loss, LM)"></a>语言模型损失 (Language Modeling Loss, LM)</h4><p>BLIP 包含解码器，用于生成任务，因此需要一个针对于生成任务的语言模型损失。目标是根据给定的图像以自回归方式来生成关于文本的描述。与 VLP 中广泛使用的 MLM 损失 (完形填空) 相比，LM 使模型能够将视觉信息转换为连贯的字幕。</p>
 <h2 id="CapFilt"><a href="#CapFilt" class="headerlink" title="CapFilt"></a>CapFilt</h2><p>为了高效率利用噪声网络数据。</p>
-<p><img src="D:\mynotes\source\images\deepLearning\BLIP-CapFilt.png" alt="CapFilt"></p>
+<p><img src="/../../images/deepLearning/BLIP-CapFilt.png" alt="CapFilt"></p>
 <h3 id="字幕器-Captioner"><a href="#字幕器-Captioner" class="headerlink" title="字幕器 Captioner"></a>字幕器 Captioner</h3><p>给一张网络图片，生成字幕。是一个基于视觉的文本解码器，使用 LM Loss微调。给定网络图片 $I_w $，Captioner 生成字幕 $T_s$ 。</p>
 <h3 id="过滤器-Filter"><a href="#过滤器-Filter" class="headerlink" title="过滤器 Filter"></a>过滤器 Filter</h3><p>过滤掉噪声图文对。是一个基于视觉的文本编码器，看文本是否与图像匹配，使用 ITC 和 ITM 微调。Filter 删除原始 Web 文本 $T_w$ 和合成文本 $T_s$ 中的噪声文本，如果 ITM 头将其预测为与图像不匹配，则认为文本有噪声。</p>
 <p>最后，将过滤后的图像-文本对与人工注释对相结合，形成一个新的数据集，用它来预训练一个新的模型。</p>
@@ -668,13 +668,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2025/01/01/paper-reading/efficient-teacher/">
+                <a href="/2025/01/01/paper-reading/blip2-lun-wen-bi-ji/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="Efficient Teacher">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="BLIP2论文笔记">
                         
-                        <span class="card-title">Efficient Teacher</span>
+                        <span class="card-title">BLIP2论文笔记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -709,13 +709,13 @@
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2025/01/01/paper-reading/coca-lun-wen-bi-ji/">
+                <a href="/2025/01/01/paper-reading/efficient-teacher/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="CoCa论文笔记">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="Efficient Teacher">
                         
-                        <span class="card-title">CoCa论文笔记</span>
+                        <span class="card-title">Efficient Teacher</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -885,7 +885,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">99k</span>&nbsp;字
+                class="white-color">94.9k</span>&nbsp;字
             
             
             

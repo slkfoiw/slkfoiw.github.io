@@ -431,14 +431,14 @@
 <li>新类上的提示学习具有挑战。必须确保从少数样本中学习到的新提示与基提示有足够的区别，以避免新基类的错误分类。</li>
 </ol>
 <p>为了解决上述挑战，我们开发了一种简单而高效的transformer解码器视觉提示，用于多尺度的密集预测，它依赖于novel-to-base因果注意，而不需要元训练。我们将detr风格的架构中的查询视为一种视觉提示的形式，并设计了一种机制来初始化和学习新的提示。然后，novel-to-base的<strong>因果</strong>注意允许base提示影响novel提示表征，而不能反过来（这里的因果指的是单向性）。直观地说，这允许novel提示被排斥和/或吸引到它们的base对应物上。这种注意力是在不同尺度（转换器的层）之间共享的，因此能更稳健地学习和提高性能。提示的多尺度细化有助于在多个尺度上进行图像特征的交互和推理，从而有助于更好的密集预测。最后，我们在一个可转换设置中扩展了这种架构，在其中，novel提示和base提示都可以在测试时对无监督目标进行微调，以进一步提高性能。所提出的架构和方法如图1所示</p>
-<p><img src="D:\mynotes\source\images\deepLearning\VP-for-GFSS1.png" alt="image-20250217104404818"></p>
+<p><img src="/../../images/deepLearning/VP-for-GFSS1.png" alt="image-20250217104404818"></p>
 <p>主要贡献：</p>
 <ul>
 <li>为GFSS设计了一个多尺度的视觉提示transformer解码器架构，具有可学习的提示，允许为novel类创建novel提示，通过support image（及其掩码）的掩码平均池化（masked average pooling）进行初始化。</li>
 <li>在这个架构中，提出并学习了一个在novel提示和base提示之间的<strong>多尺度的（共享的）novel-to-base的交叉注意机制</strong>。</li>
 <li>提出了一种新的<strong>转换</strong>提示调优（Transductive Prompt-tuning），它允许视觉提示在测试的（未标记的）图像上进行调优（即术语中转换的含义）。</li>
 </ul>
-<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p><img src="D:\mynotes\source\images\deepLearning\VP-for-GFSS2.png" alt="image-20250217120808951"></p>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p><img src="/../../images/deepLearning/VP-for-GFSS2.png" alt="image-20250217120808951"></p>
 <h3 id="1-视觉提示多尺度Transformer"><a href="#1-视觉提示多尺度Transformer" class="headerlink" title="1.视觉提示多尺度Transformer"></a>1.视觉提示多尺度Transformer</h3><h4 id="base视觉提示"><a href="#base视觉提示" class="headerlink" title="base视觉提示"></a>base视觉提示</h4><p>假设有$B$个基类，定义$B$个视觉提示分别代表每个基类，并随机初始化它们。这些视觉提示首先通过自我注意学习自身之间的关系，然后用来提示多个尺度的图像特征。在每个解码器层base提示的细化公式如下：<br>$$<br>V_B^{(l)} = \mathcal{A}( V_B^{(l-1)} ) + \mathcal{C}(V_B^{(l-1)}, F^{(l-1)})<br>$$<br>$\mathcal{A}$代表自注意力，$\mathcal{C}$代表交叉注意力，$V_B^{(l)} \in \mathbb{R}^{B \times C}$是第$l$层的base视觉提示，$F^{(l)} \in \mathbb{R}^{H_l W_l \times C_l}$是第$l$层的扁平（flattened）图像特征。</p>
 <p>通过多层transformer注意细化提示后，定义一个分割头，表示为$\mathcal{H}(\cdot)$。这个分割头将最终改进的提示$V_B^{(L)}$和最高分辨率的图像特征$F^{(L)}$作为输入，生成每像素每类的预测。(具体见3)</p>
 <h4 id="novel视觉提示"><a href="#novel视觉提示" class="headerlink" title="novel视觉提示"></a>novel视觉提示</h4><p>在对基类进行训练之后，冻结模型除了表示基类的视觉提示以外的所有层。假设有$N$个新类，我们添加$N$个novel视觉提示。进一步添加了一个因果单向注意模块，允许novel提示通过base提示增强novel提示。输出被传递给一个分割头，以对新的类进行预测。</p>
@@ -932,7 +932,7 @@ $$
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">99k</span>&nbsp;字
+                class="white-color">94.9k</span>&nbsp;字
             
             
             

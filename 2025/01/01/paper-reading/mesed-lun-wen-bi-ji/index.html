@@ -420,7 +420,7 @@
                 <h1 id="MESED"><a href="#MESED" class="headerlink" title="MESED"></a>MESED</h1><p>A Multi-modal Entity Set Expansion Dataset with Fine-grained Semantic Classes and Hard Negative Entities</p>
 <p>具有细粒度语义类和硬否定实体的多模态实体集扩展数据集</p>
 <h2 id="实体集扩展介绍"><a href="#实体集扩展介绍" class="headerlink" title="实体集扩展介绍"></a>实体集扩展介绍</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>实体集扩展（Entity Set Expansion，ESE）任务旨在用属于同一语义类别的新实体扩展少量种子实体。例如，给定{Washington D.C., Chicago, Los Angeles}，ESE 会尝试检索具有目标语义类别 US 的其他实体城市，如New York, NYC, Boston。</p>
-<h3 id="存在问题"><a href="#存在问题" class="headerlink" title="存在问题"></a>存在问题</h3><p><img src="D:\mynotes\source\images\deepLearning\MESED1.png" alt="image-20250110101845737"></p>
+<h3 id="存在问题"><a href="#存在问题" class="headerlink" title="存在问题"></a>存在问题</h3><p><img src="/../../images/deepLearning/MESED1.png" alt="image-20250110101845737"></p>
 <p>传统的ESE 方法基于单模态（即字面模态），难以处理现实世界中的复杂实体，例如：</p>
 <ol>
 <li>具有细粒度语义差异的否定实体：指属于同一粗粒度语义类作为目标类的实体。这些实体共享文本内涵的语义，因此很难进行详细区分。例如，在扩展US Cities时，不可避免地要扩展具有相同父类（即US Location）的实体，如同样位于美国的<em>佛罗里达州</em>和<em>德克萨斯州</em>（US states）。</li>
@@ -452,7 +452,7 @@
 </ol>
 <h2 id="MultiExpan-方法"><a href="#MultiExpan-方法" class="headerlink" title="MultiExpan 方法"></a>MultiExpan 方法</h2><p>将 Multi-Expan 分成两个步骤：多模态实体表示阶段和实体扩展阶段。</p>
 <p>在第一阶段，我们设计了一个多模态实体级编码器，其输出是候选实体的掩蔽跨度概率分布。实体表示为包含该实体的所有句子的预测实体分布的平均值。我们提出了一个多模态掩蔽实体预测任务和三个辅助自学习预训练任务，以重新完善实体表示。在第二阶段，MultiExpan 会根据实体概率表征的相似性获取目标实体。提出 MultiExpan 的目的是为了提供一个稳健的多模态baseline，并探索不同预训练任务的有效性</p>
-<h3 id="多模态实体表示阶段"><a href="#多模态实体表示阶段" class="headerlink" title="多模态实体表示阶段"></a>多模态实体表示阶段</h3><p><img src="D:\mynotes\source\images\deepLearning\MESED3" alt="多模态实体表示"></p>
+<h3 id="多模态实体表示阶段"><a href="#多模态实体表示阶段" class="headerlink" title="多模态实体表示阶段"></a>多模态实体表示阶段</h3><p><img src="/../../images/deepLearning/MESED3" alt="多模态实体表示"></p>
 <p>多模态编码器首先利用自注意Transformer分别处理文本和图像，然后将它们结合起来，进行深度跨模态交互。</p>
 <ol>
 <li><p>文本：上下文文本用$BERT_{base}$初始化的12层Transformer编码，获得文本嵌入$\hat{W} = {\hat{w_1}, \hat{w_2}, …, \hat{w_{L_1}} = BERT_{BASE}(T)}$。$L_1$ 是句子中词块的最大长度</p>
@@ -488,7 +488,7 @@
 <li>具有不同结构的多模态模型：CLIP、ALBEF</li>
 </ol>
 <p><strong>评价指标</strong> ESE 的目标是根据实体与给定种子实体的相似度，按降序扩展排序实体列表。采用了两种广泛使用的评价指标，即MAP@𝐾 和 P@𝐾。MAP@K计算方式如下：<br>$$<br>MAP@K = \frac{1}{|Q|} \sum_{q \in Q}AP_K(R_q, G_q)<br>$$<br>𝑄是每个查询q的集合，$AP_K(R_q, G_q)$是𝐾与排名列表$R_q$ 和groud truth列表$G_q$ 的平均精度。P@K是前K个实体的精度。</p>
-<h3 id="主要实验"><a href="#主要实验" class="headerlink" title="主要实验"></a>主要实验</h3><p><img src="D:\mynotes\source\images\deepLearning\MESED-table3" alt="image-20250112101526651"></p>
+<h3 id="主要实验"><a href="#主要实验" class="headerlink" title="主要实验"></a>主要实验</h3><p><img src="/../../images/deepLearning/MESED-table3" alt="image-20250112101526651"></p>
 <ol>
 <li>多模态方法上优于单模态方法。值得注意的是，我们的 MultiExpan（MEP）仅通过使用屏蔽实体预测任务就取得了优异的性能。完整的 MultiExpan 方法取得了最佳的整体性能。此外，完整版的 Multi-Expan也达到了最佳性能。</li>
 <li>就多模态模型的结构而言，ALBEF 和我们的 MultiExpan 通过Transformer实现了深度模态交互，与 CLIP 通过点积相似性计算实现的浅度模态交互相比，后者更适合 ESE 任务。这些结果表明，深度模态交互和融合是未来可以探索的一个方向。</li>
@@ -731,13 +731,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2025/01/01/paper-reading/id-like-prompt-learning-for-few-shot-out-of-distribution-detection-lun-wen-bi-ji/">
+                <a href="/2025/01/01/paper-reading/instrucblip-lun-wen-bi-ji/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="ID-like Prompt Learning for Few-Shot Out-of-Distribution Detection论文笔记">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="InstructBLIP论文笔记">
                         
-                        <span class="card-title">ID-like Prompt Learning for Few-Shot Out-of-Distribution Detection论文笔记</span>
+                        <span class="card-title">InstructBLIP论文笔记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -948,7 +948,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">99k</span>&nbsp;字
+                class="white-color">94.9k</span>&nbsp;字
             
             
             

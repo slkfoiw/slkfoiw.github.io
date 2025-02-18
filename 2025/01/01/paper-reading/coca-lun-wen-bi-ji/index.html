@@ -446,7 +446,7 @@
 <p>自回归：在训练过程中使用模型自身的预测结果作为输入</p>
 <p>teacher-forcing: 在训练过程中使用真实的输出序列作为输入。在Teacher Forcing模式下，模型在每个timesteps t预测输出后，不是将这个预测值用作时间t+1的输入，而是使用真实的数据，即目标序列在时间t+1的真实值。这样，即使前一个预测不准确，网络也可以在准确的数据指导下继续学习‌12。这种方法可以防止错误的累积和传播，使得训练过程更加稳定‌</p>
 </blockquote>
-<h3 id="CoCa"><a href="#CoCa" class="headerlink" title="CoCa"></a>CoCa</h3><p><img src="D:\mynotes\source\images\deepLearning\CoCa结构.png" alt="CoCa结构"></p>
+<h3 id="CoCa"><a href="#CoCa" class="headerlink" title="CoCa"></a>CoCa</h3><p><img src="/../../images/deepLearning/CoCa%E7%BB%93%E6%9E%84.png" alt="CoCa结构"></p>
 <p>顾名思义，在训练的时候有两个训练目标：基于对比学习的损失函数 Contrastive Loss 和基于生成式图像字幕任务的目标函数 Captioning Loss (一种生成式任务)。</p>
 <p>类似于标准的图像-文本编码解码器模型，CoCa通过神经网络编码器将图像编码为潜在表示，例如ViT，并使用causal masking transformer解码器解码文本</p>
 <blockquote>
@@ -461,7 +461,7 @@
 <blockquote>
 <p>我们的实验表明，一个单一的池化的图像embedding有助于视觉识别任务作为一个全局表示，而更多的视觉tokens（因此更细粒度）有利于需要区域级特征的多模态理解任务。</p>
 </blockquote>
-<img src="D:\mynotes\source\images\deepLearning\CoCa伪代码.png" alt="CoCa结构" style="zoom:150%;">
+<img src="../../images/deepLearning/CoCa伪代码.png" alt="CoCa结构" style="zoom:150%;">
 
 <ul>
 <li>Contrastive Loss 应用于 Image Encoder 和 Text Decoder 的输出端，使得二者都具备独立提取图像特征和文本特征的能力，而且学习到的是<strong>偏全局的图文表征</strong>。</li>
@@ -716,13 +716,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2025/01/01/paper-reading/blip-lun-wen-bi-ji/">
+                <a href="/2025/01/01/paper-reading/efficient-teacher/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="BLIP论文笔记">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="Efficient Teacher">
                         
-                        <span class="card-title">BLIP论文笔记</span>
+                        <span class="card-title">Efficient Teacher</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -933,7 +933,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">99k</span>&nbsp;字
+                class="white-color">94.9k</span>&nbsp;字
             
             
             
