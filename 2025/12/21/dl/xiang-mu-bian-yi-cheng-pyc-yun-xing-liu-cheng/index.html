@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="CuberSugar&#39;s Blog">
+    <meta name="keywords" content="项目编译成pyc运行流程, CuberSugar&#39;s Blog">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>CuberSugar&#39;s Blog</title>
+    <title>项目编译成pyc运行流程 | CuberSugar&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon_cube.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -251,7 +251,7 @@
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title"></h1>
+                    <h1 class="description center-align post-title">项目编译成pyc运行流程</h1>
                 </div>
             </div>
         </div>
@@ -372,6 +372,15 @@
                 </div>
                 <div class="col s5 right-align">
                     
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/deepLearning/" class="post-category">
+                                deepLearning
+                            </a>
+                        
+                    </div>
+                    
                 </div>
             </div>
 
@@ -379,7 +388,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2025-01-09
+                    2025-12-21
                 </div>
                 
 
@@ -388,7 +397,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    210
+                    143
                 </div>
                 
 
@@ -408,22 +417,21 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="yolov7"><a href="#yolov7" class="headerlink" title="yolov7"></a>yolov7</h1><h2 id="整体结构"><a href="#整体结构" class="headerlink" title="整体结构"></a>整体结构</h2><p>输入input、骨干网络backbone、颈部neck、头部head</p>
-<p><img src="/../../images/deepLearning/yolov7" alt="yolov7"></p>
-<ol>
-<li>图片经过input部分数据增强等一系列操作进行预处理后，被送入backbone</li>
-<li>backbone对处理后的图片提取特征</li>
-<li>提取到的特征经过 Neck 模块特征融合处理得到大、中、小三种尺寸的特征</li>
-<li>最终，融合后的特征被送入检测头，经过检测之后输出得到结果</li>
+                <ol>
+<li><p>使用<code>comileall</code>编译<code>oadp/dp</code>下的所有文件</p>
+<p>例如：</p>
+<figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> compileall <span class="keyword">as</span> ca</span><br><span class="line"></span><br><span class="line">ca.compile_dir(<span class="string">r'oadp/dp'</span>)</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>需要删掉/移除到原本的py文件，并将<code>dp/__pycache__</code>下的所有文件移到dp/下，并重新命名，去掉文件名中的<code>cpython-310</code></p>
+</li>
 </ol>
-<h2 id="prototype"><a href="#prototype" class="headerlink" title="prototype"></a>prototype</h2><p><a target="_blank" rel="noopener" href="https://docs.pingcode.com/ask/187609.html">prototype learning讲解</a></p>
-<p>K均值聚类是原型学习的一个典型示例</p>
-<p><a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content/CVPR2021/papers/Zhu_Prototype_Augmentation_and_Self-Supervision_for_Incremental_Learning_CVPR_2021_paper.pdf">https://openaccess.thecvf.com/content/CVPR2021/papers/Zhu_Prototype_Augmentation_and_Self-Supervision_for_Incremental_Learning_CVPR_2021_paper.pdf</a></p>
-<h2 id="trick"><a href="#trick" class="headerlink" title="trick"></a>trick</h2><p>CBAM加一个，在yolov7_backbone处</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">def forward(self, x):</span><br><span class="line">        x0 = self.stage0(x) </span><br><span class="line">        x1 = self.stage1(x0) </span><br><span class="line"></span><br><span class="line">        x2 = self.elan_0(x1)</span><br><span class="line">        x2 = self.cbam_0(x2) #! 添加 CBAM</span><br><span class="line">        </span><br><span class="line">        x3 = self.elan_1(x2)</span><br><span class="line">        # x3 = self.cbam_1(x3) #! 添加 CBAM</span><br><span class="line">        </span><br><span class="line">        x4 = self.elan_2(x3)</span><br><span class="line">        # x4 = self.cbam_2(x4) #! 添加 CBAM</span><br><span class="line">        </span><br><span class="line">        x5 = self.elan_3(x4)</span><br><span class="line">        # x5 = self.cbam_3(x5) #! 添加 CBAM </span><br><span class="line">       </span><br><span class="line">        return x3, x4, x5</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rename_files_in_directory</span>(<span class="params">directory_path</span>):</span><br><span class="line">    <span class="keyword">for</span> filename <span class="keyword">in</span> os.listdir(directory_path):</span><br><span class="line">        <span class="keyword">if</span> <span class="string">".cpython-310"</span> <span class="keyword">in</span> filename:</span><br><span class="line">            new_filename = filename.replace(<span class="string">".cpython-310"</span>, <span class="string">""</span>)</span><br><span class="line">            old_file_path = os.path.join(directory_path, filename)</span><br><span class="line">            new_file_path = os.path.join(directory_path, new_filename)</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                os.rename(old_file_path, new_file_path)</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">f"Renamed: <span class="subst">{filename}</span> -&gt; <span class="subst">{new_filename}</span>"</span>)</span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">f"Error renaming <span class="subst">{filename}</span>: <span class="subst">{e}</span>"</span>)</span><br><span class="line"></span><br><span class="line">directory_path = <span class="string">"oadp/dp/"</span></span><br><span class="line"></span><br><span class="line">rename_files_in_directory(directory_path)</span><br></pre></td></tr></tbody></table></figure>
 
 
 
+<ol start="2">
+<li>运行命令和之前一样，例如<code>torchrun --nproc_per_node=1 -m oadp.dp.train oadp_ori_ov_coco configs/dp/oadp_ov_coco.py</code></li>
+</ol>
 
                 
             </div>
@@ -450,7 +458,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://slkfoiw.github.io/2025/01/09/dl/yolov7-xue-xi-bi-ji/">https://slkfoiw.github.io/2025/01/09/dl/yolov7-xue-xi-bi-ji/</a>
+                    <a href="https://slkfoiw.github.io/2025/12/21/dl/xiang-mu-bian-yi-cheng-pyc-yun-xing-liu-cheng/">https://slkfoiw.github.io/2025/12/21/dl/xiang-mu-bian-yi-cheng-pyc-yun-xing-liu-cheng/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -655,54 +663,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="far fa-dot-circle"></i>&nbsp;Current
+            </div>
             <div class="card">
-                <a href="/2025/02/12/dl/janus/">
+                <a href="/2025/12/21/dl/xiang-mu-bian-yi-cheng-pyc-yun-xing-liu-cheng/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="项目编译成pyc运行流程">
                         
-                        <span class="card-title"></span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2025-02-12
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            CuberSugar
-                            
-                        </span>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                Next&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2025/01/01/paper-reading/albef-lun-wen-bi-ji/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="ALBEF论文笔记">
-                        
-                        <span class="card-title">ALBEF论文笔记</span>
+                        <span class="card-title">项目编译成pyc运行流程</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -713,14 +685,56 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2025-01-01
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-12-21
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/paper-reading/" class="post-category">
-                                    paper-reading
+                            <a href="/categories/deepLearning/" class="post-category">
+                                    deepLearning
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                Next&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2025/02/15/dl/janus/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="janus">
+                        
+                        <span class="card-title">janus</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-02-15
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/deepLearning/" class="post-category">
+                                    deepLearning
                                 </a>
                             
                             

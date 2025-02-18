@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="CuberSugar&#39;s Blog">
+    <meta name="keywords" content="机器学习导论-个人作业技术报告, CuberSugar&#39;s Blog">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>CuberSugar&#39;s Blog</title>
+    <title>机器学习导论-个人作业技术报告 | CuberSugar&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon_cube.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -246,12 +246,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title"></h1>
+                    <h1 class="description center-align post-title">机器学习导论-个人作业技术报告</h1>
                 </div>
             </div>
         </div>
@@ -372,6 +372,15 @@
                 </div>
                 <div class="col s5 right-align">
                     
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/deepLearning/" class="post-category">
+                                deepLearning
+                            </a>
+                        
+                    </div>
+                    
                 </div>
             </div>
 
@@ -379,7 +388,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2024-11-13
+                    2024-01-03
                 </div>
                 
 
@@ -388,7 +397,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    1k
+                    1.3k
                 </div>
                 
 
@@ -408,66 +417,118 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="论文"><a href="#论文" class="headerlink" title="论文"></a>论文</h1><p>BARON首先对上下文相关的区域进行采样，形成一个“袋子”。由于区域建议网络(RPN)被证明可以覆盖潜在的新对象，我们探索了一种邻域抽样策略，对 region proposals 周围的 box 进行抽样，以帮助建模一袋视觉概念的共同出现。</p>
-<p>其次，BARON通过将区域特征投影到词嵌入空间中，并使用冻结的VLM的文本编码器(TE)对这些伪词进行编码，从而获得区域袋嵌入。BARON将区域特征投射到伪词上，自然使TE能够有效地表示共现语义概念，理解整个场景。为了保留区域框的空间信息，BARON将框形和框中心位置投影到嵌入中，并添加到伪词中，然后将它们馈送给TE。</p>
-<h2 id="环境配置过程"><a href="#环境配置过程" class="headerlink" title="环境配置过程"></a>环境配置过程</h2><p>readme里面给出的指导是用slurm_train训练，但是有如下报错</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">srun: error: Unable to allocate resources: Unable to contact slurm controller (connect failure)</span><br></pre></td></tr></tbody></table></figure>
+                <h1 id="选择题目：3-糖尿病诊断"><a href="#选择题目：3-糖尿病诊断" class="headerlink" title="选择题目：3 糖尿病诊断"></a>选择题目：3 糖尿病诊断</h1><h2 id="数据集预处理"><a href="#数据集预处理" class="headerlink" title="数据集预处理"></a>数据集预处理</h2><ol>
+<li>数据集中存在为布尔值的属性列，先把它们转化成数字（0：False, 1：True)</li>
+<li>把标签列提取出来编码，采用标签编码即可（0: NoDiabetes, 1: Prediabetes, 2: Diabetes）</li>
+</ol>
+<p>相关代码如下：</p>
+<figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">preprocess_data</span>(<span class="params">data</span>):</span><br><span class="line">    <span class="comment"># 将布尔值转换为数值</span></span><br><span class="line">    data = data.replace({<span class="literal">True</span>: <span class="number">1</span>, <span class="literal">False</span>: <span class="number">0</span>}).infer_objects(copy=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 将 Diabetes 列编码为数值（0: Diabetes, 1: NoDiabetes, 2: Prediabetes）</span></span><br><span class="line">    le = LabelEncoder()</span><br><span class="line">    data[<span class="string">'Diabetes'</span>] = le.fit_transform(data[<span class="string">'Diabetes'</span>])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> data, le</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 
-<p>尝试改用dist_train训练（但是<strong>readme里没有提到这个文件的训练方式</strong></p>
-<ul>
-<li>系统上的CUDA 10.0</li>
-<li>CUDA驱动版本 12.4</li>
+<h2 id="特征选择"><a href="#特征选择" class="headerlink" title="特征选择"></a>特征选择</h2><p>数据的样本涉及到特征种类较多，为避免无关特征的影响，我们先对特征进行选择，找出与标签（即糖尿病的情况）相关性最高的几个特征。然后将特征进行标准化，让不同特征的数值范围一致，这样可以让模型更好地进行训练和收敛。</p>
+<p>相关代码在<code>model_search.py</code>文件中:</p>
+<figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line"><span class="comment"># 特征选择</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">feature_selection</span>(<span class="params">data, top_k=<span class="number">9</span></span>):</span><br><span class="line">    X = data.iloc[:, <span class="number">1</span>:-<span class="number">1</span>]  <span class="comment"># 特征变量</span></span><br><span class="line">    Y = data.iloc[:, -<span class="number">1</span>]  <span class="comment"># 目标变量</span></span><br><span class="line"></span><br><span class="line">    select_top_k = SelectKBest(score_func=chi2, k=top_k)  <span class="comment"># 选择排名前k的特征</span></span><br><span class="line">    fit = select_top_k.fit(X, Y)</span><br><span class="line">    features = fit.transform(X)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 提取特征名称</span></span><br><span class="line">    selected_features_indices = fit.get_support()</span><br><span class="line">    selected_feature_names = X.columns[selected_features_indices].tolist()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"选择的特征:"</span>, selected_feature_names)</span><br><span class="line">    <span class="keyword">return</span> features, selected_feature_names</span><br></pre></td></tr></tbody></table></figure>
+
+
+
+<h2 id="模型探索"><a href="#模型探索" class="headerlink" title="模型探索"></a>模型探索</h2><p>该问题是一个分类问题，数据集比较易于处理，考虑从简单的模型开始，如逻辑回归或决策树，逐步过渡到更复杂的模型，如随机森林或支持向量机。这里我选择了如下几种模型：</p>
+<ol>
+<li>逻辑回归（Logistic Regression）</li>
+<li>高斯朴素贝叶斯（Gaussian Naive Bayes）</li>
+<li>K近邻分类（K-Nearest Neighbors）</li>
+<li>决策树分类（Decision Tree Classifier）</li>
+<li>支持向量机（Support Vector Machine, SVM）</li>
+<li>XGBoost</li>
+</ol>
+<p>通过交叉检验对每个模型进行评估，以下是各模型在训练集上的交叉验证mP：</p>
+<p><img src="/../../images/image-20241201132158703.png" alt="image-20241201132158703"></p>
+<p>SVM耗时较长，后续补充XGBoost模型时没有评估SVM：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">LR 0.8461940174191783</span><br><span class="line">NB 0.7803187407247</span><br><span class="line">KNN 0.8286078911982038</span><br><span class="line">DT 0.7842212562301403</span><br><span class="line">XGB 0.8481994913743092</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="/../../images/image-20241220185448750.png" alt="image-20241220185448750"></p>
+<p>可以看到逻辑回归、支持向量机、XGBoost的结果较好，因此可以选择这些模型进行接下来的探索。</p>
+<p>这部分的关键代码如下：</p>
+<figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line"><span class="comment">#模型选择</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">model_selection</span>(<span class="params">X_train, Y_train</span>):</span><br><span class="line">    models = []</span><br><span class="line">    models.append((<span class="string">"LR"</span>, LogisticRegression()))  <span class="comment"># 逻辑回归</span></span><br><span class="line">    models.append((<span class="string">"NB"</span>, GaussianNB()))  <span class="comment"># 高斯朴素贝叶斯</span></span><br><span class="line">    models.append((<span class="string">"KNN"</span>, KNeighborsClassifier()))  <span class="comment"># K近邻分类</span></span><br><span class="line">    models.append((<span class="string">"DT"</span>, DecisionTreeClassifier()))  <span class="comment"># 决策树分类</span></span><br><span class="line">    models.append((<span class="string">"XGB"</span>, XGBClassifier()))  <span class="comment"># XGBoost分类</span></span><br><span class="line">    <span class="comment"># models.append(("SVM", SVC(kernel='linear')))  # 支持向量机分类</span></span><br><span class="line">    <span class="comment">#模型评估</span></span><br><span class="line">    results = []</span><br><span class="line">    names = []</span><br><span class="line">    <span class="keyword">for</span> name, model <span class="keyword">in</span> models:</span><br><span class="line">        kfold = KFold(n_splits=<span class="number">10</span>)</span><br><span class="line">        cv_result = cross_val_score(</span><br><span class="line">            model, X_train, Y_train, cv=kfold, scoring=<span class="string">'accuracy'</span>)</span><br><span class="line">        names.append(name)</span><br><span class="line">        results.append(cv_result)</span><br><span class="line">    <span class="comment">#输出模型评估结果</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(names)):</span><br><span class="line">        <span class="built_in">print</span>(names[i], results[i].mean())</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 结果可视化</span></span><br><span class="line">    ax = sns.boxplot(data=results)</span><br><span class="line">    ax.set_xticklabels(names)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="平衡数据集"><a href="#平衡数据集" class="headerlink" title="平衡数据集"></a>平衡数据集</h2><p>注意到数据集中NoDiabetes的类别明显比Diabetes和PreDiabetes多，可能导致结果预测不平衡，因此class_weighted选择‘balanced’。这个可以显著提高结果的mP。</p>
+<p>另外还采用了SMOTE过采样：</p>
+<p>SMOTE 的作用</p>
+<ol>
+<li><strong>平衡数据集</strong>:<ul>
+<li>通过生成合成的少数类样本，使数据集中的各个类别的样本数量更加平衡。</li>
+<li>这有助于模型更好地学习少数类的特征，提高其预测能力。</li>
 </ul>
-<figure class="highlight bash"><table><tbody><tr><td class="code"><pre><span class="line">$ nvcc --version //查看系统上的CUDA版本为10.0</span><br><span class="line">nvcc: NVIDIA (R) Cuda compiler driver</span><br><span class="line">Copyright (c) 2005-2018 NVIDIA Corporation</span><br><span class="line">Built on Sat_Aug_25_21:08:01_CDT_2018</span><br><span class="line">Cuda compilation tools, release 10.0, V10.0.130</span><br></pre></td></tr></tbody></table></figure>
-
-<p>依次安装readme里提到的包</p>
-<figure class="highlight bash"><table><tbody><tr><td class="code"><pre><span class="line">$ pip install openmim mmengine</span><br></pre></td></tr></tbody></table></figure>
-
-<p>mmcv安装前需先安装pytorch 下述为<strong>CUDA版本为10.0</strong>对应的pytorch安装命令</p>
-<figure class="highlight bash"><table><tbody><tr><td class="code"><pre><span class="line">$ conda install pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 cudatoolkit=10.2 -c pytorch</span><br></pre></td></tr></tbody></table></figure>
-
-<p>mmcv版本不能太高，否则会跟后续mmdet的要求冲突（例如出现如下报错：</p>
-<figure class="highlight bash"><table><tbody><tr><td class="code"><pre><span class="line">$ mmdet 3.3.0 requires mmcv&lt;2.2.0,&gt;=2.0.0rc4; extra == <span class="string">"mim"</span>, but you have mmcv 2.2.0 <span class="built_in">which</span> is incompatible.</span><br></pre></td></tr></tbody></table></figure>
-
-<p>mmdet&gt;=3.3要求的mmcv版本&gt;=2.0.0 &lt;2.2.0</p>
-<figure class="highlight bash"><table><tbody><tr><td class="code"><pre><span class="line">$ mim install mmcv==2.0.0</span><br></pre></td></tr></tbody></table></figure>
-
-
-
-<figure class="highlight bash"><table><tbody><tr><td class="code"><pre><span class="line">$ pip install git+https://github.com/lvis-dataset/lvis-api.git //没成功，但是应该是lvis数据集的，可能用不上？</span><br><span class="line">$ mim install mmdet&gt;=3.0.0rc6 //安装的3.3.0</span><br></pre></td></tr></tbody></table></figure>
-
-<p>readme没给出的包：ftfy</p>
-<figure class="highlight bash"><table><tbody><tr><td class="code"><pre><span class="line">$ conda install ftfy</span><br><span class="line">$ conda install regex</span><br></pre></td></tr></tbody></table></figure>
-
-<p>运行训练出现报错</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">File "/home/anaconda3/envs/ovdet/lib/python3.10/importlib/__init__.py", line 126, in import_module</span><br><span class="line">    return _bootstrap._gcd_import(name[level:], package, level)</span><br><span class="line">ImportError: libc10_cuda.so: cannot open shared object file: No such file or directory</span><br></pre></td></tr></tbody></table></figure>
-
-<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><ol>
-<li>安装其他库的时候pytorch被更新成cpu的了</li>
-</ol>
-<p><img src="/../../images/deepLearning/image-20241115101855273.png" alt="image-20241115101855273"></p>
-<p>解决方案:</p>
-<p>先安装包，然后重新下载一遍pytorch</p>
-<ol start="2">
-<li>之前以为clip模型是一样的，把/home/OVD/OADP-main/pretrained/clip/ViT-B-32.pt连接到checkpoints/clip_vitb32.pth，但是其实不能用，运行下述代码的时候忘记取消软连接了，/home/OVD/OADP-main/pretrained/clip/ViT-B-32.pt被改了</li>
-</ol>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">import clip</span><br><span class="line">import torch</span><br><span class="line">model, _ = clip.load("ViT-B/32")</span><br><span class="line">torch.save(model.state_dict(), 'checkpoints/clip_vitb32.pth')</span><br></pre></td></tr></tbody></table></figure>
-
-<p>todo：在oadp里用下面命令重新安装</p>
-<figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line">python -c "import clip; clip.load_default()"</span><br></pre></td></tr></tbody></table></figure>
-
-<ol start="3">
-<li><p>CUDA out of memory</p>
-<p>减小lr：0.04 -》 0.001</p>
-<p>减小batch：4 -》2</p>
 </li>
+<li><strong>减少过拟合</strong>:<ul>
+<li>当数据集不平衡时，模型可能会对多数类进行过度拟合，而对少数类拟合不足。</li>
+<li>使用 SMOTE 增加少数类样本可以减少这种偏向，提高模型的泛化能力。</li>
+</ul>
+</li>
+<li>提高模型性能</li>
 </ol>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>可学习的prompt：在<code>models/roi_heads/bbox_head.py</code>里实现了一个BaronBBoxHead类，继承自mmedet的BBoxHead，如下是init里初始化prompt的部分，实现可学习的方法是给cls_embeddings加上一个bias</p>
-<figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> cls_bias <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            self.cls_bias = <span class="number">0.0</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">assert</span> self.loss_cls.use_sigmoid, \</span><br><span class="line">                <span class="string">"cls_bias only used for sigmoid logits"</span></span><br><span class="line">            self.cls_bias = nn.Parameter(torch.ones(<span class="number">1</span>) * cls_bias) <span class="comment"># 可学习的偏移量</span></span><br><span class="line"><span class="keyword">if</span> cls_embeddings_path <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>: <span class="comment"># config里指明cls_embeddings_path='data/metadata/coco_clip_hand_craft_attn12.npy',</span></span><br><span class="line">            cls_embeddings = torch.from_numpy(</span><br><span class="line">                np.load(cls_embeddings_path)).<span class="built_in">float</span>()</span><br><span class="line">            <span class="keyword">assert</span> self.num_classes == cls_embeddings.shape[<span class="number">0</span>]</span><br><span class="line">            self.register_buffer(<span class="string">'cls_embeddings'</span>, cls_embeddings) <span class="comment"># 注册一个不可训练的buffer</span></span><br><span class="line">            self.learn_bg = <span class="literal">False</span></span><br><span class="line">            <span class="keyword">if</span> bg_embedding == <span class="string">'zero'</span>:</span><br><span class="line">                self.register_buffer(<span class="string">'bg_embedding'</span>,</span><br><span class="line">                                     torch.zeros_like(cls_embeddings[:<span class="number">1</span>]))</span><br><span class="line">            <span class="keyword">elif</span> bg_embedding == <span class="string">'learn'</span>:</span><br><span class="line">                self.bg_embedding = nn.Linear(<span class="number">1</span>, cls_embeddings.shape[<span class="number">1</span>])</span><br><span class="line">                self.init_cfg += [</span><br><span class="line">                    <span class="built_in">dict</span>(</span><br><span class="line">                        <span class="built_in">type</span>=<span class="string">'Xavier'</span>, distribution=<span class="string">'uniform'</span>,</span><br><span class="line">                        override=<span class="built_in">dict</span>(name=<span class="string">'bg_embedding'</span>)),</span><br><span class="line">                ]</span><br><span class="line">                self.learn_bg = <span class="literal">True</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">raise</span> ValueError(<span class="string">f"<span class="subst">{bg_embedding}</span> not supported."</span>)</span><br></pre></td></tr></tbody></table></figure>
+<p>SMOTE 的工作原理</p>
+<ol>
+<li>首先，从少数类中随机选择一个样本。</li>
+<li>计算该样本与所有其他少数类样本之间的距离，找到最近的几个样本。</li>
+<li>在选择的样本与其最近邻之间随机选择一个点，并生成一个新的合成样本。这个新样本是通过线性插值在两个样本之间的某一位置生成的。</li>
+<li>重复上述过程，直到少数类的样本数量达到指定的平衡比例。</li>
+</ol>
+<p>相关代码如下：</p>
+<figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line"><span class="comment"># 过采样</span></span><br><span class="line"><span class="keyword">from</span> imblearn.over_sampling <span class="keyword">import</span> SMOTE</span><br><span class="line"></span><br><span class="line"><span class="comment"># 应用 SMOTE 进行过采样</span></span><br><span class="line">smote = SMOTE()</span><br><span class="line">X_train_resampled, Y_train_resampled = smote.fit_resample(X_train, Y_train)</span><br></pre></td></tr></tbody></table></figure>
 
-<p>训练时的调整在pred_cls_logits方法里</p>
-<figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">pred_cls_logits</span>(<span class="params">self, pseudo_words, clip_model</span>):</span><br><span class="line">        text_encoder = clip_model.text_encoder</span><br><span class="line">        <span class="keyword">if</span> pseudo_words.shape[<span class="number">0</span>] == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> pseudo_words.new_zeros(<span class="number">0</span>, self.num_classes + <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">with</span> autocast():</span><br><span class="line">            valid_mask = self._drop_word(pseudo_words)</span><br><span class="line">            pseudo_text, end_token_ids = text_encoder.prepare_pseudo_text_tensor(</span><br><span class="line">                pseudo_words, valid_mask)  <span class="comment"># add start and stop token</span></span><br><span class="line">            <span class="keyword">if</span> self.use_attn12_output:</span><br><span class="line">                cls_features, _, _ = \</span><br><span class="line">                    text_encoder.encode_pseudo_text_endk(pseudo_text, end_token_ids,</span><br><span class="line">                                                         text_pe=<span class="literal">True</span>,</span><br><span class="line">                                                         stepk=<span class="number">12</span>, normalize=<span class="literal">True</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                cls_features = \</span><br><span class="line">                    text_encoder.encode_pseudo_text(pseudo_text, end_token_ids,</span><br><span class="line">                                                    text_pe=<span class="literal">True</span>, normalize=<span class="literal">True</span>)</span><br><span class="line">        <span class="keyword">if</span> self.learn_bg:</span><br><span class="line">            input_ones = pseudo_words.new_ones(<span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line">            bg_embedding = self.bg_embedding(input_ones)</span><br><span class="line">            bg_embedding = F.normalize(bg_embedding, p=<span class="number">2</span>, dim=-<span class="number">1</span>)   <span class="comment"># normalize</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            bg_embedding = self.bg_embedding</span><br><span class="line">        cls_embeddings = torch.cat([self.cls_embeddings, bg_embedding])</span><br><span class="line">        <span class="keyword">if</span> self.training:</span><br><span class="line">            cls_logits = self.cls_temp * cls_features @ cls_embeddings.T</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            cls_logits = self.test_cls_temp * cls_features @ cls_embeddings.T</span><br><span class="line">        <span class="keyword">if</span> self.training <span class="keyword">and</span> self.loss_cls.use_sigmoid:</span><br><span class="line">            cls_logits += self.cls_bias <span class="comment"># 加上可学习的偏移量</span></span><br><span class="line">        <span class="keyword">assert</span> cls_logits.shape[<span class="number">1</span>] == self.num_classes + <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> cls_logits</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="调参"><a href="#调参" class="headerlink" title="调参"></a>调参</h2><p>使用网格搜索对参数进行调优，关键代码如下：</p>
+<figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line"><span class="comment"># 使用网格搜索进行调参，并设置 class_weight</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置逻辑回归的超参数范围</span></span><br><span class="line">param_grid = {</span><br><span class="line">    <span class="string">'C'</span>: [<span class="number">0.005</span>, <span class="number">0.01</span>, <span class="number">0.1</span>, <span class="number">1</span>],  <span class="comment"># 正则化参数</span></span><br><span class="line">    <span class="string">'solver'</span>: [<span class="string">'lbfgs'</span>, <span class="string">'liblinear'</span>],  <span class="comment"># 求解器</span></span><br><span class="line">    <span class="string">'max_iter'</span>: [<span class="number">100</span>, <span class="number">150</span>, <span class="number">200</span>]  <span class="comment"># 最大迭代次数</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> GridSearchCV</span><br><span class="line"></span><br><span class="line">grid_search = GridSearchCV(LogisticRegression(class_weight=<span class="string">'balanced'</span>), param_grid, cv=<span class="number">5</span>, scoring=<span class="string">'accuracy'</span>)</span><br><span class="line">grid_search.fit(X_train_resampled, Y_train_resampled)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出最佳参数</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f"最佳参数: <span class="subst">{grid_search.best_params_}</span>"</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f"最佳得分: <span class="subst">{grid_search.best_score_}</span>"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用最佳参数训练最终模型</span></span><br><span class="line">best_model = grid_search.best_estimator_</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 
+<p>最优参数如图：</p>
+<p><img src="/../../images/img.png" alt="调参"></p>
+<h2 id="附：实验结果记录"><a href="#附：实验结果记录" class="headerlink" title="附：实验结果记录"></a>附：实验结果记录</h2><p>文件夹中有网站的分数截图，下表是对这些分数的具体说明</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>分数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>LR</td>
+<td>0.383851</td>
+</tr>
+<tr>
+<td>LR+param grid</td>
+<td>0.382004</td>
+</tr>
+<tr>
+<td>LR+param_grid+class_weighted</td>
+<td>0.506784</td>
+</tr>
+<tr>
+<td>随机森林</td>
+<td>0.338977</td>
+</tr>
+<tr>
+<td>svm</td>
+<td>0.333333</td>
+</tr>
+<tr>
+<td>XGBoost</td>
+<td>0.372797</td>
+</tr>
+<tr>
+<td>XGBoost+param_grid</td>
+<td>0.36659</td>
+</tr>
+<tr>
+<td>集成学习LR+RF+XGBoost</td>
+<td>0.384489</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>XGBoost:</p>
+<p>最佳参数: {‘subsample’: 0.9, ‘n_estimators’: 200, ‘max_depth’: 7, ‘learning_rate’: 0.1, ‘colsample_bytree’: 0.8}<br>最佳得分: 0.7601263601263601</p>
+<p>LR:</p>
+<p>最佳参数: {‘C’: 1, ‘max_iter’: 100, ‘solver’: ‘lbfgs’}<br>最佳得分: 0.5195390195390195</p>
 
                 
             </div>
@@ -494,7 +555,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://slkfoiw.github.io/2024/11/13/dl/baron/">https://slkfoiw.github.io/2024/11/13/dl/baron/</a>
+                    <a href="https://slkfoiw.github.io/2024/01/03/dl/ji-qi-xue-xi-dao-lun-ge-ren-zuo-ye-ji-zhu-bao-gao/">https://slkfoiw.github.io/2024/01/03/dl/ji-qi-xue-xi-dao-lun-ge-ren-zuo-ye-ji-zhu-bao-gao/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -703,13 +764,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2024/11/18/dl/detpro-huan-jing-pei-zhi/">
+                <a href="/2024/02/10/dl/shen-jing-wang-luo-ji-chu-zhi-shi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="神经网络基础知识">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">神经网络基础知识</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -720,12 +781,16 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-11-18
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-02-10
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            CuberSugar
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/deepLearning/" class="post-category">
+                                    deepLearning
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -737,16 +802,16 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                Next&nbsp;<i class="fas fa-chevron-right"></i>
+                Current&nbsp;<i class="far fa-dot-circle"></i>
             </div>
             <div class="card">
-                <a href="/2024/07/19/dl/ji-qi-xue-xi-dao-lun-ge-ren-zuo-ye-ji-zhu-bao-gao/">
+                <a href="/2024/01/03/dl/ji-qi-xue-xi-dao-lun-ge-ren-zuo-ye-ji-zhu-bao-gao/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="机器学习导论-个人作业技术报告">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">机器学习导论-个人作业技术报告</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -757,16 +822,21 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-07-19
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-01-03
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            CuberSugar
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/deepLearning/" class="post-category">
+                                    deepLearning
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>

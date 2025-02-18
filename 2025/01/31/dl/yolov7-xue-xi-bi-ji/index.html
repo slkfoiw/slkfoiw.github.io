@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="CuberSugar&#39;s Blog">
+    <meta name="keywords" content="yolov7, CuberSugar&#39;s Blog">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>CuberSugar&#39;s Blog</title>
+    <title>yolov7 | CuberSugar&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon_cube.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -246,12 +246,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title"></h1>
+                    <h1 class="description center-align post-title">yolov7</h1>
                 </div>
             </div>
         </div>
@@ -372,6 +372,15 @@
                 </div>
                 <div class="col s5 right-align">
                     
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/deepLearning/" class="post-category">
+                                deepLearning
+                            </a>
+                        
+                    </div>
+                    
                 </div>
             </div>
 
@@ -379,7 +388,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2024-06-28
+                    2025-01-31
                 </div>
                 
 
@@ -388,7 +397,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    1.6k
+                    210
                 </div>
                 
 
@@ -408,54 +417,22 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h1><ol>
-<li>决定需要关注输入的哪部分：在处理大量信息时，注意力机制能够帮助模型或个体确定哪些部分是重要的，并集中资源进行处理。例如，在机器翻译任务中，注意力机制可以帮助模型确定源语言句子中哪些词汇对目标语言的翻译更为重要。</li>
-<li>分配有限的信息处理资源给重要的部分：通过给重要的信息部分分配更多的注意力，模型可以更有效地利用资源，从而提高处理效率和准确性，解决信息过载问题。这类似于人类视觉注意力机制，通过快速扫描全局图像，获得需要重点关注的目标区域，然后对这一区域投入更多注意力资源，以获取更多细节信息，同时抑制其他无用信息。</li>
-</ol>
-<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><ol>
-<li>查询向量Query：指的是查询的范围，自主提示，即主观意识的特征向量</li>
-<li>键向量Key：指的是被比对的项，非自主提示，即物体的突出特征信息向量</li>
-<li>值向量Value：物体本身的特征向量，通常和Key成对出现</li>
-</ol>
-<h1 id="具体过程"><a href="#具体过程" class="headerlink" title="具体过程"></a>具体过程</h1><p>对于每一个Query，计算所有Key与它的相关性，然后根据这个相关性去找对应的Value（Key、Value成对出现），Query和Key相关性高的其对应Value要重点关注（分配更高的注意力权重）。</p>
-<p>计算Key与Query的相关性<br>$$<br>scores_i = Query \cdot Key_i<br>$$<br>softmax进行归一化，得到权重系数<br>$$<br>\alpha_i = softmax(scores_i) = \frac{e^{scores_i}}{\sum_{j=1}^{Lx} e^{scores_j}}<br>$$<br>对Value进行加权求和，得到Attetion Value<br>$$<br>Attetion = \sum_{i=1}^{Lx} \alpha_i \cdot Value_i<br>$$</p>
-<h2 id="自注意力机制"><a href="#自注意力机制" class="headerlink" title="自注意力机制"></a>自注意力机制</h2><p>提出背景：输入向量大小不一，并且不同向量之间有一定的关系，但是实际训练的时候无法充分发挥这些输入之间的关系，导致模型训练结果效果不好。</p>
-<p>特色：让机器注意到整个输入中不同部分之间的相关性。是一组元素内部相互做注意力机制，因此自注意力机制也叫做内部注意力机制。</p>
-<p>实现过程：Q、K、V是同一个东西，或者三者来源于同一个输入X。</p>
+                <h1 id="yolov7"><a href="#yolov7" class="headerlink" title="yolov7"></a>yolov7</h1><h2 id="整体结构"><a href="#整体结构" class="headerlink" title="整体结构"></a>整体结构</h2><p>输入input、骨干网络backbone、颈部neck、头部head</p>
+<p><img src="/../../images/deepLearning/yolov7" alt="yolov7"></p>
 <ol>
-<li>对于每一个输入向量X，分别乘上系数$W^q、W^k、W^v$（需要学习的参数），得到Q、K、V。</li>
-<li>利用Q和K计算每两个输入向量之间的相关性（scores），一般采用点积计算</li>
-<li>用softmax归一化，得到注意力权重</li>
-<li>用权重乘每个Value，最终得到输出向量Z</li>
+<li>图片经过input部分数据增强等一系列操作进行预处理后，被送入backbone</li>
+<li>backbone对处理后的图片提取特征</li>
+<li>提取到的特征经过 Neck 模块特征融合处理得到大、中、小三种尺寸的特征</li>
+<li>最终，融合后的特征被送入检测头，经过检测之后输出得到结果</li>
 </ol>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line"># 自注意力机制</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line">def soft_max(z):</span><br><span class="line">    t = np.exp(z)</span><br><span class="line">    a = np.exp(z) / np.expand_dims(np.sum(t, axis=1), 1)</span><br><span class="line">    return a</span><br><span class="line"></span><br><span class="line"># 每一行为一个序列单元的查询向量</span><br><span class="line">Query = np.array([</span><br><span class="line">    [1,0,2],</span><br><span class="line">    [2,2,2],</span><br><span class="line">    [2,1,3]</span><br><span class="line">]) </span><br><span class="line"></span><br><span class="line"># 每一行为一个查询单元的键向量</span><br><span class="line">Key = np.array([</span><br><span class="line">    [0,1,1],</span><br><span class="line">    [4,4,0],</span><br><span class="line">    [2,3,1]</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"># 每一行为一个查询单元的值向量</span><br><span class="line">Value = np.array([</span><br><span class="line">    [1,2,3],</span><br><span class="line">    [2,8,0],</span><br><span class="line">    [2,6,3]</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line">scores = Query @ Key.T # 计算每一个序列单元的分数，即代表重要程度。结果的每一行为所有序列单元相对于某一个Query的重要程度</span><br><span class="line">print(scores)</span><br><span class="line">scores = soft_max(scores)//对scores做归一化处理，使得一行的和为1</span><br><span class="line">print(scores)</span><br><span class="line">out = scores @ Value //每一行代表每个序列单元新的编码</span><br><span class="line">print(out)</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="prototype"><a href="#prototype" class="headerlink" title="prototype"></a>prototype</h2><p><a target="_blank" rel="noopener" href="https://docs.pingcode.com/ask/187609.html">prototype learning讲解</a></p>
+<p>K均值聚类是原型学习的一个典型示例</p>
+<p><a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content/CVPR2021/papers/Zhu_Prototype_Augmentation_and_Self-Supervision_for_Incremental_Learning_CVPR_2021_paper.pdf">https://openaccess.thecvf.com/content/CVPR2021/papers/Zhu_Prototype_Augmentation_and_Self-Supervision_for_Incremental_Learning_CVPR_2021_paper.pdf</a></p>
+<h2 id="trick"><a href="#trick" class="headerlink" title="trick"></a>trick</h2><p>CBAM加一个，在yolov7_backbone处</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">def forward(self, x):</span><br><span class="line">        x0 = self.stage0(x) </span><br><span class="line">        x1 = self.stage1(x0) </span><br><span class="line"></span><br><span class="line">        x2 = self.elan_0(x1)</span><br><span class="line">        x2 = self.cbam_0(x2) #! 添加 CBAM</span><br><span class="line">        </span><br><span class="line">        x3 = self.elan_1(x2)</span><br><span class="line">        # x3 = self.cbam_1(x3) #! 添加 CBAM</span><br><span class="line">        </span><br><span class="line">        x4 = self.elan_2(x3)</span><br><span class="line">        # x4 = self.cbam_2(x4) #! 添加 CBAM</span><br><span class="line">        </span><br><span class="line">        x5 = self.elan_3(x4)</span><br><span class="line">        # x5 = self.cbam_3(x5) #! 添加 CBAM </span><br><span class="line">       </span><br><span class="line">        return x3, x4, x5</span><br></pre></td></tr></tbody></table></figure>
 
-<p>缺点：</p>
-<ol>
-<li>自注意力机制过滤了不重要的信息，会导致模型有效信息的抓取能力比CNN弱，因为模型无法利用图像本身具有的尺度、平移不变性以及图像的特征局部性这些先验知识，只能通过大量数据进行学习。所以一般自注意力机制在大数据的基础上才能有效地建立准确的全局关系，而在小数据的情况下可能效果不如CNN。</li>
-<li>没有考虑向量的位置信息</li>
-</ol>
-<h2 id="多头注意力机制"><a href="#多头注意力机制" class="headerlink" title="多头注意力机制"></a>多头注意力机制</h2><p>提出背景：使用自注意力机制的模型，对当前位置的信息进行编码时，会过度的将注意力集中于自身的位置，有效信息抓取能力变差。</p>
-<p>特色：用独立学习得到的h组（一般h=8）不同的线性投影（linear projections）来变换Q、K、V。 然后，这h组变换后的Q、K、V将并行地送到注意力汇聚中。 最后，将这h个注意力汇聚的输出拼接在一起， 并且通过另一个可以学习的线性投影进行变换， 以产生最终输出。</p>
-<p>实现过程：</p>
-<ol>
-<li>对于一个输入向量X， 定义多组W：$W_0^q、W_0^k、W_0^v…W_7^q、W_7^k、W_7^v$</li>
-<li>每组都按上述自注意力机制实现过程走一遍，得到多个输出$Z_0…Z_7$</li>
-<li>将多个输出拼接后乘以一个矩阵转化为跟输入X相同的维度</li>
-</ol>
-<h2 id="通道注意力机制"><a href="#通道注意力机制" class="headerlink" title="通道注意力机制"></a>通道注意力机制</h2><p>提出背景：之前都是关注图片不同位置的重要性，而图片的另一个维度就是通道，所有也可以计算不同通道的重要性。</p>
-<h2 id="CA-coordinate-attettion-注意力机制"><a href="#CA-coordinate-attettion-注意力机制" class="headerlink" title="CA(coordinate attettion)注意力机制"></a>CA(coordinate attettion)注意力机制</h2><p>提出背景：现有的注意力机制在求取通道注意力的时候，一般采用的全局最大池化/平均池化，这样会造成物体空间信息的损失。</p>
-<p>特色：在引入通道注意力机制的同时，引入空间注意力机制。</p>
-<p>实现过程：将位置信息嵌入到通道注意力中</p>
-<p><img src="/../../images/deepLearning/CA%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6.PNG" alt="CA注意力机制"></p>
-<p>CA注意力机制分为两个并行阶段。</p>
-<ol>
-<li>首先将输入特征图(CxHxW)分别在宽度、高度两个方向进行全局平均池化，获得在宽度、高度两个方向的特征图(Cx1xH、CxWx1)。</li>
-<li>将两个并行阶段合并，将宽和高转置到同一个维度，然后堆叠，将宽高特征合并得到特征层C x 1 x (H+W)</li>
-<li>利用卷积+标准化+激活函数获得特征</li>
-<li>再次分开为两个并行阶段：Cx1xH、CxWx1</li>
-<li>利用1x1卷积调整通道数后取sigmoid获得宽、高维度上的注意力情况，扩展成CxHxW矩阵，乘上原有的特征图</li>
-</ol>
+
+
 
                 
             </div>
@@ -482,7 +459,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://slkfoiw.github.io/2024/06/28/dl/zhu-yi-li-ji-zhi/">https://slkfoiw.github.io/2024/06/28/dl/zhu-yi-li-ji-zhi/</a>
+                    <a href="https://slkfoiw.github.io/2025/01/31/dl/yolov7-xue-xi-bi-ji/">https://slkfoiw.github.io/2025/01/31/dl/yolov7-xue-xi-bi-ji/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -691,13 +668,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2024/07/19/dl/ji-qi-xue-xi-dao-lun-ge-ren-zuo-ye-ji-zhu-bao-gao/">
+                <a href="/2025/02/15/dl/janus/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="janus">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">janus</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -708,12 +685,16 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-07-19
+                            <i class="far fa-clock fa-fw icon-date"></i>2025-02-15
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            CuberSugar
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/deepLearning/" class="post-category">
+                                    deepLearning
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -728,13 +709,13 @@
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2024/06/28/os/shell-tiao-zhan-xing-ren-wu/">
+                <a href="/2025/01/01/paper-reading/albef-lun-wen-bi-ji/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="shell挑战性任务">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="ALBEF论文笔记">
                         
-                        <span class="card-title">shell挑战性任务</span>
+                        <span class="card-title">ALBEF论文笔记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -745,14 +726,14 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-06-28
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-01-01
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/OS/" class="post-category">
-                                    OS
+                            <a href="/categories/paper-reading/" class="post-category">
+                                    paper-reading
                                 </a>
                             
                             
