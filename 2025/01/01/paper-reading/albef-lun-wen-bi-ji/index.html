@@ -446,7 +446,7 @@
 <ol start="4">
 <li>为了改进在噪声监督下的学习，我们提出了<strong>动量蒸馏</strong>（MoD），使模型能够利用一个更大的未经管理的web数据集。在训练过程中，我们通过取模型参数的移动平均数来保持模型的动量版本，并使用动量模型生成伪目标作为额外的监督。使用MoD时，该模型不会因为产生其他不同于web注释的合理输出而受到惩罚。我们证明了MoD不仅改进了训练前的任务，而且还改进了具有干净注释的下游任务。</li>
 </ol>
-<p><img src="D:\mynotes\source\images\deepLearning\ALBEF框架图.png" alt="ALBEF框架图"></p>
+<p><img src="/../..%5Cimages%5CdeepLearning%5CALBEF%E6%A1%86%E6%9E%B6%E5%9B%BE.png" alt="ALBEF框架图"></p>
 <p>三个优化目标：单模态编码器上的图像文本对比学习（ITC）、多模态编码器上的掩码语言建模（MLM）和图像文本匹配（ITM）。其中，通过在线对比Hard Negative Mining改进了ITM</p>
 <h3 id="图像文本对比学习（ITC）"><a href="#图像文本对比学习（ITC）" class="headerlink" title="图像文本对比学习（ITC）"></a>图像文本对比学习（ITC）</h3><p>即Align before Fuse的核心<br>$$<br>s = g_v(v_{cls})^T g_w(w_{cls})<br>$$</p>
 <p>s是相似度函数，$v_{cls}$是[CLS] token的embedding（图像编码器编码得到的），$w_{cls}$是文本编码其得到的， $g_v$和$g_w$是一种线性转换，它们将[CLS]embedding映射到归一化的低维（256-d）表示</p>
