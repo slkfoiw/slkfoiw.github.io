@@ -429,7 +429,7 @@
 <p>held-in evaluation：内部评估，使用同一数据集进行训练和评估，通常采用交叉验证技术将数据集划分为训练集和验证集。模型会在训练集上进行训练，并使用验证集上的数据进行评估和调优。可能导致过度拟合。<br>held-out evaluation：外部评估，使用独立的、未参与训练的数据集进行评估的。测试泛化能力。</p>
 </blockquote>
 <h3 id="数据集"><a href="#数据集" class="headerlink" title="数据集"></a>数据集</h3><p>收集了26个公开的视觉语言数据集，，并将它们转换成指令调整格式，涵盖11个任务分类</p>
-<p><img src="D:\mynotes\source\images\image-20241213105002407.png" alt="image-20241213105002407"></p>
+<p><img src="/../../images/image-20241213105002407.png" alt="image-20241213105002407"></p>
 <p>对于每项任务，都用自然语言精心制作 10 到 15 个不同的指令模板。这些模板是构建指令调整数据的基础，其中阐明了任务和目标。对于本质上倾向于<strong>简短回答</strong>的公共数据集，在一些相应的指令模板中使用了<code>short</code>和<code>briefly</code>等术语，以<strong>降低模型过度拟合</strong>到总是生成简短输出的风险。</p>
 <h3 id="训练与评估"><a href="#训练与评估" class="headerlink" title="训练与评估"></a>训练与评估</h3><p>26个数据集分为13个held in（黄），13个held out（白）。</p>
 <p>使用held in数据集的训练集进行指令调整，并使用其验证集或测试集进行held in评估。</p>
@@ -459,9 +459,9 @@
 <li>结构：得益于 BLIP-2 模块化架构设计所带来的灵活性，我们可以快速调整模型以适应各种 LLM。在 实验中，我们采用了 BLIP-2 的<strong>四个变体</strong>，它们具有<strong>相同的图像编码器</strong>（ViT-g/14 ），但<strong>冻结的 LLM 不同</strong>，包括 FlanT5- XL (3B)、FlanT5-XXL (11B)、Vicuna-7B 和 Vicuna-13B。FlanT5 [7] 是基于 编码器-解码器变换器 T5 [34] 的指令调整模型。另一方面，Vicuna[2] 是最近从 LLaMA[41] 发布的纯 解码器变换器指令调整模型。在视觉语言指令调整过程中，从预先训练好的 BLIP-2 checkpoint初始化模型，只对 Q-Former 的参数进行微调，同时冻结图像编码器和 LLM。由于原始 BLIP-2 模型不包括 Vicuna 的检查点，因此我们使用与 BLIP-2 相同的程序对 Vicuna 进行预训练。 </li>
 <li>训练和超参数。使用 LAVIS 库 进行实施、训练和评估。所有模型都经过最多 60K 步的指令调整，每 3K 步验证一次模型的性能。对于每个模型，我们都会选择一个最佳checkpoint，并在所有数据 集上进行评估。对 3B、7B 和 11/13B 模型分别采用了 192、128 和 64 的批量大小。使用 Adam优化器，$\beta_1 =  0.9，\beta_2 =  0.999$，权重衰减为 0.05。此外，在最初的 1,000 步中对学习率进行线性预热，从 $10^{-8}$增加到 $10^{-5}$，然后进行余弦衰减，最低学习率为 0。所有模型均使用 16 个 Nvidia  A100 (40G) GPU 进行训练，并在 1.5 天内完成。</li>
 </ol>
-<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><h3 id="零样本评估"><a href="#零样本评估" class="headerlink" title="零样本评估"></a>零样本评估</h3><p><img src="D:\mynotes\source\images\image-20241213181719964.png" alt="image-20241213181719964"></p>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><h3 id="零样本评估"><a href="#零样本评估" class="headerlink" title="零样本评估"></a>零样本评估</h3><p><img src="/../../images/image-20241213181719964.png" alt="image-20241213181719964"></p>
 <h3 id="指令调整vs多任务学习"><a href="#指令调整vs多任务学习" class="headerlink" title="指令调整vs多任务学习"></a>指令调整vs多任务学习</h3><p>多任务学习与指令调整类似，是一种广泛使用的方法，涉及同时训练多个数据集，目的是提高每个数据集的性能。为了研究在指令调整中观察到的zero-shot泛化的改善是主要来自于指令的格式化 还是仅仅来自于多任务学习，我们在相同的训练设置下对这两种方法进行了比较分析。</p>
-<p><img src="D:\mynotes\source\images\image-20241213191314798.png" alt="image-20241213191314798"></p>
+<p><img src="/../../images/image-20241213191314798.png" alt="image-20241213191314798"></p>
 <p>指令调整和多任务学习在保留数据集上表现出相似的性能。这表明，只要模型经过此类数据的训练，就能很好地适应这两种不同的输入模式。另一方面，在不可见的保留数据集上，指令调整比多任务学习有显著提高，而多任务学习的性能仍与原始 BLIP-2 相当。这表明，指令调整是提高模型zero-shot泛化能力的关键。</p>
 
                 
@@ -915,7 +915,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">94.9k</span>&nbsp;字
+                class="white-color">94.5k</span>&nbsp;字
             
             
             

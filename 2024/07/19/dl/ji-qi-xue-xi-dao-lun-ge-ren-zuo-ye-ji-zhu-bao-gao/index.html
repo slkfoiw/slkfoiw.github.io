@@ -431,11 +431,11 @@
 <li>XGBoost</li>
 </ol>
 <p>通过交叉检验对每个模型进行评估，以下是各模型在训练集上的交叉验证mP：</p>
-<p><img src="D:\mynotes\source\images\image-20241201132158703.png" alt="image-20241201132158703"></p>
+<p><img src="/../../images/image-20241201132158703.png" alt="image-20241201132158703"></p>
 <p>SVM耗时较长，后续补充XGBoost模型时没有评估SVM：</p>
 <figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">LR 0.8461940174191783</span><br><span class="line">NB 0.7803187407247</span><br><span class="line">KNN 0.8286078911982038</span><br><span class="line">DT 0.7842212562301403</span><br><span class="line">XGB 0.8481994913743092</span><br></pre></td></tr></tbody></table></figure>
 
-<p><img src="D:\mynotes\source\images\image-20241220185448750.png" alt="image-20241220185448750"></p>
+<p><img src="/../../images/image-20241220185448750.png" alt="image-20241220185448750"></p>
 <p>可以看到逻辑回归、支持向量机、XGBoost的结果较好，因此可以选择这些模型进行接下来的探索。</p>
 <p>这部分的关键代码如下：</p>
 <figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line"><span class="comment">#模型选择</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">model_selection</span>(<span class="params">X_train, Y_train</span>):</span><br><span class="line">    models = []</span><br><span class="line">    models.append((<span class="string">"LR"</span>, LogisticRegression()))  <span class="comment"># 逻辑回归</span></span><br><span class="line">    models.append((<span class="string">"NB"</span>, GaussianNB()))  <span class="comment"># 高斯朴素贝叶斯</span></span><br><span class="line">    models.append((<span class="string">"KNN"</span>, KNeighborsClassifier()))  <span class="comment"># K近邻分类</span></span><br><span class="line">    models.append((<span class="string">"DT"</span>, DecisionTreeClassifier()))  <span class="comment"># 决策树分类</span></span><br><span class="line">    models.append((<span class="string">"XGB"</span>, XGBClassifier()))  <span class="comment"># XGBoost分类</span></span><br><span class="line">    <span class="comment"># models.append(("SVM", SVC(kernel='linear')))  # 支持向量机分类</span></span><br><span class="line">    <span class="comment">#模型评估</span></span><br><span class="line">    results = []</span><br><span class="line">    names = []</span><br><span class="line">    <span class="keyword">for</span> name, model <span class="keyword">in</span> models:</span><br><span class="line">        kfold = KFold(n_splits=<span class="number">10</span>)</span><br><span class="line">        cv_result = cross_val_score(</span><br><span class="line">            model, X_train, Y_train, cv=kfold, scoring=<span class="string">'accuracy'</span>)</span><br><span class="line">        names.append(name)</span><br><span class="line">        results.append(cv_result)</span><br><span class="line">    <span class="comment">#输出模型评估结果</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(names)):</span><br><span class="line">        <span class="built_in">print</span>(names[i], results[i].mean())</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 结果可视化</span></span><br><span class="line">    ax = sns.boxplot(data=results)</span><br><span class="line">    ax.set_xticklabels(names)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></tbody></table></figure>
@@ -470,7 +470,7 @@
 <figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line"><span class="comment"># 使用网格搜索进行调参，并设置 class_weight</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置逻辑回归的超参数范围</span></span><br><span class="line">param_grid = {</span><br><span class="line">    <span class="string">'C'</span>: [<span class="number">0.005</span>, <span class="number">0.01</span>, <span class="number">0.1</span>, <span class="number">1</span>],  <span class="comment"># 正则化参数</span></span><br><span class="line">    <span class="string">'solver'</span>: [<span class="string">'lbfgs'</span>, <span class="string">'liblinear'</span>],  <span class="comment"># 求解器</span></span><br><span class="line">    <span class="string">'max_iter'</span>: [<span class="number">100</span>, <span class="number">150</span>, <span class="number">200</span>]  <span class="comment"># 最大迭代次数</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> GridSearchCV</span><br><span class="line"></span><br><span class="line">grid_search = GridSearchCV(LogisticRegression(class_weight=<span class="string">'balanced'</span>), param_grid, cv=<span class="number">5</span>, scoring=<span class="string">'accuracy'</span>)</span><br><span class="line">grid_search.fit(X_train_resampled, Y_train_resampled)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出最佳参数</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f"最佳参数: <span class="subst">{grid_search.best_params_}</span>"</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f"最佳得分: <span class="subst">{grid_search.best_score_}</span>"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用最佳参数训练最终模型</span></span><br><span class="line">best_model = grid_search.best_estimator_</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 
 <p>最优参数如图：</p>
-<p><img src="D:\mynotes\source\images\img.png" alt="调参"></p>
+<p><img src="/../../images/img.png" alt="调参"></p>
 <h2 id="附：实验结果记录"><a href="#附：实验结果记录" class="headerlink" title="附：实验结果记录"></a>附：实验结果记录</h2><p>文件夹中有网站的分数截图，下表是对这些分数的具体说明</p>
 <table>
 <thead>
@@ -755,7 +755,7 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2024/09/06/compiler/she-ji-wen-dang/">
+                <a href="/2024/11/13/dl/baron/">
                     <div class="card-image">
                         
                         
@@ -772,7 +772,7 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-09-06
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-11-13
                         </span>
                         <span class="publish-author">
                             
@@ -792,7 +792,7 @@
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2024/07/06/db/springboot/">
+                <a href="/2024/06/28/dl/zhu-yi-li-ji-zhi/">
                     <div class="card-image">
                         
                         
@@ -809,7 +809,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-07-06
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-06-28
                             </span>
                         <span class="publish-author">
                             
@@ -964,7 +964,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">94.9k</span>&nbsp;字
+                class="white-color">94.5k</span>&nbsp;字
             
             
             
