@@ -418,8 +418,8 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="第一次作业架构与心得分享"><a href="#第一次作业架构与心得分享" class="headerlink" title="第一次作业架构与心得分享"></a>第一次作业架构与心得分享</h2><h3 id="一、架构设计"><a href="#一、架构设计" class="headerlink" title="一、架构设计"></a>一、架构设计</h3><p>如下图：</p>
-<p><img src="/../../images/OO/unit1-1.png"></p>
-<h3 id="二、总体思路"><a href="#二、总体思路" class="headerlink" title="二、总体思路"></a>二、总体思路</h3><p>最开始觉得<code>'(表达式)^n'</code>去括号这块很难解决，后来发现其实可以把题目看作一个多项式化简的问题，而**化简后的每一项都可以表示为<code>系数*x^非负指数</code>**，所以在训练题第二题的基础上增加了幂函数因子类及预处理多项式相乘、合并同类项等过程，具体流程如下：</p>
+<p><img src="../../images/OO/unit1-1.png" alt=""></p>
+<h3 id="二、总体思路"><a href="#二、总体思路" class="headerlink" title="二、总体思路"></a>二、总体思路</h3><p>最开始觉得<code>'(表达式)^n'</code>去括号这块很难解决，后来发现其实可以把题目看作一个多项式化简的问题，而<strong>化简后的每一项都可以表示为<code>系数*x^非负指数</code></strong>，所以在训练题第二题的基础上增加了幂函数因子类及预处理多项式相乘、合并同类项等过程，具体流程如下：</p>
 <ol>
 <li>输入表达式预处理：删掉所有空白项，去掉连续加减号 </li>
 <li>解析输入表达式：方法类似训练题第二题，采用递归下降的方法，不过训练题只有‘+’，而这里‘+’、‘-’都有，所以需要存储运算符号，而我后续要将Expr化简成Term的集合，所以就用Term的系数coefficient记录‘+’、‘-’</li>
@@ -428,7 +428,7 @@
 <li>输出：第一项系数若非负则不输出符号，后续项按照项的sign输出符号及项</li>
 </ol>
 <h3 id="三、bug分析"><a href="#三、bug分析" class="headerlink" title="三、bug分析"></a>三、bug分析</h3><p>本次作业未被hack。我测试别人的方法是造一些和0、1相关的数据，如(0)^0, 1*x, 2-2等等</p>
-<h2 id="第二次作业架构"><a href="#第二次作业架构" class="headerlink" title="第二次作业架构"></a>第二次作业架构</h2><h3 id="一、架构设计-1"><a href="#一、架构设计-1" class="headerlink" title="一、架构设计"></a>一、架构设计</h3><p><img src="/../../images/OO/unit1-2.png" alt="类图"></p>
+<h2 id="第二次作业架构"><a href="#第二次作业架构" class="headerlink" title="第二次作业架构"></a>第二次作业架构</h2><h3 id="一、架构设计-1"><a href="#一、架构设计-1" class="headerlink" title="一、架构设计"></a>一、架构设计</h3><p><img src="../../images/OO/unit1-2.png" alt="类图"></p>
 <p>与第一次相比：</p>
 <ul>
 <li>增加了Poly、Mono类</li>
@@ -442,42 +442,41 @@
 </ol>
 <p>第一个任务我在第一次作业就已经完成了（事实上感觉只要用了递归下降，这块不需要刻意实现）对于第二个任务，我新建了ExpFunction类来处理。</p>
 <p>第三个任务，我原本尝试了一下在解析表达式的时候处理函数，但是发现很麻烦，再加上我第一次作业的架构不是很好，把标准项放在Term里一并处理，导致解析表达式非常混乱，结构很不清晰，最后还有深浅拷贝的问题，以上种种原因造成了这条路走不通。于是我请教了同学，在交流中发现了自己架构的不足，最后决定重构。</p>
-<p>首先，添加了Poly、Mono类，然后把解析完的Expr转化为Poly来管理。Poly、Mono的主要作用就是存储标准项（标准项的形式为 $${coef*x^{xexpo}*\exp (eexpo)}$$ ,最终的表达式一定能转化为若干标准项相加的形式）,这么做可以把解析和化简分离开，结构更清晰，同时规避了一些深浅拷贝的问题。</p>
+<p>首先，添加了Poly、Mono类，然后把解析完的Expr转化为Poly来管理。Poly、Mono的主要作用就是存储标准项（标准项的形式为 <script type="math/tex">{coef*x^{xexpo}*\exp (eexpo)}</script> ,最终的表达式一定能转化为若干标准项相加的形式）,这么做可以把解析和化简分离开，结构更清晰，同时规避了一些深浅拷贝的问题。</p>
 <p>其次，对于自定义函数的处理我选择了在预处理阶段进行字符串替换。这么做解析阶段就不用处理函数了，而且对于处理第三次作业新增的“函数定义式可以调用已经定义的函数”这一新任务意外地地方便，不过需要注意的是：</p>
 <ul>
 <li>函数定义式里的形参替换成因子时因子外面要加一层括号</li>
-<li>函数表达式替换表达式里的函数调用的时候表达式外面要加一层括号<br>这么做是为了避免运算优先级出错，例如：<figure class="highlight ruby"><table><tbody><tr><td class="code"><pre><span class="line"><span class="number">1</span></span><br><span class="line">f(x)=x+<span class="number">1</span></span><br><span class="line">f(x)*<span class="number">2</span></span><br><span class="line">不加括号的结果是x+<span class="number">1</span>*<span class="number">2</span>=x+<span class="number">2</span>,显然不对</span><br></pre></td></tr></tbody></table></figure></li>
+<li>函数表达式替换表达式里的函数调用的时候表达式外面要加一层括号<br>这么做是为了避免运算优先级出错，例如：<figure class="highlight ruby"><table><tbody><tr><td class="code"><pre><span class="line"><span class="number">1</span></span><br><span class="line">f(x)=x+<span class="number">1</span></span><br><span class="line">f(x)*<span class="number">2</span></span><br><span class="line">不加括号的结果是x+<span class="number">1</span>*<span class="number">2</span>=x+<span class="number">2</span>,显然不对</span><br></pre></td></tr></tbody></table></figure>
+</li>
 </ul>
 <figure class="highlight ruby"><table><tbody><tr><td class="code"><pre><span class="line"><span class="number">1</span></span><br><span class="line">f(x)=x^<span class="number">2</span>;</span><br><span class="line">f(-<span class="number">2</span>)</span><br><span class="line">不加括号的结果是-<span class="number">2</span>^<span class="number">2</span>=-<span class="number">4</span>,显然也不对</span><br></pre></td></tr></tbody></table></figure>
-
 <h3 id="三、bug分析-1"><a href="#三、bug分析-1" class="headerlink" title="三、bug分析"></a>三、bug分析</h3><p>这次作业在写的时候遇到了很多bug：</p>
 <ul>
 <li>深、浅拷贝问题：第一次作业我把标准项放到Term里，第二次我本来打算沿用的，然而对深、浅拷贝认识不透彻导致我第二次作业debug出现了“闹鬼”，有的数据明明没有动它但它自己变了，由于这个变动的数据在很深层，很难找出哪里的拷贝出现了问题，我决定直接新建两个类Poly、Mono来管理处理完的表达式，并在Poly类中专门写了一个方法<code>public Poly copy()</code>来进行拷贝，避免出现“闹鬼”事件</li>
-<li>指数函数化简问题：我的做法是把表达式转化成Poly类的时候把指数函数的指数因子乘进去，作为指数函数的指数的一部分（即Poly中的属性ArrayList&lt;Monos&gt;数组的一个Mono管理），如何最后输出时，如果<code>exp(因子)</code>的因子是<code>coef*x^xexpo</code>形式或者<code>coef*exp(...)^eexpo</code>形式，就把系数coef提到括号外，减少一个括号的使用,即<code>exp(...)^coef</code>。但是最开始忽略了一点：如果系数coef是负数，不能提出来，否则指数就是负数，不符合指数<strong>非负</strong>的要求，即<code>exp(...)^coef</code>(coef不能是负数)。（利用这一点，我成功hack了房间里一位同学，不过ta的问题是只把<code>|coef|</code>提出来，负号<code>-</code>留里面，但是同样不行。例如<code>exp((-3*x)) -&gt; exp(-x)^3</code>，变量因子是不能有负号的，这里提取来之后里面还是一个表达式，需要再加一层括号，<code>exp((-x))^3</code>才是正确的）</li>
+<li>指数函数化简问题：我的做法是把表达式转化成Poly类的时候把指数函数的指数因子乘进去，作为指数函数的指数的一部分（即Poly中的属性ArrayList\<monos\>数组的一个Mono管理），如何最后输出时，如果<code>exp(因子)</code>的因子是<code>coef*x^xexpo</code>形式或者<code>coef*exp(...)^eexpo</code>形式，就把系数coef提到括号外，减少一个括号的使用,即<code>exp(...)^coef</code>。但是最开始忽略了一点：如果系数coef是负数，不能提出来，否则指数就是负数，不符合指数<strong>非负</strong>的要求，即<code>exp(...)^coef</code>(coef不能是负数)。（利用这一点，我成功hack了房间里一位同学，不过ta的问题是只把<code>|coef|</code>提出来，负号<code>-</code>留里面，但是同样不行。例如<code>exp((-3*x)) -&gt; exp(-x)^3</code>，变量因子是不能有负号的，这里提取来之后里面还是一个表达式，需要再加一层括号，<code>exp((-x))^3</code>才是正确的）</monos\></li>
 </ul>
 <p>本次作业未被hack，但是强测有一个数据点幂函数指数爆int了，并且由此发现自己合并同类项的方法时间复杂度较高，进行了优化。互测阶段我造数据的方法就是拿我自己写代码时候遇到的bug点去测，比如指数函数化简问题（如上）。</p>
 <h2 id="第三次作业架构"><a href="#第三次作业架构" class="headerlink" title="第三次作业架构"></a>第三次作业架构</h2><h3 id="一、架构设计-2"><a href="#一、架构设计-2" class="headerlink" title="一、架构设计"></a>一、架构设计</h3><p>最终总体架构如下：</p>
-<p><img src="/../../images/OO/unit1-3.png" alt="第三次作业架构图"></p>
+<p><img src="../../images/OO/unit1-3.png" alt="第三次作业架构图"></p>
 <p>与之前相比，新增了Derivative类管理求导因子，主要修改了Poly、Mono里的一些方法用来求导</p>
 <h3 id="二、基本思路"><a href="#二、基本思路" class="headerlink" title="二、基本思路"></a>二、基本思路</h3><p>这次作业相比第二次作业增加了两点：</p>
 <ol>
 <li>自定义函数支持调用其他“已定义的”函数</li>
 <li>支持求导操作</li>
 </ol>
-<p>对于第一点，由于我第二次作业采用的是在预处理阶段字符串替换掉函数，即：读入函数的名称、参数和表达式，放在ArrayList&lt;SelfFunction&gt;数组中存储，然后在预处理阶段替换掉表达式里出现函数名的地方，所以本次作业我直接把替换阶段的函数列表反着遍历就可以了。</p>
+<p>对于第一点，由于我第二次作业采用的是在预处理阶段字符串替换掉函数，即：读入函数的名称、参数和表达式，放在ArrayList\<selffunction\>数组中存储，然后在预处理阶段替换掉表达式里出现函数名的地方，所以本次作业我直接把替换阶段的函数列表反着遍历就可以了。</selffunction\></p>
 <p>对于第二点，我的解决办法是新开一个Derivative类，在解析表达式的时候遇到“dx”就把它括号后面的表达式解析完后存储在Derivative中的expr属性中，然后在Expr转换为Poly时再求导</p>
 <p>由于我把Derivative里的expr转化为Poly类再求导，所以求导公式非常固定，即：</p>
-<p>$$dx\left( {coef<em>x^{xexpo}<em>\exp \left(eexpo\right)} \right) = coef</em>xexpo</em>x^{xexpo - 1}<em>\exp (eexpo) + coef</em>dx(ab)*x^{xexpo}*\exp (eexpo)$$</p>
-<p>求导中也用到了递归下降的思想，对Poly求导，即对Poly的每个Mono求导；对Mono求导，应用上述公式，得到的是Poly/ArrayList&lt;Mono&gt;</p>
+<script type="math/tex; mode=display">dx\left( {coef*x^{xexpo}*\exp \left(eexpo\right)} \right) = coef*xexpo*x^{xexpo - 1}*\exp (eexpo) + coef*dx(ab)*x^{xexpo}*\exp (eexpo)</script><p>求导中也用到了递归下降的思想，对Poly求导，即对Poly的每个Mono求导；对Mono求导，应用上述公式，得到的是Poly/ArrayList\<mono\></mono\></p>
 <h3 id="三、bug分析-2"><a href="#三、bug分析-2" class="headerlink" title="三、bug分析"></a>三、bug分析</h3><p>本次作业无强测bug，未被hack。第二次作业的架构调整对第三次作业帮助很大，在其上迭代开发非常清晰，不容易出现问题</p>
 <h2 id="度量分析"><a href="#度量分析" class="headerlink" title="度量分析"></a>度量分析</h2><p>方法复杂度</p>
-<p><img src="/../../images/OO/%E6%96%B9%E6%B3%95%E5%A4%8D%E6%9D%82%E5%BA%A6.png" alt="方法复杂度"></p>
+<p><img src="../../images/OO/方法复杂度.png" alt="方法复杂度"></p>
 <p>类复杂度</p>
-<p><img src="/../../images/OO/%E7%B1%BB%E5%A4%8D%E6%9D%82%E5%BA%A6.png" alt="类复杂度"></p>
+<p><img src="../../images/OO/类复杂度.png" alt="类复杂度"></p>
 <p>各类代码行数</p>
-<p><img src="/../../images/OO/%E7%B1%BB%E4%BB%A3%E7%A0%81%E9%87%8F.png" alt="代码行数"></p>
+<p><img src="../../images/OO/类代码量.png" alt="代码行数"></p>
 <h2 id="架构设计体验"><a href="#架构设计体验" class="headerlink" title="架构设计体验"></a>架构设计体验</h2><p>我的架构是基于第一次实验提供的递归下降方法，主要用Lexer、Parser类解析表达式，用Expr、Term、Factor保存，然后根据每次迭代增加相应的类与方法（见每次作业的架构设计部分）。在第二次作业经历了一次重构，主要是增加了Poly、Mono类，将表达式解析和化简分离。</p>
-<p>新的可能迭代场景：表达式中增加三角函数。需要新增三角函数类Trigo，标准项变成$$coef*x^{xexpo}*\exp \left(eexpo\right)*sin\left(poly\right)^{triExpo}$$, 可以将cos化为sin一并处理。</p>
+<p>新的可能迭代场景：表达式中增加三角函数。需要新增三角函数类Trigo，标准项变成<script type="math/tex">coef*x^{xexpo}*\exp \left(eexpo\right)*sin\left(poly\right)^{triExpo}</script>, 可以将cos化为sin一并处理。</p>
 <h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><ul>
 <li>在第二次作业强测由于爆int发现自己合并同类项的复杂度太高（因为我是找出x的指数最大值max，然后从max到0遍历每个指数，再遍历每个项找到满足当前条件的指数项合并，但是事实上可能表达式中根本就没有或很少比max小的指数项，比如表达式为$x^{100000000000}$, 我要从100000000000遍历到0，非常费时）。于是优化后的化简方式为：遍历多项式（Poly）里的每个单项式（Mono），以当前单项式为基准，遍历它后面的单项式看是否有它的同类项。</li>
 <li>最开始去括号化简我是采用先全部乘开再合并同类项，后来发现边乘开边合并同类项不仅速度更快，而且指数函数的指数多项式比较起来更方便。</li>
@@ -946,7 +945,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">94.1k</span>&nbsp;字
+                class="white-color">91.1k</span>&nbsp;字
             
             
             

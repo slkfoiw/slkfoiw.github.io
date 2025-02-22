@@ -397,7 +397,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    10.2k
+                    8.5k
                 </div>
                 
 
@@ -419,7 +419,7 @@
             <div id="articleContent">
                 <h1 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h1><h2 id="进程概念的引入"><a href="#进程概念的引入" class="headerlink" title="进程概念的引入"></a>进程概念的引入</h2><h3 id="两个基本概念：并发与并行"><a href="#两个基本概念：并发与并行" class="headerlink" title="两个基本概念：并发与并行"></a>两个基本概念：并发与并行</h3><p>并发：宏观同时，微观交替</p>
 <p>并行：同时</p>
-<h3 id="并发性的确定–Bernstein条件"><a href="#并发性的确定–Bernstein条件" class="headerlink" title="并发性的确定–Bernstein条件"></a>并发性的确定–Bernstein条件</h3><p>定义：</p>
+<h3 id="并发性的确定—Bernstein条件"><a href="#并发性的确定—Bernstein条件" class="headerlink" title="并发性的确定—Bernstein条件"></a>并发性的确定—Bernstein条件</h3><p>定义：</p>
 <ul>
 <li>R(Si)：Si的读子集, 其值在Si中被引用的变量的集合</li>
 <li>W(Si)：Si的写子集, 其值在Si中被改变的变量的集合</li>
@@ -450,6 +450,7 @@
 <li>一组系统资源（如打开的文件）</li>
 </ul>
 <p>进程与程序的区别</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -458,7 +459,8 @@
 <th>程序</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td></td>
 <td>动态</td>
 <td>静态</td>
@@ -478,7 +480,9 @@
 <td>通过多次执行，一个程序可以对应多个进程</td>
 <td>通过调用关系，一个进程可包括多个程序</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h2 id="进程状态与控制"><a href="#进程状态与控制" class="headerlink" title="进程状态与控制"></a>进程状态与控制</h2><h3 id="进程控制"><a href="#进程控制" class="headerlink" title="进程控制"></a>进程控制</h3><p>进程控制的主要任务是创建和撤销进程，以及实现进程的状态转换。<strong>由内核来实现</strong></p>
 <h4 id="原语"><a href="#原语" class="headerlink" title="原语"></a>原语</h4><p>由若干条指令所组成的指令序列，来实现某个特定操作功能。</p>
 <ul>
@@ -494,7 +498,6 @@
 <p>执行状态：占用处理机资源；处于此状态的进程的数目小于等于CPU的数目。在没有其他进程可以执行时（如所有进程都在阻塞状态），通常会自动执行系统的idle进程（相当于空操作）。</p>
 <p>阻塞状态：正在执行的进程，由于发生某种事件而暂时无法执行，便放弃处理机处于暂停状态</p>
 <figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">graph TB;</span><br><span class="line">	A[执行状态] --&gt; |等待某个事件|B[阻塞状态]</span><br><span class="line">	B --&gt; |事件发生|C[就绪状态]</span><br><span class="line">	A --&gt; |时间片到|C</span><br><span class="line">	C --&gt; |调度|A</span><br></pre></td></tr></tbody></table></figure>
-
 <h3 id="进程控制块"><a href="#进程控制块" class="headerlink" title="进程控制块"></a>进程控制块</h3><p>系统为每个进程定义了一个数据结构：进程控制块PCB（Process Control Block）。</p>
 <p>作用：</p>
 <ul>
@@ -517,7 +520,8 @@
 </ul>
 <h3 id="PCB组织方式"><a href="#PCB组织方式" class="headerlink" title="PCB组织方式"></a>PCB组织方式</h3><p>线性表：适用于系统中进程数目不多的情况</p>
 <p>索引方式：是线性表的改进，系统按照进程的状态分别建立就绪索引表、阻塞索引表。</p>
-<h3 id="辨析：进程上下文切换vs陷入内核"><a href="#辨析：进程上下文切换vs陷入内核" class="headerlink" title="辨析：进程上下文切换vs陷入内核"></a>辨析：进程上下文切换vs陷入内核</h3><table>
+<h3 id="辨析：进程上下文切换vs陷入内核"><a href="#辨析：进程上下文切换vs陷入内核" class="headerlink" title="辨析：进程上下文切换vs陷入内核"></a>辨析：进程上下文切换vs陷入内核</h3><div class="table-container">
+<table>
 <thead>
 <tr>
 <th></th>
@@ -525,7 +529,8 @@
 <th>陷入/退出内核（也称为模态切换，Mode Switch）</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td></td>
 <td>通常由调度器执行，保存进程执行断点，切换内存映射(页表基址，flush TLB)</td>
 <td>CPU状态改变，由中断、异常、Trap指令（系统调用）引起，需要保存执行现场（寄存器、堆栈等）</td>
@@ -540,7 +545,9 @@
 <td></td>
 <td>系统调用涉及到进程从用户态到内核态的切换（mode switch），这个时候涉及到的切换主要是寄存器上下文的切换，和通常所说的进程上下文切换不同，mode switch的消耗相对要小得多</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h2 id="线程概念的引入"><a href="#线程概念的引入" class="headerlink" title="线程概念的引入"></a>线程概念的引入</h2><h3 id="线程的提出"><a href="#线程的提出" class="headerlink" title="线程的提出"></a>线程的提出</h3><p>进程的不足：</p>
 <ul>
 <li>进程只能在一个时间处理一个任务，不能同时处理多个任务。</li>
@@ -552,6 +559,7 @@
 <li>实体之间共享相同的地址空间</li>
 </ul>
 <h3 id="进程与线程-1"><a href="#进程与线程-1" class="headerlink" title="进程与线程"></a>进程与线程</h3><p>实际上，进程包含了两个概念：资源拥有者和可执行单元。现代操作系统<strong>将资源拥有者称为进程，将可执行单元称为线程</strong>。线程将资源与计算分离，提高并发效率。</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -560,7 +568,8 @@
 <th>线程</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>基本概念</td>
 <td>程序的一次执行</td>
 <td>进程中的可执行单元，进程中的一个实体，可以与其他同进程的线程共享进程拥有的所有资源，同时也拥有栈、PC等私有资源</td>
@@ -580,7 +589,9 @@
 <td>低</td>
 <td>高</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>创建一个线程比一个进程快19-100倍。对于存在大量计算和大量I/O处理的应用，大幅度提高性能。在多CPU/多核CPU系统中更有优势。</p>
 <h2 id="线程的实现方式"><a href="#线程的实现方式" class="headerlink" title="线程的实现方式"></a>线程的实现方式</h2><h3 id="用户级线程"><a href="#用户级线程" class="headerlink" title="用户级线程"></a>用户级线程</h3><p>线程在用户空间,通过library模拟的thread,不需要或仅需要极少的kernel支持。上下文切换比较快,因为不用更改page table等,使用起来较为轻便快速。提供操控视窗系统的较好的解决方案</p>
 <p>优点：</p>
@@ -627,10 +638,8 @@
 <p>引入变量turn，以便在竞争时选出进入临界区的进程</p>
 <p>pturn/qturn表示“我”想进入临界区，turn表示该哪个进程进入临界区了（轮流进）</p>
 <figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">P:</span><br><span class="line">......</span><br><span class="line">pturn = true;//I want to enter</span><br><span class="line">while(qturn) {// other wants to enter</span><br><span class="line">	if (turn == 1) {//it's not my turn</span><br><span class="line">		pturn = false;//I (temporarily) don't want to enter</span><br><span class="line">		while(turn == 1); // The other is automatically allowed to enter</span><br><span class="line">		// other don't want to enter</span><br><span class="line">		pturn = true;// I want to enter</span><br><span class="line">	}</span><br><span class="line">}</span><br><span class="line">// other doesn't want to enter</span><br><span class="line">//临界区</span><br><span class="line">turn = 1;// it's the other's turn</span><br><span class="line">pturn = false;// I don't want to enter</span><br><span class="line">......</span><br><span class="line"></span><br><span class="line">Q:</span><br><span class="line">......</span><br><span class="line">qturn = true;</span><br><span class="line">while(pturn) {</span><br><span class="line">	if (turn == 0) {</span><br><span class="line">		pturn = false;</span><br><span class="line">		while(turn == 0);</span><br><span class="line">		qturn = true;</span><br><span class="line">	}</span><br><span class="line">}</span><br><span class="line">//临界区</span><br><span class="line">turn = 0;</span><br><span class="line">qturn = false;</span><br><span class="line">......</span><br></pre></td></tr></tbody></table></figure>
-
 <h4 id="Peterson算法"><a href="#Peterson算法" class="headerlink" title="Peterson算法"></a>Peterson算法</h4><p>解决了互斥访问的问题，而且克服了强制轮流法的缺点，可以完全正常地工作。</p>
 <figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">#define FALSE O</span><br><span class="line">#define TRUE 1</span><br><span class="line">#define N 2 //进程的个数</span><br><span class="line">int turn; //轮到谁?</span><br><span class="line">int interested[N]; //兴趣数组，初始值均为FALSE</span><br><span class="line">void enter_region(int process)//process=0或1</span><br><span class="line">{</span><br><span class="line">	//另外一个进程的进程号</span><br><span class="line">    int other;</span><br><span class="line">    other = 1 - process;</span><br><span class="line">    //表明本进程感兴趣</span><br><span class="line">    interested[process]=TRUE;</span><br><span class="line">    turn = other;//设置标志位</span><br><span class="line">    //other也可以换成process，这其实是两种方式：谦让式vs争夺式</span><br><span class="line">    while(turn == other &amp;&amp; interested[other]==TRUE);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void leave_region(int process) {</span><br><span class="line">	interested[process] = FALSE;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-
 <h4 id="Bakery-Algorithm-面包店算法"><a href="#Bakery-Algorithm-面包店算法" class="headerlink" title="Bakery Algorithm(面包店算法)"></a>Bakery Algorithm(面包店算法)</h4><ul>
 <li>在进入临界区之前，进程收到一个数字，具有最小数字的进程被允许进入临界区</li>
 <li>如果进程 Pi 和 Pj 接收到相同数字, if i &lt; j, then Pi 进入临界区；否则，Pj 进入临界区</li>
@@ -644,10 +653,8 @@
 <p>用户进程的使用可能很危险，例如：关中断之后，不再打开中断，会导致整个系统无法继续运行。所以，使用范围一般为内核进程（少量使用）。</p>
 <h4 id="使用test-and-set指令"><a href="#使用test-and-set指令" class="headerlink" title="使用test and set指令"></a>使用test and set指令</h4><p>TS（test-and-set ）是一种不可中断的基本原语（指令）。它会把“1”写到某个内存位置并传回其旧值。在多进程可同时访问内存的情况下，如果一个进程正在执行TS指令，在它执行完成前，其它的进程不可以执行TS指令。</p>
 <figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">TestAndSet(boolean_ref *lock) { </span><br><span class="line">    boolean initial = *lock; </span><br><span class="line">    *lock = true; </span><br><span class="line">    return initial; </span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-
 <h4 id="自旋锁Spinlocks"><a href="#自旋锁Spinlocks" class="headerlink" title="自旋锁Spinlocks"></a>自旋锁Spinlocks</h4><p>利用test_and_set硬件原语提供互斥支持。通过对总线的锁定实现对某个内存位置的原子读与更新。</p>
 <figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">acquire(int *lock) {</span><br><span class="line">    while(test_and_set(lock) == 1)</span><br><span class="line">    	/* do nothing */;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">release(int *lock) {</span><br><span class="line">	*lock = 0;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-
 <p>当lock == 0时，线程执行完acquire获得锁，lock被修改为1。其他线程想获得锁时，执行acquire会被卡在while循环里，直到获得线程的锁执行完释放锁。</p>
 <h3 id="几个算法的共性问题"><a href="#几个算法的共性问题" class="headerlink" title="几个算法的共性问题"></a>几个算法的共性问题</h3><p>无论是软件还是硬件方法，解法都是正确的，但它们都有一个特点：当一个进程想进入临界区时，先检查是否允许进入，若不允许，则该进程将原地等待，直到允许为止。造成：</p>
 <ul>
@@ -694,11 +701,7 @@
 <p>进程同步：指当⼀个进程Pi想要执⾏⼀个ai操作时，它只在进程Pj执⾏完aj后，才会执⾏ai操作。可以⽤信号量如下实现：将信号量初始为0，Pi执⾏ai操作前执⾏⼀个semWait操作；⽽Pj执⾏aj操作后，执⾏⼀个semSignal操作。</p>
 <p>屏障Barriers：只有当该线程/进程组中所有线程到达屏障点（可称之为同步点）时，整个程序才得以继续执行。信号量实现如下：n个进程就有n个信号量，屏障进入前对除本进程对应信号量以外的其他进程进行V操作，然后对本进程对应信号量进行P操作。</p>
 <figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">//两个进程</span><br><span class="line">semaphore s0 = 0</span><br><span class="line">semaphore s1 = 0</span><br><span class="line">P0:</span><br><span class="line">//code before barrier</span><br><span class="line">V(s0)</span><br><span class="line">P(s1)</span><br><span class="line">//code after barrier</span><br><span class="line"></span><br><span class="line">P1:</span><br><span class="line">//code before barrier</span><br><span class="line">V(s1)</span><br><span class="line">P(s0)</span><br><span class="line">//code after barrier</span><br></pre></td></tr></tbody></table></figure>
-
 <figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">//多个进程</span><br><span class="line">n = the number of threads</span><br><span class="line">count = 0//到达汇合点的线程数</span><br><span class="line">semaphore mutex = 1//互斥对count的访问</span><br><span class="line">semaphore barrier = 0 //线程到达之前都是0或者负值，到达后取正值</span><br><span class="line"></span><br><span class="line">P:</span><br><span class="line">P(mutex)</span><br><span class="line">count++</span><br><span class="line">if count == n:</span><br><span class="line">	V(barrier) //唤醒一个线程</span><br><span class="line">V(mutex)</span><br><span class="line"></span><br><span class="line">P(barrier)</span><br><span class="line">V(barrier)//一旦线程被唤醒，有责任唤醒下一个线程</span><br><span class="line"></span><br><span class="line">P(mutex)</span><br><span class="line">count--</span><br><span class="line">if count == 0:</span><br><span class="line">	P(barrier)//“关门”</span><br><span class="line">V(mutex)</span><br></pre></td></tr></tbody></table></figure>
-
-
-
 <h3 id="P、V操作的优缺点"><a href="#P、V操作的优缺点" class="headerlink" title="P、V操作的优缺点"></a>P、V操作的优缺点</h3><p>优点：简单，而且表达能力强（用P、V操作可以<strong>解决任何同步、互斥问题</strong>）</p>
 <p>缺点：不够安全，PV操作使用不当会出现死锁，遇到复杂同步互斥问题时实现复杂。</p>
 <h2 id="基于管程的同步与互斥"><a href="#基于管程的同步与互斥" class="headerlink" title="基于管程的同步与互斥"></a>基于管程的同步与互斥</h2><h3 id="管程的定义和组成"><a href="#管程的定义和组成" class="headerlink" title="管程的定义和组成"></a>管程的定义和组成</h3><p>管程（Monitor）是在程序设计语言当中引入的一种高级同步机制。</p>
@@ -710,14 +713,16 @@
 <li>对该数据结构进行操作的一组互斥执行的过程（可以理解为函数 / Java里被synchronized的方法）</li>
 <li>对局部于管程内部的共享数据设置初始值的语句</li>
 </ol>
-<h3 id="条件变量与信号量的区别"><a href="#条件变量与信号量的区别" class="headerlink" title="条件变量与信号量的区别"></a>条件变量与信号量的区别</h3><table>
+<h3 id="条件变量与信号量的区别"><a href="#条件变量与信号量的区别" class="headerlink" title="条件变量与信号量的区别"></a>条件变量与信号量的区别</h3><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>条件变量</th>
 <th>信号量</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>值不可增减</td>
 <td>可增减</td>
 </tr>
@@ -731,9 +736,10 @@
 </tr>
 <tr>
 <td>访问条件变量必须拥有管程的锁</td>
-<td></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h2 id="进程通信（Interprocess-Communication）的主要方法"><a href="#进程通信（Interprocess-Communication）的主要方法" class="headerlink" title="进程通信（Interprocess Communication）的主要方法"></a>进程通信（Interprocess Communication）的主要方法</h2><ul>
 <li><p>低级通信：只能传递状态和整数值（控制信息），包括进程互斥和同步所采用的信号量和管程机制。</p>
 <p>缺点：传送信息量小；编程复杂</p>
@@ -773,18 +779,12 @@
 <p>共享内存通信的效率高（因为进程可以直接读写内存）。</p>
 <p>进程之间在共享内存时，保持共享区域直到通信完毕。</p>
 <h2 id="经典同步与互斥问题"><a href="#经典同步与互斥问题" class="headerlink" title="经典同步与互斥问题"></a>经典同步与互斥问题</h2><h3 id="生产者-消费者问题"><a href="#生产者-消费者问题" class="headerlink" title="生产者-消费者问题"></a>生产者-消费者问题</h3><figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">semaphore empty = N//空闲数量</span><br><span class="line">semaphore full = 0//产品数量</span><br><span class="line">semaphore mutex = 1</span><br><span class="line">producer() {</span><br><span class="line">	while(true) {</span><br><span class="line">		P(empty);</span><br><span class="line">		P(mutex);</span><br><span class="line">		...</span><br><span class="line">		V(mutex);</span><br><span class="line">		V(full)</span><br><span class="line">	}</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">consumer() {</span><br><span class="line">	P(full)</span><br><span class="line">	P(mutex)</span><br><span class="line">	...</span><br><span class="line">	V(mutex)</span><br><span class="line">	V(empty)</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-
-
-
 <h3 id="读者-写者"><a href="#读者-写者" class="headerlink" title="读者-写者"></a>读者-写者</h3><p>读者优先</p>
 <figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">int readcount=0;//正在读的进程数</span><br><span class="line">semaphore rmutex=1;//用户readcount的互斥访问</span><br><span class="line">semaphore mutex=1;//用户数据访问的互斥</span><br><span class="line"></span><br><span class="line">read() {</span><br><span class="line">	P(rmutex)</span><br><span class="line">	if readcount == 0 then P(mutex)</span><br><span class="line">	readcount++</span><br><span class="line">	V(rmutex)</span><br><span class="line">	...</span><br><span class="line">	P(rmutex)</span><br><span class="line">	readcount--</span><br><span class="line">	if readcount == 0 then V(mutex)</span><br><span class="line">	V(rmutex)</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">write(){</span><br><span class="line">	P(mutex)</span><br><span class="line">	...</span><br><span class="line">	V(mutex)</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-
 <p>读写公平(先来先服务)</p>
 <figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">int readcount=0;//正在读的进程数</span><br><span class="line">semaphore rmutex=1;//用户readcount的互斥访问</span><br><span class="line">semaphore mutex=1;//用户数据访问的互斥</span><br><span class="line">semaphore rwmutex = 1;</span><br><span class="line">read() {</span><br><span class="line">	P(rwmutex)</span><br><span class="line">	P(rmutex)</span><br><span class="line">	if readcount == 0 then P(mutex)</span><br><span class="line">	readcount++</span><br><span class="line">	V(rmutex)</span><br><span class="line">	V(rwmutex)</span><br><span class="line">	...</span><br><span class="line">	P(rmutex)</span><br><span class="line">	readcount--</span><br><span class="line">	if readcount == 0 then V(mutex)</span><br><span class="line">	V(rmutex)</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">write(){</span><br><span class="line">	P(rwmutex)</span><br><span class="line">	P(mutex)</span><br><span class="line">    V(rwmutex)</span><br><span class="line">	...</span><br><span class="line">	V(mutex)</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-
 <p>写者优先(TODO</p>
 <figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">readSwitch = Lightswitch() </span><br><span class="line">writeSwitch = Lightswitch() </span><br><span class="line">noReaders = Semaphore(1) </span><br><span class="line">noWriters = Semaphore(1)</span><br><span class="line"></span><br><span class="line">Reader：</span><br><span class="line">noReaders.wait() </span><br><span class="line">	readSwitch.lock(noWriters)</span><br><span class="line">noReaders.signal()</span><br><span class="line">	# critical section for readers</span><br><span class="line">readSwitch.unlock(noWriters)</span><br><span class="line"></span><br><span class="line">Writer：</span><br><span class="line">writeSwitch.lock(noReaders) </span><br><span class="line">	noWriters.wait() </span><br><span class="line">		# critical section for writers </span><br><span class="line">	noWriters.signal() </span><br><span class="line">writeSwitch.unlock(noReaders) </span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
-
 <p>最初信号量都是解锁态。如果reader在临界区，会给noWriter上锁。但是不会给noReader上锁。如果这时候writer到来，会给noReader加锁，会让后续读者排队在noReader。当最后一个读者离开，他会signal noWriter，这时写者可以进入。</p>
 <p>当写者进入临界区，他同时拿着noreader和nowriter两个锁。一方面，其他读者和写者不能同时访问临界区。另一方面，writeSwitch 允许其他写者通过，并在noWriter等待。但是读者只能在noReader等待。这样，所有排队的写者能够通过临界区，而不需要signal noreader。当最后一个写者离开，noreader才解锁。写者才能进入。</p>
 <h3 id="哲学家就餐"><a href="#哲学家就餐" class="headerlink" title="哲学家就餐"></a>哲学家就餐</h3><p>求解思路</p>
@@ -846,7 +846,9 @@
 <p>缺点：长作业可能长时间得不到执行；未能依据作业的紧迫程度来划分执行的优先级；难以准确估计作业的执行时间，从而影响调度性能。</p>
 <h3 id="最短剩余时间优先（SRTF）"><a href="#最短剩余时间优先（SRTF）" class="headerlink" title="最短剩余时间优先（SRTF）"></a>最短剩余时间优先（SRTF）</h3><p>上面的方法SJF修改条件“通常后来的短作业不抢占正在执行的作业”为<strong>抢占式</strong></p>
 <h3 id="最高响应比优先（HRRF）"><a href="#最高响应比优先（HRRF）" class="headerlink" title="最高响应比优先（HRRF）"></a>最高响应比优先（HRRF）</h3><p>实际上是FCFS算法和SJF算法的折衷既考虑作业等待时间，又考虑作业的运行时间，既照顾短作业又不使长作业的等待时间过长，改善了调度性能。</p>
-<p>在每次选择作业投入运行时，先计算后备作业队列中每个作业的响应比RP，然后选择其值最大的作业投入运行。<br>$$<br>RP = \frac{作业已等待时间 + 作业的服务时间}{作业的服务时间} = 1 + \frac{作业已等待时间}{作业的服务时间}<br>$$<br>响应比的计算时机：每当调度一个作业运行时，都要计算后备作业队列中每个作业的响应比，选择响应比最高者投入运行。</p>
+<p>在每次选择作业投入运行时，先计算后备作业队列中每个作业的响应比RP，然后选择其值最大的作业投入运行。</p>
+<script type="math/tex; mode=display">
+RP = \frac{作业已等待时间 + 作业的服务时间}{作业的服务时间} = 1 + \frac{作业已等待时间}{作业的服务时间}</script><p>响应比的计算时机：每当调度一个作业运行时，都要计算后备作业队列中每个作业的响应比，选择响应比最高者投入运行。</p>
 <h2 id="交互式系统的调度算法"><a href="#交互式系统的调度算法" class="headerlink" title="交互式系统的调度算法"></a>交互式系统的调度算法</h2><h3 id="时间片轮转-RR：Round-Robin）"><a href="#时间片轮转-RR：Round-Robin）" class="headerlink" title="时间片轮转(RR：Round Robin）"></a>时间片轮转(RR：Round Robin）</h3><h3 id="多级队列（MQ：Multi-level-Queue）"><a href="#多级队列（MQ：Multi-level-Queue）" class="headerlink" title="多级队列（MQ：Multi-level Queue）"></a>多级队列（MQ：Multi-level Queue）</h3><p>本算法引入多个就绪队列，通过各队列的区别对待，达到综合的调度目标；</p>
 <p>不同队列可有不同的优先级、时间片长度、调度策略等；在运行过程中还可改变进程所在队列。如：系统进程、用户交互进程、批处理进程等</p>
 <h3 id="多级反馈队列（MFQ：-Multi-level-Feedback-Queue-）"><a href="#多级反馈队列（MFQ：-Multi-level-Feedback-Queue-）" class="headerlink" title="多级反馈队列（MFQ： Multi-level Feedback Queue ）"></a>多级反馈队列（MFQ： Multi-level Feedback Queue ）</h3><p>是时间片轮转算法和优先级算法的综合和发展</p>
@@ -869,13 +871,17 @@
 <h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><ul>
 <li><p>静态表调度（Static table-driven scheduling）：通过对所有周期性任务的分析预测，事先确定一个固定的调度方案。</p>
 </li>
-<li><p>单调速率调度（RMS：Rate Monotonic Scheduling） 静态最优调度算法：任务的周期越小，其优先级越高，优先级最高的任务最先被调度；如果两个任务的优先级一样，当调度它们时，RM算法将随机选择一个调度。静态、<strong>抢先式调度</strong>。前提<br>  $$<br>  \sum_{i=1}^n \frac{C_i}{T_i} &lt;= n(\sqrt[n]{2} - 1) \to ln2 \approx 0.69 (n \to \infty)<br>  $$</p>
-</li>
-<li><p>最早截止时间优先算法（EDF：Earliest Deadline First）：任务的绝对截止时间越早，其优先级越高，优先级最高的任务最先被调度。如果两个任务的优先级一样，当调度它们时，RM算法将随机选择一个调度。<strong>抢占式</strong>。任务集可调度的充分必要条件(C是执行时间，T是周期)：<br>  $$<br>  \sum_{i=1}^n \frac{C_i}{T_i} &lt;= 1<br>  $$</p>
-</li>
+<li><p>单调速率调度（RMS：Rate Monotonic Scheduling） 静态最优调度算法：任务的周期越小，其优先级越高，优先级最高的任务最先被调度；如果两个任务的优先级一样，当调度它们时，RM算法将随机选择一个调度。静态、<strong>抢先式调度</strong>。前提</p>
+<script type="math/tex; mode=display">
+  \sum_{i=1}^n \frac{C_i}{T_i} <= n(\sqrt[n]{2} - 1) \to ln2 \approx 0.69 (n \to \infty)</script></li>
+</ul>
+<ul>
+<li><p>最早截止时间优先算法（EDF：Earliest Deadline First）：任务的绝对截止时间越早，其优先级越高，优先级最高的任务最先被调度。如果两个任务的优先级一样，当调度它们时，RM算法将随机选择一个调度。<strong>抢占式</strong>。任务集可调度的充分必要条件(C是执行时间，T是周期)：</p>
+<script type="math/tex; mode=display">
+  \sum_{i=1}^n \frac{C_i}{T_i} <= 1</script></li>
 <li><p>最低松弛度优先算法（LLF：Least Laxity First）：根据任务紧急/松弛程度，来确定任务的优先级，使优先级高的优先执行。</p>
-<p>  $$<br>  松弛度Laxity = 任务截止时间 - 本身剩余运行时间 - 当前时间<br>  $$</p>
-<p>  调度时机：有任务执行完时，或有进程Laxity为0时（直接抢占）</p>
+<script type="math/tex; mode=display">
+  松弛度Laxity = 任务截止时间 - 本身剩余运行时间 - 当前时间</script><p>  调度时机：有任务执行完时，或有进程Laxity为0时（直接抢占）</p>
 </li>
 </ul>
 <h2 id="多处理机调度"><a href="#多处理机调度" class="headerlink" title="多处理机调度"></a>多处理机调度</h2><p>与单处理机调度的区别：</p>
@@ -945,8 +951,8 @@
 <li>分配矩阵Allocation：n x m矩阵</li>
 <li>需求矩阵Need：n x m矩阵</li>
 </ul>
-<p>$$<br>Need(i, j) = Max(i,j) - Allocation(i,j)<br>$$</p>
-<p><img src="/../../images/OS/%E9%93%B6%E8%A1%8C%E5%AE%B6%E7%AE%97%E6%B3%95.png" alt="银行家算法"></p>
+<script type="math/tex; mode=display">
+Need(i, j) = Max(i,j) - Allocation(i,j)</script><p><img src="../../images/OS/银行家算法.png" alt="银行家算法"></p>
 <h3 id="死锁检测"><a href="#死锁检测" class="headerlink" title="死锁检测"></a>死锁检测</h3><h4 id="资源分配图-进程-资源图"><a href="#资源分配图-进程-资源图" class="headerlink" title="资源分配图/进程-资源图"></a>资源分配图/进程-资源图</h4><p>用有向图描述系统资源和进程的状态。二元组G=（ N， E），N： 结点的集合，N=P∪R。</p>
 <p>P为进程， R为资源，P = {p1, p2, … , pn}，R = {r1, r2, … , rm}，两者为互斥资源。E：有向边的集合，e属于E，e = (pi , rj ) 或e = (rj , pi )。</p>
 <ul>
@@ -1417,7 +1423,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">94.1k</span>&nbsp;字
+                class="white-color">91.1k</span>&nbsp;字
             
             
             

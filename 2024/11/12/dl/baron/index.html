@@ -421,51 +421,38 @@
 <p>其次，BARON通过将区域特征投影到词嵌入空间中，并使用冻结的VLM的文本编码器(TE)对这些伪词进行编码，从而获得区域袋嵌入。BARON将区域特征投射到伪词上，自然使TE能够有效地表示共现语义概念，理解整个场景。为了保留区域框的空间信息，BARON将框形和框中心位置投影到嵌入中，并添加到伪词中，然后将它们馈送给TE。</p>
 <h2 id="环境配置过程"><a href="#环境配置过程" class="headerlink" title="环境配置过程"></a>环境配置过程</h2><p>readme里面给出的指导是用slurm_train训练，但是有如下报错</p>
 <figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">srun: error: Unable to allocate resources: Unable to contact slurm controller (connect failure)</span><br></pre></td></tr></tbody></table></figure>
-
 <p>尝试改用dist_train训练（但是<strong>readme里没有提到这个文件的训练方式</strong></p>
 <ul>
 <li>系统上的CUDA 10.0</li>
 <li>CUDA驱动版本 12.4</li>
 </ul>
 <figure class="highlight bash"><table><tbody><tr><td class="code"><pre><span class="line">$ nvcc --version //查看系统上的CUDA版本为10.0</span><br><span class="line">nvcc: NVIDIA (R) Cuda compiler driver</span><br><span class="line">Copyright (c) 2005-2018 NVIDIA Corporation</span><br><span class="line">Built on Sat_Aug_25_21:08:01_CDT_2018</span><br><span class="line">Cuda compilation tools, release 10.0, V10.0.130</span><br></pre></td></tr></tbody></table></figure>
-
 <p>依次安装readme里提到的包</p>
 <figure class="highlight bash"><table><tbody><tr><td class="code"><pre><span class="line">$ pip install openmim mmengine</span><br></pre></td></tr></tbody></table></figure>
-
 <p>mmcv安装前需先安装pytorch 下述为<strong>CUDA版本为10.0</strong>对应的pytorch安装命令</p>
 <figure class="highlight bash"><table><tbody><tr><td class="code"><pre><span class="line">$ conda install pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 cudatoolkit=10.2 -c pytorch</span><br></pre></td></tr></tbody></table></figure>
-
 <p>mmcv版本不能太高，否则会跟后续mmdet的要求冲突（例如出现如下报错：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="code"><pre><span class="line">$ mmdet 3.3.0 requires mmcv&lt;2.2.0,&gt;=2.0.0rc4; extra == <span class="string">"mim"</span>, but you have mmcv 2.2.0 <span class="built_in">which</span> is incompatible.</span><br></pre></td></tr></tbody></table></figure>
-
 <p>mmdet&gt;=3.3要求的mmcv版本&gt;=2.0.0 &lt;2.2.0</p>
 <figure class="highlight bash"><table><tbody><tr><td class="code"><pre><span class="line">$ mim install mmcv==2.0.0</span><br></pre></td></tr></tbody></table></figure>
-
-
-
 <figure class="highlight bash"><table><tbody><tr><td class="code"><pre><span class="line">$ pip install git+https://github.com/lvis-dataset/lvis-api.git //没成功，但是应该是lvis数据集的，可能用不上？</span><br><span class="line">$ mim install mmdet&gt;=3.0.0rc6 //安装的3.3.0</span><br></pre></td></tr></tbody></table></figure>
-
 <p>readme没给出的包：ftfy</p>
 <figure class="highlight bash"><table><tbody><tr><td class="code"><pre><span class="line">$ conda install ftfy</span><br><span class="line">$ conda install regex</span><br></pre></td></tr></tbody></table></figure>
-
 <p>运行训练出现报错</p>
 <figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">File "/home/anaconda3/envs/ovdet/lib/python3.10/importlib/__init__.py", line 126, in import_module</span><br><span class="line">    return _bootstrap._gcd_import(name[level:], package, level)</span><br><span class="line">ImportError: libc10_cuda.so: cannot open shared object file: No such file or directory</span><br></pre></td></tr></tbody></table></figure>
-
 <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><ol>
 <li>安装其他库的时候pytorch被更新成cpu的了</li>
 </ol>
-<p><img src="/../../images/deepLearning/image-20241115101855273.png" alt="image-20241115101855273"></p>
+<p><img src="../../images/deepLearning/image-20241115101855273.png" alt="image-20241115101855273"></p>
 <p>解决方案:</p>
 <p>先安装包，然后重新下载一遍pytorch</p>
-<ol start="2">
+<ol>
 <li>之前以为clip模型是一样的，把/home/OVD/OADP-main/pretrained/clip/ViT-B-32.pt连接到checkpoints/clip_vitb32.pth，但是其实不能用，运行下述代码的时候忘记取消软连接了，/home/OVD/OADP-main/pretrained/clip/ViT-B-32.pt被改了</li>
 </ol>
 <figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">import clip</span><br><span class="line">import torch</span><br><span class="line">model, _ = clip.load("ViT-B/32")</span><br><span class="line">torch.save(model.state_dict(), 'checkpoints/clip_vitb32.pth')</span><br></pre></td></tr></tbody></table></figure>
-
 <p>todo：在oadp里用下面命令重新安装</p>
 <figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line">python -c "import clip; clip.load_default()"</span><br></pre></td></tr></tbody></table></figure>
-
-<ol start="3">
+<ol>
 <li><p>CUDA out of memory</p>
 <p>减小lr：0.04 -》 0.001</p>
 <p>减小batch：4 -》2</p>
@@ -473,10 +460,8 @@
 </ol>
 <h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>可学习的prompt：在<code>models/roi_heads/bbox_head.py</code>里实现了一个BaronBBoxHead类，继承自mmedet的BBoxHead，如下是init里初始化prompt的部分，实现可学习的方法是给cls_embeddings加上一个bias</p>
 <figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> cls_bias <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            self.cls_bias = <span class="number">0.0</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">assert</span> self.loss_cls.use_sigmoid, \</span><br><span class="line">                <span class="string">"cls_bias only used for sigmoid logits"</span></span><br><span class="line">            self.cls_bias = nn.Parameter(torch.ones(<span class="number">1</span>) * cls_bias) <span class="comment"># 可学习的偏移量</span></span><br><span class="line"><span class="keyword">if</span> cls_embeddings_path <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>: <span class="comment"># config里指明cls_embeddings_path='data/metadata/coco_clip_hand_craft_attn12.npy',</span></span><br><span class="line">            cls_embeddings = torch.from_numpy(</span><br><span class="line">                np.load(cls_embeddings_path)).<span class="built_in">float</span>()</span><br><span class="line">            <span class="keyword">assert</span> self.num_classes == cls_embeddings.shape[<span class="number">0</span>]</span><br><span class="line">            self.register_buffer(<span class="string">'cls_embeddings'</span>, cls_embeddings) <span class="comment"># 注册一个不可训练的buffer</span></span><br><span class="line">            self.learn_bg = <span class="literal">False</span></span><br><span class="line">            <span class="keyword">if</span> bg_embedding == <span class="string">'zero'</span>:</span><br><span class="line">                self.register_buffer(<span class="string">'bg_embedding'</span>,</span><br><span class="line">                                     torch.zeros_like(cls_embeddings[:<span class="number">1</span>]))</span><br><span class="line">            <span class="keyword">elif</span> bg_embedding == <span class="string">'learn'</span>:</span><br><span class="line">                self.bg_embedding = nn.Linear(<span class="number">1</span>, cls_embeddings.shape[<span class="number">1</span>])</span><br><span class="line">                self.init_cfg += [</span><br><span class="line">                    <span class="built_in">dict</span>(</span><br><span class="line">                        <span class="built_in">type</span>=<span class="string">'Xavier'</span>, distribution=<span class="string">'uniform'</span>,</span><br><span class="line">                        override=<span class="built_in">dict</span>(name=<span class="string">'bg_embedding'</span>)),</span><br><span class="line">                ]</span><br><span class="line">                self.learn_bg = <span class="literal">True</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">raise</span> ValueError(<span class="string">f"<span class="subst">{bg_embedding}</span> not supported."</span>)</span><br></pre></td></tr></tbody></table></figure>
-
 <p>训练时的调整在pred_cls_logits方法里</p>
 <figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">pred_cls_logits</span>(<span class="params">self, pseudo_words, clip_model</span>):</span><br><span class="line">        text_encoder = clip_model.text_encoder</span><br><span class="line">        <span class="keyword">if</span> pseudo_words.shape[<span class="number">0</span>] == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> pseudo_words.new_zeros(<span class="number">0</span>, self.num_classes + <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">with</span> autocast():</span><br><span class="line">            valid_mask = self._drop_word(pseudo_words)</span><br><span class="line">            pseudo_text, end_token_ids = text_encoder.prepare_pseudo_text_tensor(</span><br><span class="line">                pseudo_words, valid_mask)  <span class="comment"># add start and stop token</span></span><br><span class="line">            <span class="keyword">if</span> self.use_attn12_output:</span><br><span class="line">                cls_features, _, _ = \</span><br><span class="line">                    text_encoder.encode_pseudo_text_endk(pseudo_text, end_token_ids,</span><br><span class="line">                                                         text_pe=<span class="literal">True</span>,</span><br><span class="line">                                                         stepk=<span class="number">12</span>, normalize=<span class="literal">True</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                cls_features = \</span><br><span class="line">                    text_encoder.encode_pseudo_text(pseudo_text, end_token_ids,</span><br><span class="line">                                                    text_pe=<span class="literal">True</span>, normalize=<span class="literal">True</span>)</span><br><span class="line">        <span class="keyword">if</span> self.learn_bg:</span><br><span class="line">            input_ones = pseudo_words.new_ones(<span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line">            bg_embedding = self.bg_embedding(input_ones)</span><br><span class="line">            bg_embedding = F.normalize(bg_embedding, p=<span class="number">2</span>, dim=-<span class="number">1</span>)   <span class="comment"># normalize</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            bg_embedding = self.bg_embedding</span><br><span class="line">        cls_embeddings = torch.cat([self.cls_embeddings, bg_embedding])</span><br><span class="line">        <span class="keyword">if</span> self.training:</span><br><span class="line">            cls_logits = self.cls_temp * cls_features @ cls_embeddings.T</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            cls_logits = self.test_cls_temp * cls_features @ cls_embeddings.T</span><br><span class="line">        <span class="keyword">if</span> self.training <span class="keyword">and</span> self.loss_cls.use_sigmoid:</span><br><span class="line">            cls_logits += self.cls_bias <span class="comment"># 加上可学习的偏移量</span></span><br><span class="line">        <span class="keyword">assert</span> cls_logits.shape[<span class="number">1</span>] == self.num_classes + <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> cls_logits</span><br></pre></td></tr></tbody></table></figure>
-
 
                 
             </div>
@@ -932,7 +917,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">94.1k</span>&nbsp;字
+                class="white-color">91.1k</span>&nbsp;字
             
             
             

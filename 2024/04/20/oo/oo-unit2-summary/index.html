@@ -417,25 +417,25 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="架构分析"><a href="#架构分析" class="headerlink" title="架构分析"></a>架构分析</h2><h3 id="第一次作业"><a href="#第一次作业" class="headerlink" title="第一次作业"></a>第一次作业</h3><p><img src="/../../images/OO/unit2-1.png" alt="第一次作业架构"></p>
+                <h2 id="架构分析"><a href="#架构分析" class="headerlink" title="架构分析"></a>架构分析</h2><h3 id="第一次作业"><a href="#第一次作业" class="headerlink" title="第一次作业"></a>第一次作业</h3><p><img src="../../images/OO/unit2-1.png" alt="第一次作业架构"></p>
 <p>三种线程：输入线程、调度线程、电梯线程</p>
 <p>输入线程和调度线程共享waitQueue队列，调度线程和电梯线程共享processingQueue队列（有六个，放一个列表里统一管理）。</p>
 <p>Passengers类用来放进入电梯的乘客，其实和RequestQueue类差不多，但是因为这部分不需要同步控制，所以很多操作都不需要，于是我新建了一个Passenger类管理。</p>
 <p>Strategy我按指导书的要求建了这么一个类，不过在后面的作业中发现这个类好像没什么用，我就删掉了。</p>
-<h3 id="第二次作业"><a href="#第二次作业" class="headerlink" title="第二次作业"></a>第二次作业</h3><p><img src="/../../images/OO/unit2-2.png" alt="第二次作业架构"></p>
+<h3 id="第二次作业"><a href="#第二次作业" class="headerlink" title="第二次作业"></a>第二次作业</h3><p><img src="../../images/OO/unit2-2.png" alt="第二次作业架构"></p>
 <p>第二次作业增加了电梯重置请求，我在第一次作业的基础上做出了如下修改：</p>
 <ol>
 <li><p>修改单电梯调度：研讨课发现好多人都用的LOOK算法，比我自己写的逻辑清晰很多，所以第二次作业我也改为Look算法，参考了往年的学长的博客，电梯的Action分为：OPEN、CLOSE、REVERSE、MOVE、WAIT。每次都从T_T中选择一种，然后调整电梯的属性。</p>
 </li>
 <li><p>增加多电梯调度：receive方法拒绝自由竞争，我用的均分方法，但是忽略了高并发的问题，强测别狠狠hack了T_T</p>
 </li>
-<li><p>增加reset处理：本来尝试新增SafeResetRqst类，增加ArrayList&lt;SafeResetRqst&gt;  resetRequests对象，作为InputThread和ElevatorThread之间的一个托盘，但是导致ScheduleThread不太好分配（可能出现检测到某个电梯的resetRqst为空，然后在往该电梯的请求队列中分配请求时该电梯的resetRqst不为空的清空）。</p>
+<li><p>增加reset处理：本来尝试新增SafeResetRqst类，增加ArrayList\<saferesetrqst\>  resetRequests对象，作为InputThread和ElevatorThread之间的一个托盘，但是导致ScheduleThread不太好分配（可能出现检测到某个电梯的resetRqst为空，然后在往该电梯的请求队列中分配请求时该电梯的resetRqst不为空的清空）。</saferesetrqst\></p>
 <p>于是换成新增ResetTable类，每个电梯都可以与InputThread、ScheduleThread共享resetTable对象，但是只改变自己对应的resetRequest，然后ScheduleThread中多电梯调度通过调用resetTable类中的dispatch方法实现。</p>
 </li>
 <li><p>结束条件改变：因为waitQueue会重新接受来自电梯乘客表、等待队列的请求，所以ScheduleThread、ElevatorThread结束条件改变。我参考了往年学长的方法，用了单例模式设置一个Counter类的counter对象来计数，当InputThread结束且总请求数sum==完成请求数finished时，则可以结束ScheduleThread、ElevatorThread。</p>
 </li>
 </ol>
-<h3 id="第三次作业"><a href="#第三次作业" class="headerlink" title="第三次作业"></a>第三次作业</h3><p><img src="/../../images/OO/unit2-3.png" alt="unit2-3"></p>
+<h3 id="第三次作业"><a href="#第三次作业" class="headerlink" title="第三次作业"></a>第三次作业</h3><p><img src="../../images/OO/unit2-3.png" alt="unit2-3"></p>
 <p>第三次作业增加了重置为双轿电梯的请求。我在第二次作业的基础上做了比较大的改动，具体有如下几个方面：</p>
 <ol>
 <li>增加类ElevatorFactory：使用简单工厂模式生产不同的电梯，同时把需要共享的对象waitQueue、processQueues、resetTable作为ElevatorFactory类的属性，这样可以在”生产”电梯时给每个电梯“装配”这些属性。此外，这个类我也使用了单例模式，方便在其他类调用这个类里的方法。</li>
@@ -448,7 +448,7 @@
 </li>
 <li>删除strategy类：第三次作业了，我仍不知道这个类有什么作用，所有就把它删掉然后把单电梯调度策略写在电梯线程里了。</li>
 </ol>
-<h3 id="协作图"><a href="#协作图" class="headerlink" title="协作图"></a>协作图</h3><p><img src="/../../images/OO/unit2-%E5%8D%8F%E4%BD%9C%E5%9B%BE.png" alt="unit2-协作图"></p>
+<h3 id="协作图"><a href="#协作图" class="headerlink" title="协作图"></a>协作图</h3><p><img src="../../images/OO/unit2-协作图.png" alt="unit2-协作图"></p>
 <p>三个线程组成两个“生产者-消费者”模式，其中电梯线程重置时需要将未完成的请求重新传递回总请求队列，再次由调度线程分配。</p>
 <h3 id="变与不变"><a href="#变与不变" class="headerlink" title="变与不变"></a>变与不变</h3><p>三次作业中，请求队列表和电梯里的乘客表没有特别大变化，三个线程的结构没变，但是每个线程内部易变</p>
 <ol>
@@ -463,7 +463,8 @@
 <p>第三次作业的调度策略可能是估算等待时间和权重赋值的结合吧。因为第二次作业性能挺差的，然后第三次作业的时间较为充裕，所有还是想改改调度策略。调度逻辑如下：</p>
 <ul>
 <li>对于每个请求者，遍历所有电梯</li>
-<li>对于每一个电梯<ul>
+<li><p>对于每一个电梯</p>
+<ul>
 <li><p>查看电梯的当前状态，计算电梯移动到请求者所在楼层需要多久。</p>
 </li>
 <li><p>考虑一些特殊情况：</p>
@@ -496,6 +497,7 @@
 <p>传给方法的参数是对对象的引用，在方法里改变这个对象是在改变这个对象本身</p>
 <p>wait和sleep的使用：</p>
 <p>synchronized修饰的代码块里(假设对象叫a)如果需要等待应该用a.wait(); 方法里需要线程sleep可以写成Thread.sleep()</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -504,12 +506,15 @@
 <th>线程调度执行run</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td></td>
 <td>不会创建新的线程。因此，它不会表现出任何并发性。</td>
 <td><code>start</code>方法会启动一个新的线程，并在该新线程的上下文中异步执行<code>run</code>方法</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 
                 
             </div>
@@ -962,7 +967,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">94.1k</span>&nbsp;字
+                class="white-color">91.1k</span>&nbsp;字
             
             
             

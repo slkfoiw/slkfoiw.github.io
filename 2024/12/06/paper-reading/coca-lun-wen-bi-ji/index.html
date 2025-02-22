@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="CuberSugar&#39;s Blog">
+    <meta name="keywords" content="CoCa论文笔记, CuberSugar&#39;s Blog">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>CuberSugar&#39;s Blog</title>
+    <title>CoCa论文笔记 | CuberSugar&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon_cube.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -246,12 +246,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title"></h1>
+                    <h1 class="description center-align post-title">CoCa论文笔记</h1>
                 </div>
             </div>
         </div>
@@ -372,6 +372,15 @@
                 </div>
                 <div class="col s5 right-align">
                     
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/paper-reading/" class="post-category">
+                                paper-reading
+                            </a>
+                        
+                    </div>
+                    
                 </div>
             </div>
 
@@ -379,7 +388,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2025-02-21
+                    2024-12-06
                 </div>
                 
 
@@ -388,7 +397,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    244
+                    1.1k
                 </div>
                 
 
@@ -408,24 +417,71 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wzk4869/article/details/131744115">参考博客</a></p>
-<p>克隆项目</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">git clone https://github.com/facebookresearch/dinov2.git</span><br></pre></td></tr></tbody></table></figure>
-
-<p>配置环境</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">conda env create -f conda.yaml </span><br></pre></td></tr></tbody></table></figure>
-
-<p>一直卡在“Solving Environment：/“，于是改用手动安装：</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">conda create -n dinov2 python=3.9 -y</span><br><span class="line">conda activate dinov2</span><br><span class="line">conda install pytorch==2.0.0 torchvision==0.15.0 torchaudio==2.0.0 pytorch-cuda=11.7 -c pytorch -c nvidia</span><br><span class="line">conda install omegaconf torchmetrics=0.10.3 fvcore iopath</span><br><span class="line">pip install git+https://github.com/facebookincubator/submitit</span><br><span class="line">pip install --extra-index-url https://pypi.nvidia.com cuml-cu11</span><br></pre></td></tr></tbody></table></figure>
-
-<p>使用手动拆解安装过程，发现命令conda install pytorch=2.0.0 torchvision=0.15.0 pytorch-cuda=11.7导致环境解析卡住，该如何解决</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">pip install torch==2.0.0 torchvision==0.15.1 torchaudio==2.0.1</span><br><span class="line">pip install omegaconf torchmetrics==0.10.3 fvcore iopath</span><br><span class="line">pip install git+https://github.com/facebookincubator/submitit</span><br></pre></td></tr></tbody></table></figure>
-
-<p>配置Vicuna</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">git clone https://github.com/fredi-python/llama.cpp.git &amp;&amp; cd llama.cpp &amp;&amp; make -j &amp;&amp; cd models &amp;&amp; wget -c https://huggingface.co/TheBloke/vicuna-7B-v1.5-GGUF/resolve/main/vicuna-7b-v1.5.Q4_K_M.gguf</span><br></pre></td></tr></tbody></table></figure>
-
-<p>运行13B模型示例:</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">cd ..</span><br><span class="line">./main -m models/vicuna-7b-v1.5.Q4_K_M.gguf --repeat_penalty 1.0 --color -i -r "User:" -f prompts/chat-with-vicuna-v1.txt</span><br></pre></td></tr></tbody></table></figure>
+                <h1 id="CoCa：Contrastive-Captioner"><a href="#CoCa：Contrastive-Captioner" class="headerlink" title="CoCa：Contrastive Captioner"></a>CoCa：Contrastive Captioner</h1><p>探索<strong>大规模的预训练base模型</strong>在计算机视觉领域有重要意义，因为这些模型可以快速转移到许多下游任务中。</p>
+<h2 id="现有的三种基础模型训练方法"><a href="#现有的三种基础模型训练方法" class="headerlink" title="现有的三种基础模型训练方法"></a>现有的三种基础模型训练方法</h2><h3 id="1-单编码模型single-encoder-models"><a href="#1-单编码模型single-encoder-models" class="headerlink" title="1. 单编码模型single-encoder models"></a>1. 单编码模型single-encoder models</h3><p>只有图像编码器，生成视觉表示。使用人工标注的干净数据集</p>
+<p>用途：可以被用到图像和视频理解的下游任务。</p>
+<p>局限：这种模型<strong>严重依赖图像标注</strong>作为标签向量，而不吸收自然语言知识，阻碍了它们在涉及视觉和语言模式的下游任务中的应用。</p>
+<h2 id="2-双编码模型dual-encoder-models"><a href="#2-双编码模型dual-encoder-models" class="headerlink" title="2. 双编码模型dual-encoder models"></a>2. 双编码模型dual-encoder models</h2><p>可以使用有噪声的网络数据，可以在有噪声的图像-文本对上用对比损失预训练两个编码器。</p>
+<p>用途：除了用于视觉任务的视觉嵌入外，由此产生的双编码器模型还可以将文本embedding<strong>编码到相同的潜在空间</strong>，从而实现新的跨模态对齐功能，如零样本图像分类和图像-文本检索。</p>
+<p>局限：这种模型并不直接适用于联合视觉-语言理解任务，如视觉问题回答（VQA），因为缺少联合组件来学习融合的图像和文本表示。</p>
+<h2 id="3-编码-解码模型encoder-decoder-models"><a href="#3-编码-解码模型encoder-decoder-models" class="headerlink" title="3. 编码-解码模型encoder-decoder models"></a>3. 编码-解码模型encoder-decoder models</h2><p>是生成式预训练模型，可以<strong>联合学习视觉和多模态的特征</strong>。在预训练期间，该模型在编码器端编码图像，在解码器输出端计算LM(Language Model)损失。</p>
+<p>用途：对于下游任务，解码器的输出可以用作多模态理解任务的联合表示。</p>
+<p>局限：虽然通过预先训练的编码器-解码器模型获得了优越的视觉语言结果，但它们不产生与图像embedding对齐的纯文本表示，因此在跨模态对齐任务中不可行和效率较低。</p>
+<h2 id="CoCa基本特点"><a href="#CoCa基本特点" class="headerlink" title="CoCa基本特点"></a>CoCa基本特点</h2><p>CoCa统一了上面三种方法的范式，并训练了一个包含这三种方法的模型能力的图像-文本基础模型。</p>
+<ul>
+<li>是一个结合了<strong>对比损失</strong>和<strong>字幕损失</strong>的图像-文本 编码-解码基础模型，因此具备使用<strong>对比</strong>方法的模型能力和<strong>生成</strong>方法的模型能力。</li>
+<li>两个训练目标共享相同的计算图（computational graph），开销小</li>
+<li>在人工标注图像和噪声图像文本数据上都进行训练，训练是<strong>端到端和从头开始的预训练</strong>。通过将所有标签简单地视为文本，无缝地统一了表示学习的自然语言监督。</li>
+<li>在广泛的下游任务上通过零样本迁移或minimal task adaptation有很好的表现。</li>
+</ul>
+<h2 id="具体方法"><a href="#具体方法" class="headerlink" title="具体方法"></a>具体方法</h2><p>作者首先回顾了三个不同方式使用自然语言监督的基础模型：单编码器分类预训练、双编码器对比学习和编码器解码器图像字幕。然后引入了CoCa，它们在一个简单的架构下同时具有对比学习和图像到字幕生成的优点。进一步讨论了CoCa模型如何通过zero-shot transfer或minimal task adaptation快速转移到下游任务。</p>
+<h3 id="三种用自然语言监督的基础模型"><a href="#三种用自然语言监督的基础模型" class="headerlink" title="三种用自然语言监督的基础模型"></a>三种用自然语言监督的基础模型</h3><h4 id="1-Single-Encoder-Classification"><a href="#1-Single-Encoder-Classification" class="headerlink" title="1. Single-Encoder Classification"></a>1. Single-Encoder Classification</h4><p>用交叉熵损失计算：</p>
+<script type="math/tex; mode=display">
+\mathcal{L}_{cls} = -p(y)\log{q_{\theta}(x)}</script><p>$ p(y)$ 是 GT 标签的 one-hot、multi-hot 或平滑分布， $q_θ(x)$ 是以$ θ $为参数的模型在输入 $x$ 时的预测结果</p>
+<h4 id="2-Dual-Encoder-Contrastive-Learning"><a href="#2-Dual-Encoder-Contrastive-Learning" class="headerlink" title="2. Dual-Encoder Contrastive Learning"></a>2. Dual-Encoder Contrastive Learning</h4><script type="math/tex; mode=display">
+\mathcal{L}_{Con} = - \frac{1}{N} (\sum_{i}^{N} \log{\frac{exp(x_i^{T}y_i/\sigma)}{\sum_{j=1}^{N} exp(x_i^{T}y_j/\sigma)}} + \sum_{i}^{N} \log{\frac{exp(y_i^{T}x_i/\sigma)}{\sum_{j=1}^{N} exp(y_i^{T}x_j/\sigma)}})</script><p>$x_i$代表第i个图像-文本对的图像embeddings(归一化的)，$y_i$代表第i个图像-文本对的文本embeddings(归一化的)。式子括号里前半部分是计算image-to-text，后半部分是text-to-imge。$N$是batch size</p>
+<h4 id="3-Encoder-Decoder-Captioning"><a href="#3-Encoder-Decoder-Captioning" class="headerlink" title="3. Encoder-Decoder Captioning"></a>3. Encoder-Decoder Captioning</h4><p>图像编码器提供潜在的编码特征，文本解码器学习在前向自回归分解（ forward autoregressive factorization）下最大化成对文本$y$的条件似然：</p>
+<script type="math/tex; mode=display">
+\mathcal{L}_{Cap} = - \sum_{t=1}^{T} \log{P_{\theta}(y_t | y_{<t}, x)}</script><p>利用teacher-forcing对编-解码器进行训练，以并行化计算和学习效率最大化。与之前的方法不同，字幕处理器方法产生了一个联合的图像-文本表示，可以用于视觉语言理解，并且也能够通过自然语言生成图像字幕应用程序。</p>
+<blockquote>
+<p>自回归：在训练过程中使用模型自身的预测结果作为输入</p>
+<p>teacher-forcing: 在训练过程中使用真实的输出序列作为输入。在Teacher Forcing模式下，模型在每个timesteps t预测输出后，不是将这个预测值用作时间t+1的输入，而是使用真实的数据，即目标序列在时间t+1的真实值。这样，即使前一个预测不准确，网络也可以在准确的数据指导下继续学习‌12。这种方法可以防止错误的累积和传播，使得训练过程更加稳定‌</p>
+</blockquote>
+<h3 id="CoCa"><a href="#CoCa" class="headerlink" title="CoCa"></a>CoCa</h3><p><img src="../../images/deepLearning/CoCa结构.png" alt="CoCa结构"></p>
+<p>顾名思义，在训练的时候有两个训练目标：基于对比学习的损失函数 Contrastive Loss 和基于生成式图像字幕任务的目标函数 Captioning Loss (一种生成式任务)。</p>
+<p>类似于标准的图像-文本编码解码器模型，CoCa通过神经网络编码器将图像编码为潜在表示，例如ViT，并使用causal masking transformer解码器解码文本</p>
+<blockquote>
+<p>causal mask：因果掩码或未来掩码，用于自回归模型中，以防止模型在生成序列时窥视未来的符号。这确保了给定位置的预测仅依赖于该位置之前的符号</p>
+</blockquote>
+<script type="math/tex; mode=display">
+\mathcal{L}_{CoCa} = \lambda_{Con} \mathcal{L}_{Con} + \lambda_{Cap} \mathcal{L}_{Cap}</script><p> Unimodal Text Decoder的结构和 MultiModal Text Decoder 不同，前者没有 Cross-Attention 后者有，因此前者就只是提取纯文本特征，后者学习图像文本的多模态联合表征。</p>
+<blockquote>
+<p>交叉注意力机制：计算流程类似于自注意力机制，但自注意力机制中的查询、键和值都来自同一个输入序列，而交叉注意力机制的查询和键/值来自<strong>不同的输入序列</strong>。</p>
+</blockquote>
+<p>Image Encoder 的输出 img_feature 先通过一个 Attention Pooler，分别得到 <code>con_feature</code> 和 <code>cap_feature</code>。然后，<code>con_feature</code> 和Unimodal Text Decoder 的输出 <code>[CLS] token</code> 计算对比学习的损失，<code>cap_feature</code> 和MultiModal Text Decoder的输出计算生成任务的损失，完成预训练。</p>
+<p>Pooler 是一个简单的多头注意力层，目的是把 Image Encoder 的输出 img_feature 分别转化成 [1, dim] 和 [N, dim] 维的向量。[1, dim]是con_feature(全局)，[N, dim]是cap_feature（区域级特征的多模态理解任务）</p>
+<blockquote>
+<p>我们的实验表明，一个单一的池化的图像embedding有助于视觉识别任务作为一个全局表示，而更多的视觉tokens（因此更细粒度）有利于需要区域级特征的多模态理解任务。</p>
+</blockquote>
+<p><img src="../../images/deepLearning/CoCa伪代码.png" alt="CoCa结构" style="zoom:150%;"></p>
+<ul>
+<li>Contrastive Loss 应用于 Image Encoder 和 Text Decoder 的输出端，使得二者都具备独立提取图像特征和文本特征的能力，而且学习到的是<strong>偏全局的图文表征</strong>。</li>
+<li>Captioning Loss 应用于 MultiModal Decoder 的输出端，使得其具有联合提取图像文本联合表征的能力，而且学习到的是<strong>偏细粒度的图文表征</strong>。</li>
+</ul>
+<p>和ALBEF很相似，但训练目标函数不同；ALBEF 的文本模型部分使用的都是两个 Encoder，不具备直接去做生成式任务的能力，这里用的两个Decoder。</p>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><p>从头开始训练，只有一个阶段</p>
+<p>训练数据集： JFT-3B、ALIGN(有噪声的)</p>
+<p>主要在三个下游任务进行</p>
+<ol>
+<li>zero-shot transfer, </li>
+<li>frozen-feature evaluation</li>
+<li>finetuning</li>
+<li>还提出了消融实验</li>
+</ol>
+<h3 id="视觉识别任务实验结果："><a href="#视觉识别任务实验结果：" class="headerlink" title="视觉识别任务实验结果："></a>视觉识别任务实验结果：</h3><p> frozen-feature evaluation和finetuning</p>
+<p>CoCa 在 ImageNet 上获得了新的最先进的 91.0% 的Top-1 精度，以及更好的视频动作识别结果。而且，CoCa 模型在视觉编码器中使用的参数比其他方法少得多</p>
+<h3 id="跨模态对齐任务实验结果"><a href="#跨模态对齐任务实验结果" class="headerlink" title="跨模态对齐任务实验结果"></a>跨模态对齐任务实验结果</h3><p>zero-shot</p>
+<h3 id="图像字幕和多模态理解任务"><a href="#图像字幕和多模态理解任务" class="headerlink" title="图像字幕和多模态理解任务"></a>图像字幕和多模态理解任务</h3><p>在3个主流 benchmark 上做了实验，分别是 Visual Question Answering (VQA v2), Visual Entailment (SNLI-VE), 和 Visual Reasoning (NLVR2)。在 MSCOCO Captioning 任务上微调了模型</p>
 
                 
             </div>
@@ -452,7 +508,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://slkfoiw.github.io/2025/02/21/dl/dinov2-bu-shu/">https://slkfoiw.github.io/2025/02/21/dl/dinov2-bu-shu/</a>
+                    <a href="https://slkfoiw.github.io/2024/12/06/paper-reading/coca-lun-wen-bi-ji/">https://slkfoiw.github.io/2024/12/06/paper-reading/coca-lun-wen-bi-ji/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -661,13 +717,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2025/12/03/paper-reading/blip-lun-wen-bi-ji/">
+                <a href="/2024/12/13/paper-reading/instrucblip-lun-wen-bi-ji/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="BLIP论文笔记">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="InstructBLIP论文笔记">
                         
-                        <span class="card-title">BLIP论文笔记</span>
+                        <span class="card-title">InstructBLIP论文笔记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -678,7 +734,7 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2025-12-03
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-12-13
                         </span>
                         <span class="publish-author">
                             
@@ -702,13 +758,13 @@
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2025/02/17/paper-reading/visual-prompting-for-gfss-a-multi-scale-approach-lun-wen-bi-ji/">
+                <a href="/2024/12/03/paper-reading/albef-lun-wen-bi-ji/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="Visual Prompting for GFSS A Multi-scale Approach论文笔记">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="ALBEF论文笔记">
                         
-                        <span class="card-title">Visual Prompting for GFSS A Multi-scale Approach论文笔记</span>
+                        <span class="card-title">ALBEF论文笔记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -719,7 +775,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2025-02-17
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-12-03
                             </span>
                         <span class="publish-author">
                             
@@ -861,6 +917,13 @@
 </main>
 
 
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
 
 
     <footer class="page-footer bg-color">
@@ -878,7 +941,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">94.1k</span>&nbsp;字
+                class="white-color">91.1k</span>&nbsp;字
             
             
             

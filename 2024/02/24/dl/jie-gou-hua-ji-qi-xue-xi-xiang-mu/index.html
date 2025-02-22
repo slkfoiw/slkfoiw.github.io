@@ -423,6 +423,7 @@
 <li>查准率：衡量预测的准确性。如：分类器标记为猫的例子中，有多少真的是猫</li>
 <li>查全率：衡量发现所有正例的能力。如：对于所有真猫图片，分类器正确识别出了多少百分比</li>
 </ul>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -431,7 +432,8 @@
 <th>预测为负例</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>实际为正例</td>
 <td>TP</td>
 <td>FP</td>
@@ -441,12 +443,16 @@
 <td>FN</td>
 <td>TN</td>
 </tr>
-</tbody></table>
-<p>$$<br>Precision = \frac{TP}{TP + FP} \<br>Recall = \frac{TP}{TP + FN}<br>$$</p>
-<p>两种指标都要顾及到，比较方法是F1分数，公式为$\frac{2}{\frac{1}{P}+\frac{1}{R}}$(越大越好)</p>
+</tbody>
+</table>
+</div>
+<script type="math/tex; mode=display">
+Precision = \frac{TP}{TP + FP} \\
+Recall = \frac{TP}{TP + FN}</script><p>两种指标都要顾及到，比较方法是F1分数，公式为$\frac{2}{\frac{1}{P}+\frac{1}{R}}$(越大越好)</p>
 <h1 id="mAP-mean-Average-Precision-评价指标"><a href="#mAP-mean-Average-Precision-评价指标" class="headerlink" title="mAP(mean Average Precision)评价指标"></a>mAP(mean Average Precision)评价指标</h1><p>mAP是目标检测模型中常用的评价指标。</p>
-<p>首先介绍一下交并比IoU(Intersection over union)的概念，它是用来度量预测边框与实际边框的重叠程度的。<br>$$<br>IoU = \frac{预测边框与实际边框的交}{二者的并}<br>$$</p>
-<p>tips:在训练时，常常依据候选区域和标定区域 的IoU值来确定正负样本。</p>
+<p>首先介绍一下交并比IoU(Intersection over union)的概念，它是用来度量预测边框与实际边框的重叠程度的。</p>
+<script type="math/tex; mode=display">
+IoU = \frac{预测边框与实际边框的交}{二者的并}</script><p>tips:在训练时，常常依据候选区域和标定区域 的IoU值来确定正负样本。</p>
 <ol>
 <li><p>设置IoU阈值：在计算mAP之前，我们会先设置一个IoU（如0.5）阈值来判断预测是真阳性还是假阳性。</p>
 </li>
@@ -469,7 +475,7 @@
 </ul>
 <p>一般来说，如果要考虑n个指标，有时候选择其中一个做为优化指标是合理的，然后剩下都是满足指标，只需满足设定的阈值就好。</p>
 <h1 id="贝叶斯最优错误率：理论上限"><a href="#贝叶斯最优错误率：理论上限" class="headerlink" title="贝叶斯最优错误率：理论上限"></a>贝叶斯最优错误率：理论上限</h1><p>对于计算机视觉任务而言，常用人类水平的错误率估计或代替贝叶斯错误率/贝叶斯最优错误率</p>
-<p>$$可避免误差=贝叶斯错误率（的估计）-训练错误率$$<br>如果想要提升机器学习系统的性能，建议关注训练错误率和贝叶斯错误率的距离（可避免误差）以及开发错误率和训练错误率的距离（方差），然后针对不同的问题采用不同的策略</p>
+<script type="math/tex; mode=display">可避免误差=贝叶斯错误率（的估计）-训练错误率</script><p>如果想要提升机器学习系统的性能，建议关注训练错误率和贝叶斯错误率的距离（可避免误差）以及开发错误率和训练错误率的距离（方差），然后针对不同的问题采用不同的策略</p>
 <p>解决可避免误差的常用方法：</p>
 <ul>
 <li>Train Bigger model</li>
@@ -483,7 +489,7 @@
 <li>NN archtecture / hyperparameters search</li>
 </ul>
 <h1 id="进行错误分析-error-analysis"><a href="#进行错误分析-error-analysis" class="headerlink" title="进行错误分析(error analysis)"></a>进行错误分析(error analysis)</h1><p>找一组错误样本（可能是开发集或者测试集的），观察错误标记的样本，看看假阳性和假阴性，统计属于不同错误类型的错误数量。如此，可以知道哪些问题有改进的潜力</p>
-<h1 id="迁移学习"><a href="#迁移学习" class="headerlink" title="迁移学习"></a>迁移学习</h1><p>任务A –&gt; 任务B</p>
+<h1 id="迁移学习"><a href="#迁移学习" class="headerlink" title="迁移学习"></a>迁移学习</h1><p>任务A —&gt; 任务B</p>
 <p>预训练    微调</p>
 <p>注：</p>
 <ul>
@@ -491,7 +497,7 @@
 <li>任务A比任务B的数据多得多时，迁移学习意义更大</li>
 </ul>
 <h1 id="多任务学习"><a href="#多任务学习" class="headerlink" title="多任务学习"></a>多任务学习</h1><p>同时开始学习，试图让单个神经网络做几件事情，并且希望这里每个任务都能帮到其他所有任务</p>
-<h1 id="端到端的深度学习"><a href="#端到端的深度学习" class="headerlink" title="端到端的深度学习"></a>端到端的深度学习</h1><p>$$X \xrightarrow{直接映射} Y$$<br>注：需要足够多的数据</p>
+<h1 id="端到端的深度学习"><a href="#端到端的深度学习" class="headerlink" title="端到端的深度学习"></a>端到端的深度学习</h1><script type="math/tex; mode=display">X \xrightarrow{直接映射} Y</script><p>注：需要足够多的数据</p>
 
                 
             </div>
@@ -951,7 +957,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">94.1k</span>&nbsp;字
+                class="white-color">91.1k</span>&nbsp;字
             
             
             

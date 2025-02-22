@@ -418,7 +418,8 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><h2 id="知识蒸馏"><a href="#知识蒸馏" class="headerlink" title="知识蒸馏"></a>知识蒸馏</h2><p>把一个大的模型（教师模型）里面的知识萃取蒸馏出来，并浓缩到一个小的（学生）模型中。是一种用于模型压缩和迁移学习的技术，其主要思想是通过将一个大型模型的知识传递给一个小型模型来提高小型模型的性能。</p>
-<h2 id="软标签和硬标签"><a href="#软标签和硬标签" class="headerlink" title="软标签和硬标签"></a>软标签和硬标签</h2><table>
+<h2 id="软标签和硬标签"><a href="#软标签和硬标签" class="headerlink" title="软标签和硬标签"></a>软标签和硬标签</h2><div class="table-container">
+<table>
 <thead>
 <tr>
 <th></th>
@@ -426,7 +427,8 @@
 <th>软标签</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>定义</td>
 <td>一种离散的、确定性的类别表示方式。每个样本被赋予一个明确的、唯一的类别标签</td>
 <td>一种连续的、概率分布形式的类别表示方式。每个样本的标签是一个概率向量，表示它属于每个类别的概率。</td>
@@ -441,9 +443,12 @@
 <td></td>
 <td>软标签包含了样本与多个类别之间的相似度信息，因此它们可以使模型更加平滑地处理类别之间的边界，并减少对单一类别的过度依赖</td>
 </tr>
-</tbody></table>
-<h2 id="蒸馏温度"><a href="#蒸馏温度" class="headerlink" title="蒸馏温度"></a>蒸馏温度</h2><p>知识蒸馏中的一个超参数，它控制了模型预测的软标签分布的“软化”程度。蒸馏温度的作用是在生成软标签时引入一个温度参数，从而调整标签的相对概率分布。这个温度参数通常是一个正的实数。例如分类问题最后总是用softmax函数将输出转化为概率分布，用上蒸馏温度就变成如下形式：<br>$$<br>softmax(z/T)_i = \frac{e^{z_i/T}}{\sum_j e^{z_j/T}}<br>$$</p>
-<p>作用：</p>
+</tbody>
+</table>
+</div>
+<h2 id="蒸馏温度"><a href="#蒸馏温度" class="headerlink" title="蒸馏温度"></a>蒸馏温度</h2><p>知识蒸馏中的一个超参数，它控制了模型预测的软标签分布的“软化”程度。蒸馏温度的作用是在生成软标签时引入一个温度参数，从而调整标签的相对概率分布。这个温度参数通常是一个正的实数。例如分类问题最后总是用softmax函数将输出转化为概率分布，用上蒸馏温度就变成如下形式：</p>
+<script type="math/tex; mode=display">
+softmax(z/T)_i = \frac{e^{z_i/T}}{\sum_j e^{z_j/T}}</script><p>作用：</p>
 <p>软标签的平滑性： 增加蒸馏温度会使软标签的概率分布更平滑。较高的温度将导致更平缓的概率曲线，使得模型更容易学到相对均匀的分布。这对于小型模型的训练过程中更容易捕捉大型模型的知识，因为软标签的平滑性有助于抑制训练时的过拟合。</p>
 <p>控制标签的尖峰性： 较低的温度会使软标签的分布更接近硬标签，即更尖锐，更接近确定性。这可能使得模型更注重大型模型中预测概率最高的类别，但相对容易受到噪声的影响。</p>
 <p>控制模型的自信程度： 蒸馏温度还可以影响模型的自信度。较高的温度导致模型更不确定，而较低的温度则会使模型更自信。这可以在训练过程中控制模型的泛化行为。</p>
@@ -494,7 +499,7 @@
 <p>mmdet/models/necks/fpn.py</p>
 <p>mmdet/models/dense_heads/rpn_head.py</p>
 <p>mmdet/models/roi_heads/standard_roi_head.py</p>
-<h2 id="Q-A"><a href="#Q-A" class="headerlink" title="Q&amp;A"></a>Q&amp;A</h2><p>teacher甚至student是指代什么？</p>
+<h2 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q&amp;A"></a>Q&amp;A</h2><p>teacher甚至student是指代什么？</p>
 <blockquote>
 <p>知识蒸馏里的术语</p>
 </blockquote>
@@ -505,8 +510,9 @@
 <p>nn.BatchNorm2d和nn.LayerNorm有什么区别和联系？</p>
 <blockquote>
 <ol>
-<li><p>计算<br>$$<br>nn.BatchNorm2d : \text{E}[x]c = \frac{1}{N \times H \times W} \sum_{n=1}^N \sum_{h=1}^{H} \sum_{w=1}^{W} x_{n,c,h,w} \nn.LayerNorm : \text{E}[x]{c} = \frac{1}{H \times W}\sum_{h=1}^{H} \sum_{w=1}^{W} x_{c,h,w}<br>$$</p>
-</li>
+<li><p>计算</p>
+<script type="math/tex; mode=display">
+nn.BatchNorm2d : \text{E}[x]c = \frac{1}{N \times H \times W} \sum_{n=1}^N \sum_{h=1}^{H} \sum_{w=1}^{W} x_{n,c,h,w} \\nn.LayerNorm : \text{E}[x]{c} = \frac{1}{H \times W}\sum_{h=1}^{H} \sum_{w=1}^{W} x_{c,h,w}</script></li>
 <li><p>应用场景</p>
 <ul>
 <li>BatchNorm通常用于CNN（卷积神经网络）的卷积层之后，用于调整数据的分布，加速网络训练。由于BatchNorm依赖于mini-batch的统计数据，因此它对于较小的batch size可能不太稳定。</li>
@@ -529,9 +535,9 @@
 <p>logits（或称为分数、原始分数、未校准的输出等）是模型输出的原始、未归一化的预测值</p>
 </blockquote>
 <p>这里为什么要除以embedding向量的开方？一种初始化规则？</p>
-<p><img src="/../../images/tmp/image-20240504102504742.png" alt="image-20240504102504742"></p>
+<p><img src="../../images/tmp/image-20240504102504742.png" alt="image-20240504102504742"></p>
 <p>oake模块下base.py文件中Validator类有什么作用呢？</p>
-<p><img src="/../../images/tmp/image-20240504181309157.png" alt="image-20240504181309157"></p>
+<p><img src="../../images/tmp/image-20240504181309157.png" alt="image-20240504181309157"></p>
 <blockquote>
 <p>OKAE这三文件都可以单独运行，独立的把需要的特征提取出来保存。因为OADP中global、block和object使用的蒸馏特征在提取的时候会特别耗时，所以作者把这三个蒸馏特征的提取过程单独用这三个文件预先生成之后保存起来了，后面DP部分训练时候是直接读取的这些特征</p>
 </blockquote>
@@ -565,7 +571,6 @@
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="http://t.csdnimg.cn/RGdL1">知识蒸馏</a></p>
 <p><code>zip</code> 是 Python 的一个内置函数，用于将可迭代的对象作为参数，将对象中对应的元素打包成一个个元组，然后返回由这些元组组成的对象</p>
 <figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">for foreground, bbox in zip(foregrounds, bboxes):  </span><br><span class="line">    objects.append(self._object(image, bbox))  </span><br><span class="line">    masks.append(self._mask(foreground, bbox))</span><br><span class="line">//zip 在这里用于并行地遍历两个列表（或任何可迭代对象），确保在每次迭代中，foregrounds 和 bboxes 的对应元素都被一起处理</span><br></pre></td></tr></tbody></table></figure>
-
 
                 
             </div>
@@ -1025,7 +1030,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">94.1k</span>&nbsp;字
+                class="white-color">91.1k</span>&nbsp;字
             
             
             

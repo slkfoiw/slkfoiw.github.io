@@ -419,33 +419,29 @@
             <div id="articleContent">
                 <h2 id="yolov5前期配置和运行"><a href="#yolov5前期配置和运行" class="headerlink" title="yolov5前期配置和运行"></a>yolov5前期配置和运行</h2><p>参考资料：<a target="_blank" rel="noopener" href="http://t.csdnimg.cn/MjIs3">Yolov5训练自己的数据集（详细完整版）</a></p>
 <p>注：VOCData文件夹（可以自己命名）下的images和labels文件夹不能叫别的名字！</p>
-<p>使用镜像源安装库：</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">pip install -r requirements.txt -i  https://pypi.tuna.tsinghua.edu.cn/simple</span><br></pre></td></tr></tbody></table></figure>
-
-<p>运行train.py的命令</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">python train.py --weights weights/yolov5s.pt  --cfg models/yolov5s.yaml  --data data/myvoc.yaml --epoch 200 --batch-size 8 --img 640   --device cpu --resume True</span><br></pre></td></tr></tbody></table></figure>
-
+<p>使用镜像源安装库：<br></p><figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">pip install -r requirements.txt -i  https://pypi.tuna.tsinghua.edu.cn/simple</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>运行train.py的命令<br></p><figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">python train.py --weights weights/yolov5s.pt  --cfg models/yolov5s.yaml  --data data/myvoc.yaml --epoch 200 --batch-size 8 --img 640   --device cpu --resume True</span><br></pre></td></tr></tbody></table></figure><p></p>
 <h2 id="yolov5项目目录结构理解"><a href="#yolov5项目目录结构理解" class="headerlink" title="yolov5项目目录结构理解"></a>yolov5项目目录结构理解</h2><p>参考资料：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/669304006">YOLOv5系列(二) 解析项目目录结构(详尽)</a></p>
 <ol>
 <li>models/yolov5_.yaml:模型的配置文件，有n、s、m、l、x版本，逐渐增大（随着架构的增大，训练时间也是逐渐增大）</li>
 <li>data/hyps/hyp.scratch-_.yaml:超参数配置文件，有low、med、high版本，数据增强效果递增</li>
 </ol>
 <h2 id="训练过程"><a href="#训练过程" class="headerlink" title="训练过程"></a>训练过程</h2><p>我用git拉取了yolov5源代码（如下图，右边有点点的就是我修改了的文件）</p>
-<p><img src="/../../images/%E7%9B%AE%E5%BD%95.png" alt="dir"></p>
+<p><img src="../../images/目录.png" alt="dir"></p>
 <p>就按这个顺序依次说明</p>
 <ol>
 <li>data文件夹：新建了myvoc.yaml文件</li>
 <li>models文件夹：新建了yolo5s_well.yaml文件，复制了yolo5s里的内容，仅修改了类</li>
 <li>VOCData文件夹：存储自己的数据集，两个py文件顾名思义：用来生成训练集和验证集以及将数据集由xml转化为txt供模型训练</li>
 <li>random_search.py:没有用，可忽略</li>
-<li>train.py:修改了其中的一些参数，主要是路径修改<br><img src="/../../images/deepLearning/resume%E5%8F%82%E6%95%B0.png" alt="resume"><br>在九天上我把resume参数default改为true了，这样可以在训练意外中断后，能在之前训练的基础上继续训练，具体做法如下：</li>
+<li>train.py:修改了其中的一些参数，主要是路径修改<br><img src="../../images/deepLearning/resume参数.png" alt="resume"><br>在九天上我把resume参数default改为true了，这样可以在训练意外中断后，能在之前训练的基础上继续训练，具体做法如下：</li>
 </ol>
 <ul>
 <li>命令行里输入cd yolov5进入文件夹</li>
 <li>输入conda activate pytorch激活我配置好的虚拟环境</li>
 <li>输入nohup python train.py在原来的基础上继续训练，nohup可以把输入放到nohup.txt文件里，保证不在该界面的时候训练依然可以继续（官方文档的ReadMe有写），可以继续训练是因为我改了train.py里的参数，这么输入就可以了</li>
 </ul>
-<h2 id="数据增强"><a href="#数据增强" class="headerlink" title="数据增强"></a>数据增强</h2><h3 id="yolov5源代码中自带的数据增强方法：需激活"><a href="#yolov5源代码中自带的数据增强方法：需激活" class="headerlink" title="yolov5源代码中自带的数据增强方法：需激活"></a>yolov5源代码中自带的数据增强方法：需激活</h3><p>参考资料：<a target="_blank" rel="noopener" href="http://t.csdnimg.cn/9WOJp">YOLOv5-6.x源码分析（七）—- 数据增强之augmentations.py</a> </p>
+<h2 id="数据增强"><a href="#数据增强" class="headerlink" title="数据增强"></a>数据增强</h2><h3 id="yolov5源代码中自带的数据增强方法：需激活"><a href="#yolov5源代码中自带的数据增强方法：需激活" class="headerlink" title="yolov5源代码中自带的数据增强方法：需激活"></a>yolov5源代码中自带的数据增强方法：需激活</h3><p>参考资料：<a target="_blank" rel="noopener" href="http://t.csdnimg.cn/9WOJp">YOLOv5-6.x源码分析（七）—— 数据增强之augmentations.py</a> </p>
 <p>此篇博客详细介绍了yolov5中使用的数据增强方法，包括：</p>
 <ol>
 <li>归一化和反规范化</li>
@@ -456,7 +452,7 @@
 <li>随机透视变换</li>
 <li>cutout</li>
 <li>mixup</li>
-<li>box_candidates</li>
+<li>box_candidates </li>
 </ol>
 <p>相关文件：</p>
 <ul>
@@ -472,35 +468,32 @@
 <li>下载库:<code>pip install albumentations -i https://pypi.tuna.tsinghua.edu.cn/simple</code></li>
 </ul>
 <p>_补充说明_：</p>
-<p>“Albumentations——强大的数据增强库（图像分类、分割、关键点检测、目标检测）” <br>  “YOLOv5集成Albumentations，添加新的数据增强方法”</p>
+<p>“Albumentations——强大的数据增强库（图像分类、分割、关键点检测、目标检测）” \<br>  “YOLOv5集成Albumentations，添加新的数据增强方法”</p>
 <p>  根据augmentations.py的代码：<br>  </p><figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">class Albumentations:</span><br><span class="line">  # YOLOv5 Albumentations class (optional, only used if package is installed)</span><br></pre></td></tr></tbody></table></figure><br>  可推断必须安装albumentations库才能启动数据增强<br>  <figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">T = [</span><br><span class="line">        A.RandomResizedCrop(height=size, width=size, scale=(0.8, 1.0), ratio=(0.9, 1.11), p=0.0),</span><br><span class="line">        A.Blur(p=0.01),</span><br><span class="line">        A.MedianBlur(p=0.01),</span><br><span class="line">        A.ToGray(p=0.01),</span><br><span class="line">        A.CLAHE(p=0.01),</span><br><span class="line">        A.RandomBrightnessContrast(p=0.0),</span><br><span class="line">        A.RandomGamma(p=0.0),</span><br><span class="line">        A.ImageCompression(quality_lower=75, p=0.0),</span><br><span class="line">]  # transforms</span><br></pre></td></tr></tbody></table></figure><br>  这部分可以看到具体应用了哪些数据增强方法<p></p>
 <p><strong>2. hyp.scratch.yaml调整（可启用mixup）</strong></p>
 <ul>
-<li>方法一：直接用官方的配置文件，将train.py里–hyp参数的默认使用文件修改一下<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">parser.add_argument("--hyp", type=str, default=ROOT / "data/hyps/hyp.scratch-low.yaml", help="hyperparameters path")</span><br></pre></td></tr></tbody></table></figure>
+<li>方法一：直接用官方的配置文件，将train.py里—hyp参数的默认使用文件修改一下<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">parser.add_argument("--hyp", type=str, default=ROOT / "data/hyps/hyp.scratch-low.yaml", help="hyperparameters path")</span><br></pre></td></tr></tbody></table></figure>
 把这里的<code>hyp.scratch-low.yaml</code>换成<code>hyp.scratch-med.yaml</code>或者<code>hyp.scratch-high.yaml</code></li>
 <li>方法二：自己调整hyp.scratch.yaml文件里的参数（不太敢瞎调，或许可以找找文章参考一下别人的？）</li>
 </ul>
-<p> **<em>补充说明：</em>**Mixup是指将两张图片和其标签，按权重进行叠加，生成新的数据集和其所对应的标签。</p>
+<p> <strong>_补充说明：_</strong>Mixup是指将两张图片和其标签，按权重进行叠加，生成新的数据集和其所对应的标签。</p>
 <p>Mixup的步骤如下：</p>
 <ol>
 <li>从训练数据中随机选择两个样本，记作样本A和样本B。</li>
 <li>随机选择一个介于0和1之间的权重值λ。</li>
-<li>将样本A和样本B的特征按照权重值λ进行线性组合：mixed_feature = λ * feature_A + (1 - λ) * feature_B。</li>
-<li>将样本A和样本B的标签按照权重值λ进行线性组合：mixed_label = λ * label_A + (1 - λ) * label_B。</li>
+<li>将样本A和样本B的特征按照权重值λ进行线性组合：mixed_feature = λ <em> feature_A + (1 - λ) </em> feature_B。</li>
+<li>将样本A和样本B的标签按照权重值λ进行线性组合：mixed_label = λ <em> label_A + (1 - λ) </em> label_B。</li>
 <li>使用mixed_feature作为新的训练样本，使用mixed_label作为对应的标签</li>
 </ol>
 <p><strong>3. 启用cutout</strong></p>
-<p>把utils/dataloaders.py的被注释掉的cutout部分相关代码取消注释(光标处的下两行)<br><img src="/../../images/cutout%E4%BB%A3%E7%A0%81.png" alt="cutout代码"></p>
-<p><strong><em>补充说明：</em></strong><br>Cutout是指随机的将样本中的部分区域cut掉，并且填充0像素值，分类的结果不变</p>
+<p>把utils/dataloaders.py的被注释掉的cutout部分相关代码取消注释(光标处的下两行)<br><img src="../../images/cutout代码.png" alt="cutout代码"></p>
+<p><strong>_补充说明：_</strong><br>Cutout是指随机的将样本中的部分区域cut掉，并且填充0像素值，分类的结果不变</p>
 <h3 id="其他数据增强方法"><a href="#其他数据增强方法" class="headerlink" title="其他数据增强方法"></a>其他数据增强方法</h3><ol>
 <li>Cutmix (参考资料：<a target="_blank" rel="noopener" href="http://t.csdnimg.cn/iNl8H">数据增强方法Mixup、Cutout、CutMix、ClassMix</a>)</li>
 </ol>
 <p>  Cutmix综合了Mixup和Cutout的想法，把一张图片上的某个随机矩形区域剪裁到另一张图片上生成新图片。标签的处理和mixUp是一样的，都是按照新样本中两个原样本的比例确定新的混合标签的比例。</p>
 <h2 id="用自己训练的模型预测-推理"><a href="#用自己训练的模型预测-推理" class="headerlink" title="用自己训练的模型预测/推理"></a>用自己训练的模型预测/推理</h2><p>修改detect.py</p>
 <figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">parse_opt</span>():</span><br><span class="line">    parser = argparse.ArgumentParser()</span><br><span class="line">    parser.add_argument(<span class="string">"--weights"</span>, nargs=<span class="string">"+"</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, default=ROOT / <span class="string">"runs/train/exp1/weights/best.pt"</span>, <span class="built_in">help</span>=<span class="string">"model path or triton URL"</span>) <span class="comment">#</span></span><br><span class="line">    parser.add_argument(<span class="string">"--source"</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, default=ROOT / <span class="string">"testData/images"</span>, <span class="built_in">help</span>=<span class="string">"file/dir/URL/glob/screen/0(webcam)"</span>) <span class="comment">#</span></span><br><span class="line">    parser.add_argument(<span class="string">"--data"</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, default=ROOT / <span class="string">"data/myvoc.yaml"</span>, <span class="built_in">help</span>=<span class="string">"(optional) dataset.yaml path"</span>)</span><br><span class="line">    parser.add_argument(<span class="string">"--imgsz"</span>, <span class="string">"--img"</span>, <span class="string">"--img-size"</span>, nargs=<span class="string">"+"</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, default=[<span class="number">640</span>], <span class="built_in">help</span>=<span class="string">"inference size h,w"</span>)</span><br><span class="line">    parser.add_argument(<span class="string">"--conf-thres"</span>, <span class="built_in">type</span>=<span class="built_in">float</span>, default=<span class="number">0.25</span>, <span class="built_in">help</span>=<span class="string">"confidence threshold"</span>)</span><br><span class="line">    parser.add_argument(<span class="string">"--iou-thres"</span>, <span class="built_in">type</span>=<span class="built_in">float</span>, default=<span class="number">0.45</span>, <span class="built_in">help</span>=<span class="string">"NMS IoU threshold"</span>)</span><br><span class="line">    parser.add_argument(<span class="string">"--max-det"</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, default=<span class="number">1000</span>, <span class="built_in">help</span>=<span class="string">"maximum detections per image"</span>)</span><br><span class="line">    parser.add_argument(<span class="string">"--device"</span>, default=<span class="string">""</span>, <span class="built_in">help</span>=<span class="string">"cuda device, i.e. 0 or 0,1,2,3 or cpu"</span>)</span><br><span class="line">    parser.add_argument(<span class="string">"--view-img"</span>, action=<span class="string">"store_true"</span>, <span class="built_in">help</span>=<span class="string">"show results"</span>)</span><br><span class="line">    parser.add_argument(<span class="string">"--save-txt"</span>,  default=<span class="literal">True</span>, action=<span class="string">"store_true"</span>, <span class="built_in">help</span>=<span class="string">"save results to *.txt"</span>)</span><br><span class="line">    parser.add_argument(<span class="string">"--save-csv"</span>, action=<span class="string">"store_true"</span>, <span class="built_in">help</span>=<span class="string">"save results in CSV format"</span>)</span><br><span class="line">    parser.add_argument(<span class="string">"--save-conf"</span>,default=<span class="literal">True</span>, action=<span class="string">"store_true"</span>, <span class="built_in">help</span>=<span class="string">"save confidences in --save-txt labels"</span>)</span><br><span class="line">    parser.add_argument(<span class="string">"--save-crop"</span>, action=<span class="string">"store_true"</span>, <span class="built_in">help</span>=<span class="string">"save cropped prediction boxes"</span>)</span><br><span class="line">    parser.add_argument(<span class="string">"--nosave"</span>, action=<span class="string">"store_true"</span>, <span class="built_in">help</span>=<span class="string">"do not save images/videos"</span>)</span><br><span class="line">    parser.add_argument(<span class="string">"--classes"</span>, nargs=<span class="string">"+"</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, <span class="built_in">help</span>=<span class="string">"filter by class: --classes 0, or --classes 0 2 3"</span>)</span><br></pre></td></tr></tbody></table></figure>
-
-
-
 <p>weights: 修改为自己训练出的模型,即runs/train/exp/weights目录下的.pt文件</p>
 <p>source: 修改为自己想检测的图片集所在的目录</p>
 <p>data: 修改为data目录下自己训练时新建的.yaml(里面有训练集、验证集的文件位置和分类信息)</p>
@@ -958,7 +951,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">94.1k</span>&nbsp;字
+                class="white-color">91.1k</span>&nbsp;字
             
             
             

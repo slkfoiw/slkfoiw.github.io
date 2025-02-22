@@ -430,12 +430,12 @@
 <h3 id="LLM"><a href="#LLM" class="headerlink" title="LLM"></a>LLM</h3><p>其次，对object proposals的小样本分类是FSOD的另一个关键组件。我们建议通过在查询图像特征和类原型之间应用交叉注意来生成支持类感知的proposals。但这些proposals仍然有噪声。<strong>FSOD的关键挑战是带有噪声的proposals的小样本学习</strong>。之前的工作针对这个问题提出了几种方法，从简单的点积到更复杂的深度神经网络，目的是改进有噪声proposal的少镜头分类。</p>
 <p>在本文中，我们建议利用预先训练好的LLMs的强大的上下文学习能力来进行FSOD中上下文化的小样本proposal分类。受最近的多模态LLMs的启发，我们仔细设计了语言指令，以提示LLM对每个proposal进行分类，并提供类别和它们的视觉原型之间的映射作为输入指令的一部分。我们的模型可以通过LLM自动利用proposal和类之间的各种上下文信息，包括proposal-propasal关系、proposal-class关系和class-class关系。提取的上下文信息可以在很大程度上促进对同一查询图像的小样本proposal分类。对于模型训练，我们使用元学习对LLM进行了微调。在每个训练过程中，我们为每个类别随机抽取一些视觉样本来计算原型，这在模型训练过程中作为强大的数据增强。</p>
 <h2 id="提出的方法"><a href="#提出的方法" class="headerlink" title="提出的方法"></a>提出的方法</h2><h3 id="任务定义"><a href="#任务定义" class="headerlink" title="任务定义"></a>任务定义</h3><p>在FSDOD中，我们有两个类集合$C = C_{base} \cup C_{novel}, C_{base} \cap C_{novel} = \emptyset$。$C_{novel}$<strong>也叫做support classess，其中的样本叫support images</strong>。K-shot目标检测就是每个新类都有K个边界框注释作为训练数据。FSOD的目标是在数据丰富的基类训练数据的帮助下，使用少量的视觉示例来检测新的类，并在基类上保持良好的性能。</p>
-<h3 id="模型结构"><a href="#模型结构" class="headerlink" title="模型结构"></a>模型结构</h3><p><img src="/../../images/deepLearning/FM-FSOD2.png" alt="2"> </p>
+<h3 id="模型结构"><a href="#模型结构" class="headerlink" title="模型结构"></a>模型结构</h3><p><img src="../../images/deepLearning/FM-FSOD2.png" alt="2"> </p>
 <p>如图2所示，我们的模型主要有以下三个子模块：</p>
 <h4 id="Visual-Feature-Extraction"><a href="#Visual-Feature-Extraction" class="headerlink" title="Visual Feature Extraction"></a>Visual Feature Extraction</h4><p>为query images和support images提取特征表示。</p>
-<p>在FSOD中，query image $I_q \in \mathbb{R}^{H_{I_q} * W_{I_q} * 3}$和N-way K-shot support set $S = { { {I_{S}^{j,i}} } <em>{i=1}^{K}}</em>{j=1}^{N}$作为输入，$I_S^{j,i} \in \mathbb{R}^{H_{I_q} * W_{I_q} * 3}$。</p>
+<p>在FSOD中，query image $I_q \in \mathbb{R}^{H_{I_q} <em> W_{I_q} </em> 3}$和N-way K-shot support set $S = { { {I_{S}^{j,i}} } _{i=1}^{K}}_{j=1}^{N}$作为输入，$I_S^{j,i} \in \mathbb{R}^{H_{I_q} <em> W_{I_q} </em> 3}$。</p>
 <p>用ViT提取query image的特征表示$f_q = \mathcal{F}(I_q)$，并为后面的目标定位保留所有位置块表示。对于support set，同样用ViT提取每张support image的特征表示$f_S^{j,i} = \mathcal{F}(I_S^{j,i})$。实际上，support image会在目标对象附近被裁剪。我们使用RoIAlign根据对象的边界框注释计算对象表示$\overline{f}_S^{j,i} = RoI Align(f_S^{j,i}, box_S^{j,i})$。</p>
-<p>那么每个类的原型就是K-shot support特征的平均值${\hat{f}<em>S^j = \frac{\sum</em>{i=1}^{K} \overline{f}<em>S^{j,i}}{K}}</em>{j=1}^{N}$</p>
+<p>那么每个类的原型就是K-shot support特征的平均值${\hat{f}_S^j = \frac{\sum_{i=1}^{K} \overline{f}_S^{j,i}}{K}}_{j=1}^{N}$</p>
 <p>在本文中，我们使用预先训练过的冻结DINOv2作为我们的特征主干，原因如下：</p>
 <ol>
 <li><p>DINOv2是一种视觉专用的自监督学习模型，在大规模的curated image数据集上进行训练。全局图像级和局部块级自监督目标共同用于训练特征主干。局部块损失可以使模型对局部化敏感，这对下游检测任务很友好。</p>
@@ -446,15 +446,15 @@
 <p>使用DINOv2的一个潜在问题是，用于测试的few-shot新类可能在DINOv2预训练中看到。我们认为，预训练只学习图像表示。而如何有效地将基础模型转移到下游任务中仍有待探索，尤其是当训练前的自我监督学习任务和下游检测任务存在较大的差异时这个问题更加突出。</p>
 <h4 id="proposal-Generation"><a href="#proposal-Generation" class="headerlink" title="proposal Generation"></a>proposal Generation</h4><p>在使用DINOv2提取视觉特征后，我们使用Transformer编码器-解码器架构来生成proposal。</p>
 <p>首先在DINOv2提取的query image的块tokens上使用多层Transformer编码器。通过Transformer编码器模块，每个块token特征都被全局上下文信息丰富。采用了多尺度变形注意方法，可以加快收敛。</p>
-<p>为了生成能感知support class的proposals，我们计算类原型${\hat{f}<em>S^j}</em>{j=1}^{N}$和来自Transformer编码器的query image特征的交叉注意力，以生成能感知support class的query image特征。</p>
-<p>然后，能感知support class的query image特征和一系列随机初始化的对象查询$Q = {q_i}<em>{i=1}^{M}$作为Transformer解码器的输入。接着采用几种自注意层和交叉注意层来细化对象查询的表示$\hat{Q} = {\hat{q_i}}</em>{i=1}^{M}$，让它们逐渐收敛到相应的物体上。在Transformer解码器的顶部使用简单的线性层计算每个对象查询的边界框位置$B = {b_i}_{i=1}^M, b_i = [x,y,w,h]$。这样，我们可以为下面的few-shot proposal classification模块生成少量（在我们模型中M=300）支持类感知的对象查询（或者叫proposals）。</p>
+<p>为了生成能感知support class的proposals，我们计算类原型${\hat{f}_S^j}_{j=1}^{N}$和来自Transformer编码器的query image特征的交叉注意力，以生成能感知support class的query image特征。</p>
+<p>然后，能感知support class的query image特征和一系列随机初始化的对象查询$Q = {q_i}_{i=1}^{M}$作为Transformer解码器的输入。接着采用几种自注意层和交叉注意层来细化对象查询的表示$\hat{Q} = {\hat{q_i}}_{i=1}^{M}$，让它们逐渐收敛到相应的物体上。在Transformer解码器的顶部使用简单的线性层计算每个对象查询的边界框位置$B = {b_i}_{i=1}^M, b_i = [x,y,w,h]$。这样，我们可以为下面的few-shot proposal classification模块生成少量（在我们模型中M=300）支持类感知的对象查询（或者叫proposals）。</p>
 <h4 id="few-shot-proposal-classification"><a href="#few-shot-proposal-classification" class="headerlink" title="few-shot proposal classification"></a>few-shot proposal classification</h4><p>根据映射类别和它们的视觉原型为每个proposal进行分类</p>
 <p>在从查询图像中获得proposals以及每个类的原型表示之后，few-shot classification将proposals分类为新类之一或“空”类。我们提出利用LLM强大的上下文学习能力进行上下文化的few-shot proposal classification，通过引入上下文信息提高few-shot分类的准确性，简化设计复杂度量学习网络的工作。</p>
 <p>具体步骤：</p>
 <ol>
 <li>在LLM tokenizer加上class tokens（e.g.: <class_1>, …,<class_80>）和background class token（<class_bg>）</class_bg></class_80></class_1></li>
-<li>为LLM设计以下语言指令<em>“Please classify each of the proposals in <proposal_1>…<proposal_300>. Categories Containing,&lt;class_ 1&gt;: &lt;visual prototype&gt;… <class_80>: &lt;visual prototype&gt;. If the proposal does not belong to any of these classes, it will be classified as <class_bg>.”</class_bg></class_80></proposal_300></proposal_1></em>，以对每个proposal执行分类。</li>
-<li>用相应的proposal特征替换占位符<proposal_1>，然后用一个可训练的投影层，将维数转换为LLM中单词嵌入的维数；将&lt;visual prototype&gt;替换为相应的类原型，然后后面跟另一个投影层。其余的语言指令由LLM tokenizer使用新引入的类标记进行标记化。我们使用Vicuna作为我们的默认语言模型，这是一个仅有解码器的LLM，从Llama进行指令调整得到的。LLM将上述指令的编码后特征作为输入，并通过隐式查找输入指令中定义的类别映射表，为每个proposal生成<class_id> token。</class_id></proposal_1></li>
+<li>为LLM设计以下语言指令<em>“Please classify each of the proposals in <proposal_1>…<proposal_300>. Categories Containing,<class_ 1="">: \<visual prototype="">… <class_80>: \<visual prototype="">. If the proposal does not belong to any of these classes, it will be classified as <class_bg>.”</class_bg></visual></class_80></visual></class_></proposal_300></proposal_1></em>，以对每个proposal执行分类。</li>
+<li>用相应的proposal特征替换占位符<proposal_1>，然后用一个可训练的投影层，将维数转换为LLM中单词嵌入的维数；将\<visual prototype="">替换为相应的类原型，然后后面跟另一个投影层。其余的语言指令由LLM tokenizer使用新引入的类标记进行标记化。我们使用Vicuna作为我们的默认语言模型，这是一个仅有解码器的LLM，从Llama进行指令调整得到的。LLM将上述指令的编码后特征作为输入，并通过隐式查找输入指令中定义的类别映射表，为每个proposal生成<class_id> token。</class_id></visual></proposal_1></li>
 <li>proposal classification的输出标记与输入指令中的proposals保持相同的顺序。通过LLM对生成的标记进行解码后，我们将LLM的分类结果与proposal generation模块中的预测相结合，得到最终的检测结果。</li>
 </ol>
 <p>通过提供上述的语言说明，并提示LLM对每个proposal进行分类，我们的方法设计得很简单。更重要的是，我们的模型将所有proposal的输入与所有类的类别映射表一起使用，它可以自动利用proposal和类之间的多重关系，包括proposal-proposal关系、proposal-class关系和class-class关系。提取的上下文信息可以在很大程度上促进对同一查询图像的few-shot proposal分类。</p>
@@ -469,9 +469,9 @@
 <li>MSCOCO</li>
 </ul>
 <h3 id="主要结果"><a href="#主要结果" class="headerlink" title="主要结果"></a>主要结果</h3><p>MSCOCO数据集上的：</p>
-<p><img src="/../../images/deepLearning/FM-FSOD-t1.png" alt="t1"></p>
+<p><img src="../../images/deepLearning/FM-FSOD-t1.png" alt="t1"></p>
 <p>PASCAL VOC数据集上的</p>
-<p><img src="/../../images/deepLearning/FM-FSOD-t3.png" alt="t3"></p>
+<p><img src="../../images/deepLearning/FM-FSOD-t3.png" alt="t3"></p>
 <p>从表1中可以发现，本文的方法明显优于传统的基于Faster R-CNN的FSOD模型，特别是对于shot数量相对较多的设置。这验证了对FSOD使用大型基础模型的有效性。基于DETR的方法通常比基于Faster R-CNN的方法有更好的结果。同样地，我们在更大数量的shot中观察到较大的性能提高，但是也有两种方法（FS-DETR、Meta-DETR）在1次和2次shot上AP50都优于我们的模型。我们认为，这是因为LLM很难用如此少的训练数据进行调整，而且我们不像FS-DETR那样使用外部数据集来进行FSOD训练。未来可能的工作是引入外部数据集用于检测训练，并探索在小数据下使用LLM的有效训练。类似的性能比较见表3。</p>
 
                 
@@ -908,6 +908,13 @@
 </main>
 
 
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
 
 
     <footer class="page-footer bg-color">
@@ -925,7 +932,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">94.1k</span>&nbsp;字
+                class="white-color">91.1k</span>&nbsp;字
             
             
             

@@ -501,14 +501,14 @@
 </li>
 </ul>
 <h3 id="RefreshTokenAspect-java-和-RequestAuthenticationFilter-java的区别"><a href="#RefreshTokenAspect-java-和-RequestAuthenticationFilter-java的区别" class="headerlink" title="RefreshTokenAspect.java 和 RequestAuthenticationFilter.java的区别"></a><code>RefreshTokenAspect.java</code> 和 <code>RequestAuthenticationFilter.java</code>的区别</h3><ol>
-<li><p>**<code>RefreshTokenAspect.java</code>**：</p>
+<li><p><strong><code>RefreshTokenAspect.java</code></strong>：</p>
 <ul>
 <li><strong>作用</strong>：这是一个AOP切面，用于在控制器方法执行后，检查并添加新的访问令牌（access token）和刷新令牌（refresh token）。它会从Redis或请求头中读取token，并将其添加到响应结果中。</li>
 <li><strong>应用场景</strong>：当用户成功登录或刷新token时，系统会在响应中返回新的access token和refresh token。</li>
 <li><strong>请求例子</strong>：用户登录成功后，系统会返回一个包含新的access token和refresh token的响应。</li>
 </ul>
 </li>
-<li><p>**<code>RequestAuthenticationFilter.java</code>**：</p>
+<li><p><strong><code>RequestAuthenticationFilter.java</code></strong>：</p>
 <ul>
 <li><strong>作用</strong>：这是一个过滤器，用于在每个请求到达服务器时，验证请求中的access token。如果access token过期，则尝试使用refresh token生成新的access token和refresh token，并将其保存到Redis中。</li>
 <li><strong>应用场景</strong>：当用户发起需要身份验证的请求时，系统会检查请求中的access token，如果过期则使用refresh token重新生成token。</li>
@@ -607,16 +607,15 @@
 <figure class="highlight java"><table><tbody><tr><td class="code"><pre><span class="line">Page&lt;T&gt; <span class="title function_">page</span><span class="params">(Page&lt;T&gt; page)</span>;</span><br><span class="line"><span class="comment">// 假设要进行无条件的分页查询，每页显示10条记录，查询第1页</span></span><br><span class="line">IPage&lt;User&gt; page = <span class="keyword">new</span> <span class="title class_">Page</span>&lt;&gt;(<span class="number">1</span>, <span class="number">10</span>);</span><br><span class="line">IPage&lt;User&gt; userPage = userService.page(page); <span class="comment">// 调用 page 方法</span></span><br><span class="line">List&lt;User&gt; userList = userPage.getRecords();</span><br><span class="line"><span class="type">long</span> <span class="variable">total</span> <span class="operator">=</span> userPage.getTotal();</span><br><span class="line">System.out.println(<span class="string">"Total users: "</span> + total);</span><br><span class="line"><span class="keyword">for</span> (User user : userList) {</span><br><span class="line">    System.out.println(<span class="string">"User: "</span> + user);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li><p><strong>根据条件分页查询数据</strong>：</p>
-<figure class="highlight java"><table><tbody><tr><td class="code"><pre><span class="line">Page&lt;T&gt; <span class="title function_">page</span><span class="params">(Page&lt;T&gt; page, Wrapper&lt;T&gt; queryWrapper)</span>;</span><br></pre></td></tr></tbody></table></figure></li>
+<figure class="highlight java"><table><tbody><tr><td class="code"><pre><span class="line">Page&lt;T&gt; <span class="title function_">page</span><span class="params">(Page&lt;T&gt; page, Wrapper&lt;T&gt; queryWrapper)</span>;</span><br></pre></td></tr></tbody></table></figure>
+</li>
 </ol>
 <p>这些方法提供了对数据库进行增删改查的基本操作。</p>
 <h2 id="sql映射"><a href="#sql映射" class="headerlink" title="sql映射"></a>sql映射</h2><p>在 MyBatis 中，可以通过在映射文件中定义 SQL 语句，并将其与 Java 接口方法关联起来。以下是一个简单的例子，展示了如何在 <code>BUserMapper.xml</code> 文件中定义 SQL 语句，并将其与 <code>BUserMapper</code> 接口中的方法进行映射。</p>
 <p>首先，定义 <code>BUserMapper</code> 接口：</p>
 <figure class="highlight java"><table><tbody><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.mysecurity.dao;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.mysecurity.model.BUser;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.annotations.Select;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">BUserMapper</span> {</span><br><span class="line">    <span class="meta">@Select("SELECT * FROM b_user WHERE username = #{username}")</span></span><br><span class="line">    BUser <span class="title function_">findByUsername</span><span class="params">(String username)</span>;</span><br><span class="line"></span><br><span class="line">    List&lt;BUser&gt; <span class="title function_">findAll</span><span class="params">()</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-
 <p>然后，在 <code>BUserMapper.xml</code> 文件中定义 SQL 语句：</p>
 <figure class="highlight xml"><table><tbody><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span>?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">mapper</span> <span class="keyword">PUBLIC</span> <span class="string">"-//mybatis.org//DTD Mapper 3.0//EN"</span> <span class="string">"http://mybatis.org/dtd/mybatis-3-mapper.dtd"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">"com.example.mysecurity.dao.BUserMapper"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 定义 findAll 方法的 SQL 语句 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"findAll"</span> <span class="attr">resultType</span>=<span class="string">"com.example.mysecurity.model.BUser"</span>&gt;</span></span><br><span class="line">        SELECT * FROM b_user</span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
-
 <p>在这个例子中：</p>
 <ol>
 <li><code>BUserMapper</code> 接口中定义了两个方法：<code>findByUsername</code> 和 <code>findAll</code>。</li>
@@ -625,7 +624,6 @@
 </ol>
 <p>通过这种方式，MyBatis 可以根据接口方法调用相应的 SQL 语句。</p>
 <h2 id="logaspect"><a href="#logaspect" class="headerlink" title="logaspect"></a>logaspect</h2><figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">package com.example.dorm.aspect;</span><br><span class="line"></span><br><span class="line">import com.example.dorm.entity.AccessLog;</span><br><span class="line">import com.example.dorm.mapper.LogMapper;</span><br><span class="line">import org.aspectj.lang.ProceedingJoinPoint;</span><br><span class="line">import org.aspectj.lang.annotation.Around;</span><br><span class="line">import org.aspectj.lang.annotation.Aspect;</span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.security.core.Authentication;</span><br><span class="line">import org.springframework.security.core.context.SecurityContextHolder;</span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line">import org.springframework.web.context.request.RequestContextHolder;</span><br><span class="line">import org.springframework.web.context.request.ServletRequestAttributes;</span><br><span class="line"></span><br><span class="line">import javax.servlet.http.HttpServletRequest;</span><br><span class="line">import java.time.LocalDateTime;</span><br><span class="line"></span><br><span class="line">@Aspect</span><br><span class="line">@Component</span><br><span class="line">public class LogAspect {</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private LogMapper LogMapper;</span><br><span class="line"></span><br><span class="line">    @Around("execution(* com.example.dorm.controller.*.*(..))")  // 拦截 controller 包下的所有方法</span><br><span class="line">    public Object logAccess(ProceedingJoinPoint joinPoint) throws Throwable {</span><br><span class="line">        // 获取用户信息，这里假设用户ID和IP可以通过 Security Context 获取</span><br><span class="line">        String username = getUserIdFromContext();</span><br><span class="line">        String userIp = getUserIp();</span><br><span class="line"></span><br><span class="line">        // 获取访问的页面</span><br><span class="line">        String accessedPage = joinPoint.getSignature().toString();</span><br><span class="line"></span><br><span class="line">        // 获取操作类型（假设可以通过请求方法获取）</span><br><span class="line">        String actionType = getRequestActionType();  // 比如 GET, POST 等</span><br><span class="line"></span><br><span class="line">        // 创建并保存访问日志</span><br><span class="line">        AccessLog accessLog = new AccessLog();</span><br><span class="line">        accessLog.setUsername(username);</span><br><span class="line">        accessLog.setUserIp(userIp);</span><br><span class="line">        accessLog.setAccessedPage(accessedPage);</span><br><span class="line">        accessLog.setDate(LocalDateTime.now());</span><br><span class="line">        accessLog.setType(actionType);</span><br><span class="line"></span><br><span class="line">        // 保存日志</span><br><span class="line">        LogMapper.insert(accessLog);</span><br><span class="line"></span><br><span class="line">        return joinPoint.proceed();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    private String getUserIdFromContext() {</span><br><span class="line">        // 从 Spring Security 获取当前用户的 ID</span><br><span class="line">        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();</span><br><span class="line">        return authentication.getName(); // 假设用户名是用户 ID</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    private String getUserIp() {</span><br><span class="line">        // 获取用户的 IP 地址，通常通过 HTTP 请求头获取</span><br><span class="line">        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();</span><br><span class="line">        return request.getRemoteAddr();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    private String getRequestActionType() {</span><br><span class="line">        // 通过 HTTP 请求方法获取操作类型，例如 GET、POST 等</span><br><span class="line">        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();</span><br><span class="line">        return request.getMethod();</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
-
 
                 
             </div>
@@ -861,13 +859,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2024/12/01/db/db-di-wu-zhang-shi-yan-zuo-ye/">
+                <a href="/2024/12/01/db/db-di-san-zhang-zuo-ye/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="db第五章实验作业">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="db第三章作业">
                         
-                        <span class="card-title">db第五章实验作业</span>
+                        <span class="card-title">db第三章作业</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -902,13 +900,13 @@
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2024/12/01/db/springboot/">
+                <a href="/2024/12/01/db/shuang-token/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="springboot">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="双token">
                         
-                        <span class="card-title">springboot</span>
+                        <span class="card-title">双token</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1078,7 +1076,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">94.1k</span>&nbsp;字
+                class="white-color">91.1k</span>&nbsp;字
             
             
             

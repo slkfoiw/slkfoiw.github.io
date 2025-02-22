@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="项目编译成pyc运行流程, CuberSugar&#39;s Blog">
+    <meta name="keywords" content="BLIP论文笔记, CuberSugar&#39;s Blog">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>项目编译成pyc运行流程 | CuberSugar&#39;s Blog</title>
+    <title>BLIP论文笔记 | CuberSugar&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon_cube.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -246,12 +246,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">项目编译成pyc运行流程</h1>
+                    <h1 class="description center-align post-title">BLIP论文笔记</h1>
                 </div>
             </div>
         </div>
@@ -375,8 +375,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/deepLearning/" class="post-category">
-                                deepLearning
+                            <a href="/categories/paper-reading/" class="post-category">
+                                paper-reading
                             </a>
                         
                     </div>
@@ -388,7 +388,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2025-12-21
+                    2024-12-03
                 </div>
                 
 
@@ -397,7 +397,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    143
+                    753
                 </div>
                 
 
@@ -417,21 +417,22 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <ol>
-<li><p>使用<code>comileall</code>编译<code>oadp/dp</code>下的所有文件</p>
-<p>例如：</p>
-<figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> compileall <span class="keyword">as</span> ca</span><br><span class="line"></span><br><span class="line">ca.compile_dir(<span class="string">r'oadp/dp'</span>)</span><br></pre></td></tr></tbody></table></figure>
-</li>
-<li><p>需要删掉/移除到原本的py文件，并将<code>dp/__pycache__</code>下的所有文件移到dp/下，并重新命名，去掉文件名中的<code>cpython-310</code></p>
-</li>
+                <h2 id="预训练"><a href="#预训练" class="headerlink" title="预训练"></a>预训练</h2><p><img src="../../images/deepLearning/BLIP框架图.png" alt="BLIP框架图"></p>
+<ol>
+<li>图像编码器：ViT的架构。将输入图像分割成一个个的 Patch 并将它们编码为一系列 Image Embedding，并使用额外的 [CLS] token 来表示全局的图像特征。</li>
+<li>文本编码器：BERT 的架构。[CLS] token 附加到文本输入的开头以总结句子。作用是提取文本特征做对比学习。</li>
+<li>基于图像的文本编码器：使用 Cross-Attention，作用是根据 ViT 给的图片特征和文本输入做二分类，所以使用的是编码器，且注意力部分是双向的 Self-Attention。添加一个额外的 [Encode] token，作为图像文本的联合特征。</li>
+<li>基于图像的文本解码器：使用 Cross-Attention，作用是根据 ViT 给的图片特征和文本输入做文本生成的任务，所以使用的是解码器，且注意力部分是 Casual-Attention，目标是预测下一个 token。添加一个额外的 [Decode] token 和结束 token，作为生成结果的起点和终点。</li>
 </ol>
-<figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rename_files_in_directory</span>(<span class="params">directory_path</span>):</span><br><span class="line">    <span class="keyword">for</span> filename <span class="keyword">in</span> os.listdir(directory_path):</span><br><span class="line">        <span class="keyword">if</span> <span class="string">".cpython-310"</span> <span class="keyword">in</span> filename:</span><br><span class="line">            new_filename = filename.replace(<span class="string">".cpython-310"</span>, <span class="string">""</span>)</span><br><span class="line">            old_file_path = os.path.join(directory_path, filename)</span><br><span class="line">            new_file_path = os.path.join(directory_path, new_filename)</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                os.rename(old_file_path, new_file_path)</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">f"Renamed: <span class="subst">{filename}</span> -&gt; <span class="subst">{new_filename}</span>"</span>)</span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">f"Error renaming <span class="subst">{filename}</span>: <span class="subst">{e}</span>"</span>)</span><br><span class="line"></span><br><span class="line">directory_path = <span class="string">"oadp/dp/"</span></span><br><span class="line"></span><br><span class="line">rename_files_in_directory(directory_path)</span><br></pre></td></tr></tbody></table></figure>
-
-
-
-<ol start="2">
-<li>运行命令和之前一样，例如<code>torchrun --nproc_per_node=1 -m oadp.dp.train oadp_ori_ov_coco configs/dp/oadp_ov_coco.py</code></li>
-</ol>
+<p>（相同颜色的部分参数共享）</p>
+<h3 id="三个训练目标"><a href="#三个训练目标" class="headerlink" title="三个训练目标"></a>三个训练目标</h3><h4 id="对比学习损失-Image-Text-Contrastive-Loss-ITC"><a href="#对比学习损失-Image-Text-Contrastive-Loss-ITC" class="headerlink" title="对比学习损失 (Image-Text Contrastive Loss, ITC)"></a>对比学习损失 (Image-Text Contrastive Loss, ITC)</h4><p>目标是对齐视觉和文本的特征空间。方法是使得正样本图文对的相似性更大，负样本图文对的相似性更低，在 ALBEF 里面也有使用到。使用了 ALBEF 中的动量编码器，它的目的是产生一些伪标签，辅助模型的训练。</p>
+<h4 id="图像-文本匹配损失-Image-Text-Matching-Loss-ITM"><a href="#图像-文本匹配损失-Image-Text-Matching-Loss-ITM" class="headerlink" title="图像-文本匹配损失(Image-Text Matching Loss, ITM)"></a>图像-文本匹配损失(Image-Text Matching Loss, ITM)</h4><p>目标是学习图像文本的联合表征，以捕获视觉和语言之间的细粒度对齐。ITM 是一个二分类任务，使用一个分类头来预测图像文本对是正样本还是负样本。使用了 ALBEF 中的 hard negative mining 技术。</p>
+<h4 id="语言模型损失-Language-Modeling-Loss-LM"><a href="#语言模型损失-Language-Modeling-Loss-LM" class="headerlink" title="语言模型损失 (Language Modeling Loss, LM)"></a>语言模型损失 (Language Modeling Loss, LM)</h4><p>BLIP 包含解码器，用于生成任务，因此需要一个针对于生成任务的语言模型损失。目标是根据给定的图像以自回归方式来生成关于文本的描述。与 VLP 中广泛使用的 MLM 损失 (完形填空) 相比，LM 使模型能够将视觉信息转换为连贯的字幕。</p>
+<h2 id="CapFilt"><a href="#CapFilt" class="headerlink" title="CapFilt"></a>CapFilt</h2><p>为了高效率利用噪声网络数据。</p>
+<p><img src="../../images/deepLearning/BLIP-CapFilt.png" alt="CapFilt"></p>
+<h3 id="字幕器-Captioner"><a href="#字幕器-Captioner" class="headerlink" title="字幕器 Captioner"></a>字幕器 Captioner</h3><p>给一张网络图片，生成字幕。是一个基于视觉的文本解码器，使用 LM Loss微调。给定网络图片 $I_w $，Captioner 生成字幕 $T_s$ 。</p>
+<h3 id="过滤器-Filter"><a href="#过滤器-Filter" class="headerlink" title="过滤器 Filter"></a>过滤器 Filter</h3><p>过滤掉噪声图文对。是一个基于视觉的文本编码器，看文本是否与图像匹配，使用 ITC 和 ITM 微调。Filter 删除原始 Web 文本 $T_w$ 和合成文本 $T_s$ 中的噪声文本，如果 ITM 头将其预测为与图像不匹配，则认为文本有噪声。</p>
+<p>最后，将过滤后的图像-文本对与人工注释对相结合，形成一个新的数据集，用它来预训练一个新的模型。</p>
 
                 
             </div>
@@ -458,7 +459,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://slkfoiw.github.io/2025/12/21/dl/xiang-mu-bian-yi-cheng-pyc-yun-xing-liu-cheng/">https://slkfoiw.github.io/2025/12/21/dl/xiang-mu-bian-yi-cheng-pyc-yun-xing-liu-cheng/</a>
+                    <a href="https://slkfoiw.github.io/2024/12/03/paper-reading/blip-lun-wen-bi-ji/">https://slkfoiw.github.io/2024/12/03/paper-reading/blip-lun-wen-bi-ji/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -663,18 +664,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;Current
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2025/12/21/dl/xiang-mu-bian-yi-cheng-pyc-yun-xing-liu-cheng/">
+                <a href="/2024/12/03/paper-reading/albef-lun-wen-bi-ji/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="项目编译成pyc运行流程">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="ALBEF论文笔记">
                         
-                        <span class="card-title">项目编译成pyc运行流程</span>
+                        <span class="card-title">ALBEF论文笔记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -684,22 +684,21 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2025-12-21
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-12-03
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/deepLearning/" class="post-category">
-                                    deepLearning
+                            <a href="/categories/paper-reading/" class="post-category">
+                                    paper-reading
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
@@ -710,13 +709,13 @@
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2025/12/13/paper-reading/instrucblip-lun-wen-bi-ji/">
+                <a href="/2024/12/01/compiler/dai-ma-you-hua/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="InstructBLIP论文笔记">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="代码优化文档">
                         
-                        <span class="card-title">InstructBLIP论文笔记</span>
+                        <span class="card-title">代码优化文档</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -727,14 +726,14 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2025-12-13
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-12-01
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/paper-reading/" class="post-category">
-                                    paper-reading
+                            <a href="/categories/compiler/" class="post-category">
+                                    compiler
                                 </a>
                             
                             
@@ -869,6 +868,13 @@
 </main>
 
 
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
 
 
     <footer class="page-footer bg-color">
@@ -886,7 +892,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">94.1k</span>&nbsp;字
+                class="white-color">91.1k</span>&nbsp;字
             
             
             

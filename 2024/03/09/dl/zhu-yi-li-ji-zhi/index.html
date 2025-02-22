@@ -427,8 +427,13 @@
 <li>值向量Value：物体本身的特征向量，通常和Key成对出现</li>
 </ol>
 <h1 id="具体过程"><a href="#具体过程" class="headerlink" title="具体过程"></a>具体过程</h1><p>对于每一个Query，计算所有Key与它的相关性，然后根据这个相关性去找对应的Value（Key、Value成对出现），Query和Key相关性高的其对应Value要重点关注（分配更高的注意力权重）。</p>
-<p>计算Key与Query的相关性<br>$$<br>scores_i = Query \cdot Key_i<br>$$<br>softmax进行归一化，得到权重系数<br>$$<br>\alpha_i = softmax(scores_i) = \frac{e^{scores_i}}{\sum_{j=1}^{Lx} e^{scores_j}}<br>$$<br>对Value进行加权求和，得到Attetion Value<br>$$<br>Attetion = \sum_{i=1}^{Lx} \alpha_i \cdot Value_i<br>$$</p>
-<h2 id="自注意力机制"><a href="#自注意力机制" class="headerlink" title="自注意力机制"></a>自注意力机制</h2><p>提出背景：输入向量大小不一，并且不同向量之间有一定的关系，但是实际训练的时候无法充分发挥这些输入之间的关系，导致模型训练结果效果不好。</p>
+<p>计算Key与Query的相关性</p>
+<script type="math/tex; mode=display">
+scores_i = Query \cdot Key_i</script><p>softmax进行归一化，得到权重系数</p>
+<script type="math/tex; mode=display">
+\alpha_i = softmax(scores_i) = \frac{e^{scores_i}}{\sum_{j=1}^{Lx} e^{scores_j}}</script><p>对Value进行加权求和，得到Attetion Value</p>
+<script type="math/tex; mode=display">
+Attetion = \sum_{i=1}^{Lx} \alpha_i \cdot Value_i</script><h2 id="自注意力机制"><a href="#自注意力机制" class="headerlink" title="自注意力机制"></a>自注意力机制</h2><p>提出背景：输入向量大小不一，并且不同向量之间有一定的关系，但是实际训练的时候无法充分发挥这些输入之间的关系，导致模型训练结果效果不好。</p>
 <p>特色：让机器注意到整个输入中不同部分之间的相关性。是一组元素内部相互做注意力机制，因此自注意力机制也叫做内部注意力机制。</p>
 <p>实现过程：Q、K、V是同一个东西，或者三者来源于同一个输入X。</p>
 <ol>
@@ -438,7 +443,6 @@
 <li>用权重乘每个Value，最终得到输出向量Z</li>
 </ol>
 <figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line"># 自注意力机制</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line">def soft_max(z):</span><br><span class="line">    t = np.exp(z)</span><br><span class="line">    a = np.exp(z) / np.expand_dims(np.sum(t, axis=1), 1)</span><br><span class="line">    return a</span><br><span class="line"></span><br><span class="line"># 每一行为一个序列单元的查询向量</span><br><span class="line">Query = np.array([</span><br><span class="line">    [1,0,2],</span><br><span class="line">    [2,2,2],</span><br><span class="line">    [2,1,3]</span><br><span class="line">]) </span><br><span class="line"></span><br><span class="line"># 每一行为一个查询单元的键向量</span><br><span class="line">Key = np.array([</span><br><span class="line">    [0,1,1],</span><br><span class="line">    [4,4,0],</span><br><span class="line">    [2,3,1]</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"># 每一行为一个查询单元的值向量</span><br><span class="line">Value = np.array([</span><br><span class="line">    [1,2,3],</span><br><span class="line">    [2,8,0],</span><br><span class="line">    [2,6,3]</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line">scores = Query @ Key.T # 计算每一个序列单元的分数，即代表重要程度。结果的每一行为所有序列单元相对于某一个Query的重要程度</span><br><span class="line">print(scores)</span><br><span class="line">scores = soft_max(scores)//对scores做归一化处理，使得一行的和为1</span><br><span class="line">print(scores)</span><br><span class="line">out = scores @ Value //每一行代表每个序列单元新的编码</span><br><span class="line">print(out)</span><br></pre></td></tr></tbody></table></figure>
-
 <p>缺点：</p>
 <ol>
 <li>自注意力机制过滤了不重要的信息，会导致模型有效信息的抓取能力比CNN弱，因为模型无法利用图像本身具有的尺度、平移不变性以及图像的特征局部性这些先验知识，只能通过大量数据进行学习。所以一般自注意力机制在大数据的基础上才能有效地建立准确的全局关系，而在小数据的情况下可能效果不如CNN。</li>
@@ -456,7 +460,7 @@
 <h2 id="CA-coordinate-attettion-注意力机制"><a href="#CA-coordinate-attettion-注意力机制" class="headerlink" title="CA(coordinate attettion)注意力机制"></a>CA(coordinate attettion)注意力机制</h2><p>提出背景：现有的注意力机制在求取通道注意力的时候，一般采用的全局最大池化/平均池化，这样会造成物体空间信息的损失。</p>
 <p>特色：在引入通道注意力机制的同时，引入空间注意力机制。</p>
 <p>实现过程：将位置信息嵌入到通道注意力中</p>
-<p><img src="/../../images/deepLearning/CA%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6.PNG" alt="CA注意力机制"></p>
+<p><img src="../../images/deepLearning/CA注意力机制.PNG" alt="CA注意力机制"></p>
 <p>CA注意力机制分为两个并行阶段。</p>
 <ol>
 <li>首先将输入特征图(CxHxW)分别在宽度、高度两个方向进行全局平均池化，获得在宽度、高度两个方向的特征图(Cx1xH、CxWx1)。</li>
@@ -917,7 +921,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">94.1k</span>&nbsp;字
+                class="white-color">91.1k</span>&nbsp;字
             
             
             

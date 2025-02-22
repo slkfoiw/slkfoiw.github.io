@@ -443,31 +443,42 @@
 </blockquote>
 </li>
 </ul>
-<ol start="4">
+<ol>
 <li>为了改进在噪声监督下的学习，我们提出了<strong>动量蒸馏</strong>（MoD），使模型能够利用一个更大的未经管理的web数据集。在训练过程中，我们通过取模型参数的移动平均数来保持模型的动量版本，并使用动量模型生成伪目标作为额外的监督。使用MoD时，该模型不会因为产生其他不同于web注释的合理输出而受到惩罚。我们证明了MoD不仅改进了训练前的任务，而且还改进了具有干净注释的下游任务。</li>
 </ol>
-<p><img src="/../../images/deepLearning/ALBEF%E6%A1%86%E6%9E%B6%E5%9B%BE.png" alt="ALBEF框架图"></p>
+<p><img src="../../images/deepLearning/ALBEF框架图.png" alt="ALBEF框架图"></p>
 <p>三个优化目标：单模态编码器上的图像文本对比学习（ITC）、多模态编码器上的掩码语言建模（MLM）和图像文本匹配（ITM）。其中，通过在线对比Hard Negative Mining改进了ITM</p>
-<h3 id="图像文本对比学习（ITC）"><a href="#图像文本对比学习（ITC）" class="headerlink" title="图像文本对比学习（ITC）"></a>图像文本对比学习（ITC）</h3><p>即Align before Fuse的核心<br>$$<br>s = g_v(v_{cls})^T g_w(w_{cls})<br>$$</p>
-<p>s是相似度函数，$v_{cls}$是[CLS] token的embedding（图像编码器编码得到的），$w_{cls}$是文本编码其得到的， $g_v$和$g_w$是一种线性转换，它们将[CLS]embedding映射到归一化的低维（256-d）表示</p>
-<p>维护<strong>两个队列</strong>来存储来自动量单模态编码器的<strong>最新的M个图像-文本表示</strong>（当作当前图像、文本的负样本）。动量编码器的归一化特征分别记为$g^{‘}<em>v(v^{‘}</em>{cls})$和$g^{‘}<em>w(w^{‘}</em>{cls})$。</p>
+<h3 id="图像文本对比学习（ITC）"><a href="#图像文本对比学习（ITC）" class="headerlink" title="图像文本对比学习（ITC）"></a>图像文本对比学习（ITC）</h3><p>即Align before Fuse的核心</p>
+<script type="math/tex; mode=display">
+s = g_v(v_{cls})^T g_w(w_{cls})</script><p>s是相似度函数，$v_{cls}$是[CLS] token的embedding（图像编码器编码得到的），$w_{cls}$是文本编码其得到的， $g_v$和$g_w$是一种线性转换，它们将[CLS]embedding映射到归一化的低维（256-d）表示</p>
+<p>维护<strong>两个队列</strong>来存储来自动量单模态编码器的<strong>最新的M个图像-文本表示</strong>（当作当前图像、文本的负样本）。动量编码器的归一化特征分别记为$g^{‘}_v(v^{‘}_{cls})$和$g^{‘}_w(w^{‘}_{cls})$。</p>
 <blockquote>
 <p>动量在数学上就是加权移动平均。例如$ y_t=m \times y_{t-1}+(1-m) \times x_t $，$ y_{t-1}$为上一时刻的输出，$x_t$为当前输入，$m$为动量参数；当 $m$很大时，$y_t$就取决于上一时刻输出，其更新就很缓慢；当$m$很小时，$y_t$就取决于当前时刻输入</p>
 </blockquote>
-<p>$$<br>\text{定义：} s(I, T) = g_v(v_{cls})^T g_w^{‘}(w^{‘}<em>{cls}) \text{，} s(T, I) = g_w(w</em>{cls})^T g_v^{‘}(v^{‘}<em>{cls}) \<br>\text{对于每一对文本和图像，计算两个相似度：} p^{i2t}<em>m(I) = \frac{exp(s(I,T_m) / \tau)}{\sum</em>{m=1}^Mexp(s(I,T_m) / \tau)} \text{，}<br>p^{t2i}<em>m(T) = \frac{exp(s(T,I_m) / \tau)}{\sum</em>{m=1}^Mexp(s(T,I_m) / \tau)} (1)\<br>\text{则损失} L</em>{itc} = \frac{1}{2}E_{(I,T) \sim D}[H(y^{i2t}(I), p^{i2t}(I)) + H(y^{t2i}(T), p^{t2i}(T))]<br>$$<br>$p^{i2t}_m、p^{t2i}_m$是文本到图像、图像到文本的softmax归一化相似度。$y^{i2t}(I)$和$y^{t2i}(T)$表示真实独热编码相似度，其中负对的概率为0，正对的概率为1。 $\tau$是个可学习的参数，H是交叉熵损失。</p>
-<h3 id="多模态编码器上的掩码语言建模（MLM）"><a href="#多模态编码器上的掩码语言建模（MLM）" class="headerlink" title="多模态编码器上的掩码语言建模（MLM）"></a>多模态编码器上的掩码语言建模（MLM）</h3><p>利用图像和上下文文本来预测掩蔽词。我们以15%的概率随机掩码出输入标记，并用特殊的标记$[MASK]$替换它们。设$\hat{T}$表示一个被mask过的文本，而$p^{msk}(I，\hat{T})$表示模型对一个该文本被mask处的token的预测概率, $y^{msk}$是一个独热编码的词汇分布，其中ground-truth token的概率为1。MLM使交叉熵损失最小化：<br>$$<br>L_{mlm} = E_{(I, \hat{T}) \sim D}H(y^{msk}, p^{msk}(I，\hat{T}))<br>$$</p>
-<h3 id="图像文本匹配（ITM）"><a href="#图像文本匹配（ITM）" class="headerlink" title="图像文本匹配（ITM）"></a>图像文本匹配（ITM）</h3><p>可以预测一对图像和文本是正的（匹配）还是负的（不匹配）。使用多模态编码器的输出嵌入$[CLS]$ token作为图像-文本对的联合表示，并附加一个全连接（FC）层，然后使用softmax来计算一个二分类概率$p^{itm}$。ITM损失为：<br>$$<br>L_{itm} = E_{(I, T) \sim D}H(y^{itm}, p^{itm}(I,T))<br>$$<br>$y^{itm}$是一个二维独热编码向量，表示真实标签。</p>
+<script type="math/tex; mode=display">
+\text{定义：} s(I, T) = g_v(v_{cls})^T g_w^{'}(w^{'}_{cls}) \text{，} s(T, I) = g_w(w_{cls})^T g_v^{'}(v^{'}_{cls}) \\
+\text{对于每一对文本和图像，计算两个相似度：} p^{i2t}_m(I) = \frac{exp(s(I,T_m) / \tau)}{\sum_{m=1}^Mexp(s(I,T_m) / \tau)} \text{，}
+p^{t2i}_m(T) = \frac{exp(s(T,I_m) / \tau)}{\sum_{m=1}^Mexp(s(T,I_m) / \tau)} (1)\\
+\text{则损失} L_{itc} = \frac{1}{2}E_{(I,T) \sim D}[H(y^{i2t}(I), p^{i2t}(I)) + H(y^{t2i}(T), p^{t2i}(T))]</script><p>$p^{i2t}_m、p^{t2i}_m$是文本到图像、图像到文本的softmax归一化相似度。$y^{i2t}(I)$和$y^{t2i}(T)$表示真实独热编码相似度，其中负对的概率为0，正对的概率为1。 $\tau$是个可学习的参数，H是交叉熵损失。</p>
+<h3 id="多模态编码器上的掩码语言建模（MLM）"><a href="#多模态编码器上的掩码语言建模（MLM）" class="headerlink" title="多模态编码器上的掩码语言建模（MLM）"></a>多模态编码器上的掩码语言建模（MLM）</h3><p>利用图像和上下文文本来预测掩蔽词。我们以15%的概率随机掩码出输入标记，并用特殊的标记$[MASK]$替换它们。设$\hat{T}$表示一个被mask过的文本，而$p^{msk}(I，\hat{T})$表示模型对一个该文本被mask处的token的预测概率, $y^{msk}$是一个独热编码的词汇分布，其中ground-truth token的概率为1。MLM使交叉熵损失最小化：</p>
+<script type="math/tex; mode=display">
+L_{mlm} = E_{(I, \hat{T}) \sim D}H(y^{msk}, p^{msk}(I，\hat{T}))</script><h3 id="图像文本匹配（ITM）"><a href="#图像文本匹配（ITM）" class="headerlink" title="图像文本匹配（ITM）"></a>图像文本匹配（ITM）</h3><p>可以预测一对图像和文本是正的（匹配）还是负的（不匹配）。使用多模态编码器的输出嵌入$[CLS]$ token作为图像-文本对的联合表示，并附加一个全连接（FC）层，然后使用softmax来计算一个二分类概率$p^{itm}$。ITM损失为：</p>
+<script type="math/tex; mode=display">
+L_{itm} = E_{(I, T) \sim D}H(y^{itm}, p^{itm}(I,T))</script><p>$y^{itm}$是一个二维独热编码向量，表示真实标签。</p>
 <p>Hard Negative Mining：我们提出了一种在零计算开销的ITM任务中进行硬负样本采样的策略。如果一个负的图像-文本对共享相似的语义，但在细粒度的细节上有所不同，那么它们是硬的（hard）。我们使用方程1中的对比相似度来寻找一个batch内的硬负样本：对于一个batch中的每一幅图像，按照对比相似度分布采样与图像最相似的文本作为负文本（即模型认为它非常可能是正样本，但其实它是负样本)。同样地，为每个文本采样一个最hard的负图像。</p>
 <blockquote>
 <p>设 B 为 Batch Size，从代码中可以看出最终的预测维度是 [3B, 2]，标签维度是 3B，前 B 个样本都是正样本，其余 2B 都是负样本。</p>
 </blockquote>
 <h3 id="动量蒸馏"><a href="#动量蒸馏" class="headerlink" title="动量蒸馏"></a>动量蒸馏</h3><p>解决的问题：从网上收集的数据存在噪声。对于ITC学习，图像的负文本也可能与图像的内容相匹配。对于MLM，可能存在其他不同于描述图像但描述得同样好（或更好）的注释的词。然而，ITC和MLM的one-hot标签惩罚所有负面预测，不管它们的正确性。</p>
-<p><img src="/../../images/deepLearning/ALBEF%E5%8A%A8%E9%87%8F%E8%92%B8%E9%A6%8F%E9%83%A8%E5%88%86.png" alt="动量蒸馏部分"></p>
-<p>解决办法：从动量模型产生的伪目标中学习。动量模型是一个连续发展的<strong>教师</strong>模型，它由单模态和多模态编码器的指数-移动平均版本组成。在训练过程中，我们<strong>训练base模型，使其预测与动量模型的预测相匹配</strong>。具体来说，对于ITC，我们首先使用动量单模态编码器的特征来计算图像-文本相似度，即$s^{‘}(I, T) = g_v^{‘}(v_{cls})^T g_w^{‘}(w^{‘}<em>{cls})$和$s^{‘}(T, I) = g_w^{‘}(w</em>{cls})^T g_v^{‘}(v^{‘}<em>{cls})$。然后把方程1中的$s$替换成$s^{‘}$来计算软伪目标$q^{i2t}$和$q^{t2i}$。$ITC</em>{MoD}$损失的定义为：<br>$$<br>L_{itc}^{mod} = (1- \alpha)L_{itc} + \frac{\alpha}{2}E_{(I,T) \sim D}[KL(q^{i2t}(I) || p^{i2t}(I)) + KL(q^{t2i}(T) || p^{t2i}(T))]<br>$$<br>类似的，$MLM_{MoD}$损失的定义为：<br>$$<br>L_{mlm}^{mod} = (1- \alpha)L_{mlm} + \alpha E_{(I,\hat{T}) \sim D}KL(q^{msk}(I, \hat{T}) || p^{msk}(I, \hat{T}))<br>$$</p>
-<blockquote>
+<p><img src="../../images/deepLearning/ALBEF动量蒸馏部分.png" alt="动量蒸馏部分"></p>
+<p>解决办法：从动量模型产生的伪目标中学习。动量模型是一个连续发展的<strong>教师</strong>模型，它由单模态和多模态编码器的指数-移动平均版本组成。在训练过程中，我们<strong>训练base模型，使其预测与动量模型的预测相匹配</strong>。具体来说，对于ITC，我们首先使用动量单模态编码器的特征来计算图像-文本相似度，即$s^{‘}(I, T) = g_v^{‘}(v_{cls})^T g_w^{‘}(w^{‘}_{cls})$和$s^{‘}(T, I) = g_w^{‘}(w_{cls})^T g_v^{‘}(v^{‘}_{cls})$。然后把方程1中的$s$替换成$s^{‘}$来计算软伪目标$q^{i2t}$和$q^{t2i}$。$ITC_{MoD}$损失的定义为：</p>
+<script type="math/tex; mode=display">
+L_{itc}^{mod} = (1- \alpha)L_{itc} + \frac{\alpha}{2}E_{(I,T) \sim D}[KL(q^{i2t}(I) || p^{i2t}(I)) + KL(q^{t2i}(T) || p^{t2i}(T))]</script><p>类似的，$MLM_{MoD}$损失的定义为：</p>
+<script type="math/tex; mode=display">
+L_{mlm}^{mod} = (1- \alpha)L_{mlm} + \alpha E_{(I,\hat{T}) \sim D}KL(q^{msk}(I, \hat{T}) || p^{msk}(I, \hat{T}))</script><blockquote>
 <p>KL:KL散度计算，又称相对熵或信息散度。我们设定两个概率分布分别为P和Q，在设定为连续随机变量的前提下，他们对应的概率密度函数分别为p(x)和q(x)。如果我们用p(x)去近似q(x)，则KL散度可以表示为：</p>
-<p>$$<br>KL(Q||P) = \int q(x)log\frac{q(x)}{p(x)}dx<br>$$</p>
-</blockquote>
+<script type="math/tex; mode=display">
+KL(Q||P) = \int q(x)log\frac{q(x)}{p(x)}dx</script></blockquote>
 
                 
             </div>
@@ -703,13 +714,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2024/12/18/dl/taming-self-training/">
+                <a href="/2024/12/06/paper-reading/coca-lun-wen-bi-ji/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="CoCa论文笔记">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">CoCa论文笔记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -720,12 +731,16 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-12-18
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-12-06
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            CuberSugar
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/paper-reading/" class="post-category">
+                                    paper-reading
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -740,13 +755,13 @@
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2024/12/01/compiler/dai-ma-you-hua/">
+                <a href="/2024/12/03/paper-reading/blip-lun-wen-bi-ji/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="代码优化文档">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="BLIP论文笔记">
                         
-                        <span class="card-title">代码优化文档</span>
+                        <span class="card-title">BLIP论文笔记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -757,14 +772,14 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-12-01
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-12-03
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/compiler/" class="post-category">
-                                    compiler
+                            <a href="/categories/paper-reading/" class="post-category">
+                                    paper-reading
                                 </a>
                             
                             
@@ -899,6 +914,13 @@
 </main>
 
 
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
 
 
     <footer class="page-footer bg-color">
@@ -916,7 +938,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">94.1k</span>&nbsp;字
+                class="white-color">91.1k</span>&nbsp;字
             
             
             

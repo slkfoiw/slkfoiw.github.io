@@ -397,7 +397,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    940
+                    939
                 </div>
                 
 
@@ -429,10 +429,17 @@
 <h2 id="CHS模式"><a href="#CHS模式" class="headerlink" title="CHS模式"></a>CHS模式</h2><p>柱面数NC：最大1024（10位）</p>
 <p>磁头数NH：表示硬盘总共有几个磁头，也就是几个盘片，最多256个（8位）</p>
 <p>扇区数NS：表示每一条磁道上有几个扇区，由于所有的0扇区用于存放固件以及一些硬盘的专用的文件，最大为<strong>63</strong> (用 6 位存储)。用户可见扇区从1开始</p>
-<p>8.46GB问题:<br>$$<br>1024 \times 256 \times 63 = 16,515,072 \<br>\text{这个扇区之前的所有物理扇区所包含的字节数} =  16,515,072 \times 512B = 8.46GB<br>$$</p>
-<h2 id="LBA模式"><a href="#LBA模式" class="headerlink" title="LBA模式"></a>LBA模式</h2><p>Logic Block Address，将磁盘驱动器可以看做一个一维的逻辑块的数组，逻辑块是最小的传输单位</p>
-<p>CHS与LBA地址转换<br>$$<br>LBA = (NH×NS×C) + (NS×H) + (S-1)\<br>\<br>C = LBA / (NS×NH)\<br>H = (LBA / NS) mod NH\<br>S = (LBA mod NS) + 1<br>$$</p>
-<h1 id="磁盘空间的管理"><a href="#磁盘空间的管理" class="headerlink" title="磁盘空间的管理"></a>磁盘空间的管理</h1><p>位图：空闲为1，已分配为0</p>
+<p>8.46GB问题:</p>
+<script type="math/tex; mode=display">
+1024 \times 256 \times 63 = 16,515,072 \\
+\text{这个扇区之前的所有物理扇区所包含的字节数} =  16,515,072 \times 512B = 8.46GB</script><h2 id="LBA模式"><a href="#LBA模式" class="headerlink" title="LBA模式"></a>LBA模式</h2><p>Logic Block Address，将磁盘驱动器可以看做一个一维的逻辑块的数组，逻辑块是最小的传输单位</p>
+<p>CHS与LBA地址转换</p>
+<script type="math/tex; mode=display">
+LBA = (NH×NS×C) + (NS×H) + (S-1)\\
+\\
+C = LBA / (NS×NH)\\
+H = (LBA / NS) mod NH\\
+S = (LBA mod NS) + 1</script><h1 id="磁盘空间的管理"><a href="#磁盘空间的管理" class="headerlink" title="磁盘空间的管理"></a>磁盘空间的管理</h1><p>位图：空闲为1，已分配为0</p>
 <p>空闲表法：将所有空闲块记录在一个表中。主要记录两项内容：起始块号，块数</p>
 <p>空闲链表法：把所有空闲块链成一个表，链会很长</p>
 <p>成组链接法：把空白物理块分成组，再通过指针把组与组之间链接起来</p>
@@ -922,7 +929,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">94.1k</span>&nbsp;字
+                class="white-color">91.1k</span>&nbsp;字
             
             
             

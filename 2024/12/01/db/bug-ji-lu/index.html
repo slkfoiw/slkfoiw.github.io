@@ -424,36 +424,35 @@
 <li><p>IPage功能不生效</p>
 <p>原因：没有配置文件</p>
 <figure class="highlight java"><table><tbody><tr><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableTransactionManagement</span></span><br><span class="line"><span class="meta">@MapperScan( { "com.example.dorm.entity" })</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MybatisPlusConfig</span> {</span><br><span class="line"> </span><br><span class="line">   <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> MybatisPlusInterceptor <span class="title function_">mybatisPlusInterceptor</span><span class="params">()</span> {</span><br><span class="line">        <span class="type">MybatisPlusInterceptor</span> <span class="variable">mybatisPlusInterceptor</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MybatisPlusInterceptor</span>();</span><br><span class="line">        mybatisPlusInterceptor.addInnerInterceptor(<span class="keyword">new</span> <span class="title class_">PaginationInnerInterceptor</span>(DbType.MYSQL));</span><br><span class="line">        <span class="keyword">return</span> mybatisPlusInterceptor;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-
 </li>
-<li><p>Result&lt;?&gt;：?不要写成其他的!!</p>
-</li>
+</ol>
+<ol>
+<li>Result&lt;?&gt;：?不要写成其他的!!</li>
 </ol>
 <h2 id="前端"><a href="#前端" class="headerlink" title="前端"></a>前端</h2><ol>
 <li>导入了奇怪的依赖包，导致出现如下报错：</li>
 </ol>
 <figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">vue-router.js?v=1cf80410:44 [Vue Router warn]: uncaught error during route navigation:...</span><br><span class="line">warn @ vue-router.js?v=1cf80410:44</span><br><span class="line">vue-router.js?v=1cf80410:2581 SyntaxError: Identifier '__vite__injectQuery' has already been declared (at ${mod.id}:40653:1)...</span><br></pre></td></tr></tbody></table></figure>
-
-<ol start="2">
+<ol>
 <li><p>el-upload onchange里的函数被调用两次</p>
 <p>原因：未关闭auto-upload，前面要有”:”！</p>
 </li>
 </ol>
 <figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">&lt;el-upload class="upload-demo" drag accept=".xls, .xlsx, .xml"</span><br><span class="line">    :on-change="handleFileUpload"</span><br><span class="line">    :auto-upload="false"&gt;</span><br><span class="line">    &lt;i class="el-icon-upload"&gt;&lt;/i&gt;</span><br><span class="line">    &lt;div class="el-upload__text"&gt;重新导入宿管信息，将文件拖到此处，或&lt;em&gt;点击上传&lt;/em&gt;&lt;/div&gt;</span><br><span class="line">&lt;/el-upload&gt;</span><br></pre></td></tr></tbody></table></figure>
-
 <blockquote>
 <p>在使用 el-upload上传文件时，on-change会触发二次事件，一次是ready状态，一次是success状态</p>
 </blockquote>
-<ol start="3">
+<ol>
 <li><p>GET类型的api传参要用params而不是data</p>
 <p>原因：<code>GET</code> 请求参数应该通过 URL 查询字符串传递，而不是放在请求体（<code>data</code>）中。应该使用 <code>params</code> 来传递 URL 查询参数，而不是使用 <code>data</code></p>
 <figure class="highlight javascript"><table><tbody><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title function_">getDormManagers</span> = (<span class="params">{pageNum, pageSize, search}</span>) =&gt; {</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">http</span>({</span><br><span class="line">        <span class="attr">url</span>: <span class="string">'/manager/get-managers'</span>,</span><br><span class="line">        <span class="attr">method</span>: <span class="string">'GET'</span>,</span><br><span class="line">        <span class="attr">headers</span>: {</span><br><span class="line">            <span class="string">'Content-Type'</span>: <span class="string">'application/json'</span></span><br><span class="line">        },</span><br><span class="line">        <span class="attr">params</span>: {</span><br><span class="line">            pageNum,</span><br><span class="line">            pageSize,</span><br><span class="line">            search</span><br><span class="line">        }</span><br><span class="line">    })</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure>
-
-
 </li>
+</ol>
+<ol>
 <li><p>网页显示 [object Promise]</p>
 <p>原因：同步异步问题，如下方式不对，这是异步调用</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">getStudentById(id).then(res =&gt; {</span><br><span class="line">	...</span><br><span class="line">})</span><br><span class="line">//改成：</span><br><span class="line">const res = await getStudentById(id);</span><br></pre></td></tr></tbody></table></figure></li>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">getStudentById(id).then(res =&gt; {</span><br><span class="line">	...</span><br><span class="line">})</span><br><span class="line">//改成：</span><br><span class="line">const res = await getStudentById(id);</span><br></pre></td></tr></tbody></table></figure>
+</li>
 </ol>
 <h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><p>mysql的触发器游标使用问题</p>
 
@@ -908,7 +907,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">94.1k</span>&nbsp;字
+                class="white-color">91.1k</span>&nbsp;字
             
             
             
