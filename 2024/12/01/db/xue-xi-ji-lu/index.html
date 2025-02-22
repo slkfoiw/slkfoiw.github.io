@@ -417,10 +417,9 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="双token机制"><a href="#双token机制" class="headerlink" title="双token机制"></a>双token机制</h2><p> <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/699850219">https://zhuanlan.zhihu.com/p/699850219</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/tzyaaaaaa/article/details/140934877">https://blog.csdn.net/tzyaaaaaa/article/details/140934877</a> 简答易懂的springsecurity认证流程！</p>
-<p>该项目通过以下步骤实现了双token机制：</p>
-<h3 id="1-详细解释每个文件的代码含义"><a href="#1-详细解释每个文件的代码含义" class="headerlink" title="1. 详细解释每个文件的代码含义"></a>1. 详细解释每个文件的代码含义</h3><h4 id="LoginSuccessHandler-java"><a href="#LoginSuccessHandler-java" class="headerlink" title="LoginSuccessHandler.java"></a><code>LoginSuccessHandler.java</code></h4><ul>
+                <h2 id="双token机制"><a href="#双token机制" class="headerlink" title="双token机制"></a>双token机制</h2><h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p> <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/699850219">https://zhuanlan.zhihu.com/p/699850219</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/tzyaaaaaa/article/details/140934877">简答易懂的springsecurity认证流程！</a> </p>
+<h3 id="1-各文件作用"><a href="#1-各文件作用" class="headerlink" title="1. 各文件作用"></a>1. 各文件作用</h3><h4 id="LoginSuccessHandler-java"><a href="#LoginSuccessHandler-java" class="headerlink" title="LoginSuccessHandler.java"></a><code>LoginSuccessHandler.java</code></h4><ul>
 <li><strong>功能</strong>：处理用户登录成功后的操作。</li>
 <li><strong>代码含义</strong>：<ul>
 <li>获取登录用户信息。</li>
@@ -518,7 +517,7 @@
 </li>
 </ol>
 <p>通过这两个文件的配合，系统能够在每次请求时验证用户身份，并在必要时刷新token，确保用户的会话持续有效。</p>
-<h3 id="2-详细解释各文件之间的关系"><a href="#2-详细解释各文件之间的关系" class="headerlink" title="2. 详细解释各文件之间的关系"></a>2. 详细解释各文件之间的关系</h3><ul>
+<h3 id="2-详-各文件之间的关系"><a href="#2-详-各文件之间的关系" class="headerlink" title="2. 详=各文件之间的关系"></a>2. 详=各文件之间的关系</h3><ul>
 <li><code>SecurityConfig</code>配置了<code>LoginSuccessHandler</code>和<code>RequestAuthenticationFilter</code>，确保登录成功后生成token，并在每个请求中验证token。</li>
 <li><code>LoginSuccessHandler</code>在用户登录成功后生成<code>accessToken</code>和<code>refreshToken</code>。</li>
 <li><code>RequestAuthenticationFilter</code>在每个请求中验证<code>accessToken</code>，如果过期则使用<code>refreshToken</code>生成新的token。</li>
@@ -528,7 +527,7 @@
 <li><code>UserDetailServiceImpl</code>从数据库查询用户信息。</li>
 <li><code>RefreshTokenAspect</code>在控制器方法执行前后，检查并刷新token。</li>
 </ul>
-<h3 id="3-解释在登录、注册等请求发生时，该项目的工作流是怎么样的"><a href="#3-解释在登录、注册等请求发生时，该项目的工作流是怎么样的" class="headerlink" title="3. 解释在登录、注册等请求发生时，该项目的工作流是怎么样的"></a>3. 解释在登录、注册等请求发生时，该项目的工作流是怎么样的</h3><h4 id="登录请求"><a href="#登录请求" class="headerlink" title="登录请求"></a>登录请求</h4><ol>
+<h3 id="3-在登录、注册等请求发生时的工作流、"><a href="#3-在登录、注册等请求发生时的工作流、" class="headerlink" title="3. 在登录、注册等请求发生时的工作流、"></a>3. 在登录、注册等请求发生时的工作流、</h3><h4 id="登录请求"><a href="#登录请求" class="headerlink" title="登录请求"></a>登录请求</h4><ol>
 <li>用户提交登录请求。</li>
 <li><code>SecurityConfig</code>配置的登录处理器拦截请求。</li>
 <li>用户认证成功后，<code>LoginSuccessHandler</code>生成<code>accessToken</code>和<code>refreshToken</code>，并返回给前端。</li>
@@ -545,7 +544,7 @@
 <li>如果<code>accessToken</code>过期，使用<code>refreshToken</code>生成新的<code>accessToken</code>和<code>refreshToken</code>，并保存到Redis中。</li>
 <li>请求继续执行，返回结果。</li>
 </ol>
-<h3 id="4-扩展其他相关解释"><a href="#4-扩展其他相关解释" class="headerlink" title="4. 扩展其他相关解释"></a>4. 扩展其他相关解释</h3><h4 id="Redis的使用"><a href="#Redis的使用" class="headerlink" title="Redis的使用"></a>Redis的使用</h4><ul>
+<h3 id="4-其他"><a href="#4-其他" class="headerlink" title="4. 其他"></a>4. 其他</h3><h4 id="Redis的使用"><a href="#Redis的使用" class="headerlink" title="Redis的使用"></a>Redis的使用</h4><ul>
 <li>Redis用于存储和管理<code>accessToken</code>和<code>refreshToken</code>，确保在<code>accessToken</code>过期后可以通过<code>refreshToken</code>重新生成新的<code>accessToken</code>。</li>
 </ul>
 <h4 id="AOP切面的使用"><a href="#AOP切面的使用" class="headerlink" title="AOP切面的使用"></a>AOP切面的使用</h4><ul>
@@ -862,13 +861,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2024/12/01/db/shuang-token/">
+                <a href="/2024/12/01/db/db-di-wu-zhang-shi-yan-zuo-ye/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="双token">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="db第五章实验作业">
                         
-                        <span class="card-title">双token</span>
+                        <span class="card-title">db第五章实验作业</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -903,13 +902,13 @@
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2024/12/01/db/shu-ju-ku-biao/">
+                <a href="/2024/12/01/db/springboot/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="数据库表">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="springboot">
                         
-                        <span class="card-title">数据库表</span>
+                        <span class="card-title">springboot</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1079,7 +1078,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">94.5k</span>&nbsp;字
+                class="white-color">94.1k</span>&nbsp;字
             
             
             

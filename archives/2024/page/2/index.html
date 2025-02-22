@@ -317,20 +317,19 @@
             <article class="cd-timeline-content" data-aos="fade-up">
                 <div class="article col s12 m6">
                     <div class="card">
-                        <a href="/2024/12/01/db/xue-xi-ji-lu/">
+                        <a href="/2024/12/01/db/springboot/">
                             <div class="card-image">
                                 
                                 
-                                <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="学习记录">
+                                <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="springboot">
                                 
-                                <span class="card-title">学习记录</span>
+                                <span class="card-title">springboot</span>
                             </div>
                         </a>
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    双token机制 https://zhuanlan.zhihu.com/p/699850219
-https://blog.csdn.net/tzyaaaaaa/article/details/140934877 简答易懂的springsec
+                                    springboot配置中遇到的问题问题1idea第一次连接MySQL数据库出现Failed to download ‘https://download.jetbrains.com/idea/jdbc-drivers/MySQL/8.1/L
                                 
                             </div>
                             <div class="publish-info">
@@ -371,34 +370,20 @@ https://blog.csdn.net/tzyaaaaaa/article/details/140934877 简答易懂的springs
             <article class="cd-timeline-content" data-aos="fade-up">
                 <div class="article col s12 m6">
                     <div class="card">
-                        <a href="/2024/12/01/db/shu-ju-ku-biao/">
+                        <a href="/2024/12/01/db/shuang-token/">
                             <div class="card-image">
                                 
                                 
-                                <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="数据库表">
+                                <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="双token">
                                 
-                                <span class="card-title">数据库表</span>
+                                <span class="card-title">双token</span>
                             </div>
                         </a>
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    规范：
-
-主码使用下划线标识
-
-外码使用斜体标识
-
-“name”列是英文名称，主要用于数据库建表、api的json文件；“字段名称”列是中文名称，数据库表的comment字段
-
-报修记录repairRecords
-
-
-
-
-
-name
-字段名
+                                    用户安全密码加密存储用户的密码经过哈希加密后存储在数据库中，关键代码如下
+String gensalt = BCrypt.gensalt();// 生成盐值，用于加密密码String hashpw = BCrypt.hashpw(bUser
                                 
                             </div>
                             <div class="publish-info">
@@ -575,6 +560,69 @@ conda create -n detpro python=3.8conda activate detproconda install pytorch==1.1
                                     
                                     <a href="/categories/deepLearning/" class="post-category">
                                     deepLearning
+                                    </a>
+                                    
+                                    
+                                </span>
+                            </div>
+                        </div>
+
+                        
+                    </div>
+                </div>
+            </article>
+        </div>
+        
+        <div class="cd-timeline-block">
+
+            
+            
+
+            
+            
+
+            
+            <div class="cd-timeline-img day" data-aos="zoom-in-up">
+                <span>08</span>
+            </div>
+            <article class="cd-timeline-content" data-aos="fade-up">
+                <div class="article col s12 m6">
+                    <div class="card">
+                        <a href="/2024/11/08/paper-reading/blip2-lun-wen-bi-ji/">
+                            <div class="card-image">
+                                
+                                
+                                <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="BLIP2论文笔记">
+                                
+                                <span class="card-title">BLIP2论文笔记</span>
+                            </div>
+                        </a>
+                        <div class="card-content article-content">
+                            <div class="summary block-with-text">
+                                
+                                    优势
+通用的
+计算高效：更少的可训练参数，因为直接使用预训练好的视觉模型、大语言模型（冻结了参数）
+
+框架
+训练分为两个学习阶段：
+
+视觉和语言的表示学习阶段
+视觉到语言的生成式学习阶段
+
+预训练好的视觉模型提供高质量的视觉表示，预训练好的
+                                
+                            </div>
+                            <div class="publish-info">
+                                <span class="publish-date">
+                                    <i class="far fa-clock fa-fw icon-date"></i>2024-11-08
+                                </span>
+                                <span class="publish-author">
+                                    
+                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                    
+                                    <a href="/categories/paper-reading/" class="post-category">
+                                    paper-reading
                                     </a>
                                     
                                     
@@ -820,63 +868,6 @@ conda create -n detpro python=3.8conda activate detproconda install pytorch==1.1
             </article>
         </div>
         
-        <div class="cd-timeline-block">
-
-            
-            
-
-            
-            
-
-            
-            <div class="cd-timeline-img day" data-aos="zoom-in-up">
-                <span>17</span>
-            </div>
-            <article class="cd-timeline-content" data-aos="fade-up">
-                <div class="article col s12 m6">
-                    <div class="card">
-                        <a href="/2024/05/17/os/os-io-management/">
-                            <div class="card-image">
-                                
-                                
-                                <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="IO管理">
-                                
-                                <span class="card-title">IO管理</span>
-                            </div>
-                        </a>
-                        <div class="card-content article-content">
-                            <div class="summary block-with-text">
-                                
-                                    I/O管理概述I/O设备分类按 数据组织/信息交换的单位 分类：
-
-块设备：传输快，可寻址
-字符设备：传输慢，不可寻址，常采用中断驱动方式
-
-按资源分配：
-
-独占式设备：只允许各个进程串行使用。如打印机
-共享设备：允许多个进程同时使用（微观
-                                
-                            </div>
-                            <div class="publish-info">
-                                <span class="publish-date">
-                                    <i class="far fa-clock fa-fw icon-date"></i>2024-05-17
-                                </span>
-                                <span class="publish-author">
-                                    
-                                    <i class="fas fa-user fa-fw"></i>
-                                    CuberSugar
-                                    
-                                </span>
-                            </div>
-                        </div>
-
-                        
-                    </div>
-                </div>
-            </article>
-        </div>
-        
     </div>
 
 </main>
@@ -893,7 +884,7 @@ conda create -n detpro python=3.8conda activate detproconda install pytorch==1.1
             
         </div>
         <div class="page-info col m4 l4 hide-on-small-only">
-            <div class="center-align b-text-gray">2 / 4</div>
+            <div class="center-align b-text-gray">2 / 5</div>
         </div>
         <div class="col s6 m4 l4">
             
@@ -924,7 +915,7 @@ conda create -n detpro python=3.8conda activate detproconda install pytorch==1.1
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">94.5k</span>&nbsp;字
+                class="white-color">94.1k</span>&nbsp;字
             
             
             
