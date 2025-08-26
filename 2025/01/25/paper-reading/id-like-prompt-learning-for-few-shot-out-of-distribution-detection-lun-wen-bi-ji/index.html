@@ -436,7 +436,7 @@
 <p>具体来说，我们将额外的提示与<code>1</code>中构建的具有挑战性的OOD 相匹配，创造出与 ID 提示类似的 OOD 提示，从而有效识别具有挑战性的 OOD 样本。</p>
 </li>
 </ol>
-<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p><img src="../../images/deepLearning/ID-likePromptLearning3" alt="ID-like3"></p>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p><img src="/../../images/deepLearning/ID-likePromptLearning3" alt="ID-like3"></p>
 <h3 id="从ID样本中构建离群值"><a href="#从ID样本中构建离群值" class="headerlink" title="从ID样本中构建离群值"></a>从ID样本中构建离群值</h3><p>定义训练集$D = {(x_1, y_1), (x_2, y_2), …, (x_N, y_N)}$，N表示样本数。</p>
 <p>为了充分探索训练样本的临近空间，我们对每个 ID 样本$x_i$进行多次随机裁剪，得到集合$X_{i}^{crop} = {x_{i,1}^{crop}, x_{i,2}^{crop}, …, x_{i,M}^{crop}}$​，M表示裁剪次数。同时，我们使用预先定义的模板（如a photo of a &lt;$y_k$&gt;， $y_k$表示类名）创建相应的类别描述文本$t_k$。</p>
 <p>然后利用预先训练好的 CLIP 模型来计算样本集$X_{i}^{crop}$与描述$t_k$之间的余弦相似度。根据余弦相似度的强弱，从高、低相似度段分别提取ID、OOD样本，记做$X_{i}^{in} = {x_{i,1}^{in}, x_{i,2}^{in}, …,x_{i,Q}^{in}}$和$X_{i}^{out} = {x_{i,1}^{out}, x_{i,2}^{out}, …,x_{i,Q}^{out}}$。于是得到$D^{in} = {(x_{1,1}^{in}, y_1), (x_{1,2}^{in}, y_1), …, (x_{N,Q}^{in}, y_N)}$、$D^{out} = {(x_{1,1}^{out}, y_1), (x_{1,2}^{out}, y_1), …, (x_{N,Q}^{out}, y_N)}$</p>
@@ -445,12 +445,14 @@
 
 ${\mathcal{L}}_{in} = {\mathbb{E}}_{\left( {x,y}\right)  \sim  {D}^{in}}\left\lbrack  {-\log \frac{{e}^{{s}_{ * }/\tau }}{\mathop{\sum }\limits_{{k = 1}}^{K}{e}^{{s}_{k}^{in}/\tau } + \mathop{\sum }\limits_{{c = 1}}^{C}{e}^{{s}_{c}^{out}/\tau }}}\right\rbrack$
 
-<p>其中，${s}_{<em>} = sim ( {\mathcal{T}( {t}_{ </em> }), \mathcal{I}(x) }) $，${s}_{k}^{in} = \operatorname{sim}\left( {\mathcal{T}\left( {t}_{k}^{in}\right) ,\mathcal{I}\left( x\right) }\right) $，${s}_{k}^{out} = \operatorname{sim}\left( {\mathcal{T}\left( {t}_{k}^{out}\right) ,\mathcal{I}\left( x\right) }\right)$</p>
+
+<p>其中，${s}<em>{*} = sim ( {\mathcal{T}( {t}</em>{ * }), \mathcal{I}(x) }) $，${s}<em>{k}^{in} = \operatorname{sim}\left( {\mathcal{T}\left( {t}</em>{k}^{in}\right) ,\mathcal{I}\left( x\right) }\right) $，${s}<em>{k}^{out} = \operatorname{sim}\left( {\mathcal{T}\left( {t}</em>{k}^{out}\right) ,\mathcal{I}\left( x\right) }\right)$</p>
 <h4 id="Out-of-distribution-loss"><a href="#Out-of-distribution-loss" class="headerlink" title="Out-of-distribution loss"></a>Out-of-distribution loss</h4><p>为了将OOD提示与离群值对齐，我们引入了OOD损失。需要注意的是，在理想的场景中，每个类别都会有一个ID提示和一个OOD提示。然而，为了节省计算资源和提高训练效率，我们将OOD提示的数量固定在100个。因此，当没有足够的OOD提示与ID类别建立一一对应关系时，我们会最大化OOD提示和异常值之间的整体相似性。为了实现这一点，我们建议有以下损失：</p>
 
 $$
 {\mathcal{L}}_{\text{out }} = {\mathbb{E}}_{x \sim  {D}^{\text{out }}}\left\lbrack  {-\log \frac{\mathop{\sum }\limits_{{c = 1}}^{C}{e}^{{s}_{c}^{\text{out }}/\tau }}{\mathop{\sum }\limits_{{k = 1}}^{K}{e}^{{s}_{k}^{in}/\tau } + \mathop{\sum }\limits_{{c = 1}}^{C}{e}^{{s}_{c}^{\text{out }}/\tau }}}\right\rbrack
 $$
+
 
 <p>此外，我们观察到在训练中使用以下形式的Lout更有利于优化提示：</p>
 
@@ -458,31 +460,33 @@ $$
 {\mathcal{L}}_{\text{out }} = {\mathbb{E}}_{x \sim  {D}^{\text{out }}}\left\lbrack  {\log \frac{\mathop{\sum }\limits_{{k = 1}}^{K}{e}^{{s}_{k}^{in}/\tau }}{\mathop{\sum }\limits_{{k = 1}}^{K}{e}^{{s}_{k}^{in}/\tau } + \mathop{\sum }\limits_{{c = 1}}^{C}{e}^{{s}_{c}^{\text{out }}/\tau }}}\right\rbrack
 $$
 
+
 <h4 id="Diversity-regularization"><a href="#Diversity-regularization" class="headerlink" title="Diversity regularization"></a>Diversity regularization</h4><p>由于所有的OOD提示都是在同一目标下随机初始化和优化的，在OOD提示之间存在过度相似性的风险。类似的OOD提示可能会导致可检测的OOD类数量的减少。为了减轻这个问题并确保OOD提示的多样性，我们引入了一个额外的损失${\mathcal{L}}_{\text{div }}$，它显式地最大化了提示之间的差异：</p>
 
 $$
 {\mathcal{L}}_{\text{div }} = \frac{\mathop{\sum }\limits_{{c = 1}}^{{C - 1}}\mathop{\sum }\limits_{{j = c + 1}}^{C}\operatorname{sim}\left( {{h}_{c}^{\text{out }},{h}_{j}^{\text{out }}}\right) }{C\left( {C - 1}\right) /2}
 $$
 
+
 <p>这里$h_c^{out} = \mathcal{T}(t_c^{out})$，$h_j^{out} = \mathcal{T}(t_j^{out})$。$t_c^{out}, t_j^{out} \in T^{out}$表示OOD提示中的第c、j个提示</p>
-<p>总损失：</p>
-<script type="math/tex; mode=display">
-\mathcal{L} = \mathcal{L}_{in} + \lambda_{out}\mathcal{L}_{out} + \lambda_{div}\mathcal{L}_{div}</script><h4 id="推理"><a href="#推理" class="headerlink" title="推理"></a>推理</h4><p>在执行分类任务时，我们使用与CLIP相同的分类方法，仅依赖于ID提示进行分类。对于OOD检测，我们将评分函数定义为：</p>
+<p>总损失：<br>$$<br>\mathcal{L} = \mathcal{L}<em>{in} + \lambda</em>{out}\mathcal{L}<em>{out} + \lambda</em>{div}\mathcal{L}_{div}<br>$$</p>
+<h4 id="推理"><a href="#推理" class="headerlink" title="推理"></a>推理</h4><p>在执行分类任务时，我们使用与CLIP相同的分类方法，仅依赖于ID提示进行分类。对于OOD检测，我们将评分函数定义为：</p>
 
 $$
 S(x) = \frac{\mathop{\sum }\limits_{{k = 1}}^{K}{e}^{{s}_{k}^{in}/\tau }}{\mathop{\sum }\limits_{{k = 1}}^{K}{e}^{{s}_{k}^{in}/\tau } + \mathop{\sum }\limits_{{c = 1}}^{C}{e}^{{s}_{c}^{\text{out }}/\tau }}
 $$
+
 
 <h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><h3 id="数据集"><a href="#数据集" class="headerlink" title="数据集"></a>数据集</h3><p>与以往的OOD检测任务不同，我们的主要目标是在开放世界环境中实现OOD检测，所以我们不选择一些玩具（如低分辨率）数据集，如CIFAR [16]和MNIST [17]。在我们的工作中，我们遵循MOS [13]和MCM [28]的设置，它们使用ImageNet-1k [3]作为ID数据，以及自然学家[11]的一个子集，将[42]和纹理[2]作为OOD数据。SUN [39]作为一个特定的OOD数据集进行了独立的测试。在MOS [13]之后，这些OOD数据从与ImageNet-1k [3]不重叠的类别中随机选择。此外，一些消融实验使用ImageNet-100进行ID数据。该数据集遵循MCM [28]的配置，该配置从ImageNet-1k中选择100个类作为ID数据。</p>
 <h3 id="预训练模型"><a href="#预训练模型" class="headerlink" title="预训练模型"></a>预训练模型</h3><p>使用CLIP-B/16作为OOD提示学习的预训练模型。具体地说,，CLIP-B/16，由一个ViT-B/16 Transformer作为图像编码器，一个自注意Transformer作为文本编码器组成。在我们的实验中，我们保持了CLIP的所有网络参数的固定，包括图像编码器和文本编码器，只更新了文本输入端的嵌入层，遵循提示学习的方法。</p>
 <h3 id="实施细节"><a href="#实施细节" class="headerlink" title="实施细节"></a>实施细节</h3><p>对于少样本训练，需要在完整的训练数据中的每个类中随机选择一定数量的样本来形成训练集。例如，我们从ImageNet-1k中的每个类中随机选择一个（一次）或四个样本（四次）。在构建ID和OOD数据时，我们对每个样本进行M（我们实验中256）次随机裁剪，并根据与手工提示的相似度选择最高的Q（我们实验中32）个和最低的Q个样本。对于ID提示，每个类只有一个可学习的提示，并且保留了类名信息。对于OOD提示，我们将它们的总数设置为C（在我们的实验中为100），并且不保留类名信息。我们将λ1设置为0.3，λ2设置为0.2，并使用AdamW作为优化器。其他超参数设置如下：训练epoch = 3，学习率= 0.005，批量大小=1，token长度L = 16。</p>
 <h3 id="评估指标"><a href="#评估指标" class="headerlink" title="评估指标"></a>评估指标</h3><p>我们采用以下OOD检测常用的评价指标：(1)分布样本真阳性率为95%时OOD样本的假阳性率（FPR95）；(2)受试者工作特征曲线下面积（AUROC）；(3) ID分类精度（ID ACC）。</p>
 <h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><p>表1是比较结果，表明使用我们的方法可以获得更好的 OOD 检测性能，优于大多数比较结果。更重要的是，即使与那些需要完整数据的方法相比，我们的方法在one shot中仍然有很好的效果。具体地说，在four shot设置中，我们平均获得了 26.08% 的 FPR95 和94.36% 的 AUROC，与相同设置下表现最好的方法相比，分别降低了 12.16% 和提高了 2.76%。</p>
-<p><img src="../../images/deepLearning/ID-likePromptLearning-t1.png" alt="t1"></p>
+<p><img src="/../../images/deepLearning/ID-likePromptLearning-t1.png" alt="t1"></p>
 <p>图 4 显示了我们的方法与 MCM 在 iNaturalist 数据集上的比较。我们的方法性能更优，ID 和 OOD 之间的差异明显更大。这表明，在区分 ID 和 OOD 时，MCM 对阈值更敏感，而我们的方法能更直观地区分 ID 和 OOD。</p>
-<p><img src="../../images/deepLearning/ID-likePromptLearning4" alt="image-20250123155828480"></p>
+<p><img src="/../../images/deepLearning/ID-likePromptLearning4" alt="image-20250123155828480"></p>
 <p>如表2所示，我们的方法优于其他少样本方法，在ID数据上获得了更好的分类结果，为68.28%。</p>
-<p><img src="../../images/deepLearning/ID-likePromptLearning-t2.png" alt="image-20250122161453748"></p>
+<p><img src="/../../images/deepLearning/ID-likePromptLearning-t2.png" alt="image-20250122161453748"></p>
 <h2 id="消融研究"><a href="#消融研究" class="headerlink" title="消融研究"></a>消融研究</h2><p>离群值的有效性</p>
 <p>即时学习的有效性</p>
 <p>不同数量的ID-like提示（OOD 提示）的有效性</p>
@@ -945,7 +949,7 @@ $$
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">91.1k</span>&nbsp;字
+                class="white-color">96.3k</span>&nbsp;字
             
             
             

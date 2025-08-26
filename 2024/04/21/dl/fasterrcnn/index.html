@@ -420,16 +420,14 @@
                 <h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>bbox(Bouding Box边界框)：包含物体的最小矩形</p>
 <p>NMS(非极大值抑制Non-Maximum Suppression)：选出IoU值最高的框，去掉与它的IoU值较高的框（即重复区域较大），然后再选出IoU次大的框，重复上述过程。</p>
 <p>two-stage方法：如R-CNN系列算法，其主要思路是先通过启发式方法（selective search）或者 CNN 网络（RPN)产生一系列稀疏的候选框，然后对这些候选框进行分类(classification)与回归(bounding box regression)，two-stage方法的优势是准确度高；<br>one-stage方法：如YOLO和SSD，其主要思路是均匀地在图片多个层数的特征图上进行密集抽样，抽样时可以采用不同尺度和长宽比，然后利用CNN提取特征后直接进行分类与回归，整个过程只需要一步，所以其优势是速度快。但是均匀的密集采样的一个重要缺点是训练比较困难，这主要是因为正样本与负样本（背景）极其不均衡，导致模型准确度稍低。</p>
-<h1 id="Fast-RCNN的改进"><a href="#Fast-RCNN的改进" class="headerlink" title="Fast RCNN的改进"></a>Fast RCNN的改进</h1><div class="table-container">
-<table>
+<h1 id="Fast-RCNN的改进"><a href="#Fast-RCNN的改进" class="headerlink" title="Fast RCNN的改进"></a>Fast RCNN的改进</h1><table>
 <thead>
 <tr>
 <th>RCNN</th>
 <th>Fast RCNN</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>对一张图片提取了大量候选区域，并把它们都输入到CNN进行特征提取，这些候选区域有大量重复，造成特征提取的浪费</td>
 <td>将整个图片归一化后直接送入CNN，<strong>卷积层不进行候选区的特征提取</strong>，在最后一个池化层加入候选区域坐标信息，进行特征提取的计算</td>
 </tr>
@@ -437,10 +435,8 @@
 <td>目标分类与候选框的回归是独立的两个操作，并且需要大量特征作为训练样本</td>
 <td>将目标分类与候选框回归统一到CNN网络中来，不需要额外存储特征</td>
 </tr>
-</tbody>
-</table>
-</div>
-<h2 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h2><p><img src="../../images/deepLearning/FastRCNN框架.png" alt="FastRCNN框架"></p>
+</tbody></table>
+<h2 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h2><p><img src="/../../images/deepLearning/FastRCNN%E6%A1%86%E6%9E%B6.png" alt="FastRCNN框架"></p>
 <h1 id="Faster-RCNN"><a href="#Faster-RCNN" class="headerlink" title="Faster RCNN"></a>Faster RCNN</h1><h2 id="改进"><a href="#改进" class="headerlink" title="改进"></a>改进</h2><p>提出背景：<strong>Fast R-CNN通过选择性搜索</strong>（selective search）找出所有的候选框，仍然比较耗时</p>
 <p>解决方法：<strong>加入一个提取边缘的神经网络，把找候选框的工作交给这个神经网络（称作Region Proposal Network，RPN）</strong></p>
 <p>具体做法如下：</p>
@@ -448,9 +444,9 @@
 <li>将RPN放在一个卷积层的后面</li>
 <li>RPN直接训练得到候选区域</li>
 </ol>
-<h2 id="结构-检测过程"><a href="#结构-检测过程" class="headerlink" title="结构(检测过程)"></a>结构(检测过程)</h2><p>基本框架如下：<br><img src="../../images/deepLearning/FasterRCNN框架.png" alt="FasterRCNN框架"></p>
+<h2 id="结构-检测过程"><a href="#结构-检测过程" class="headerlink" title="结构(检测过程)"></a>结构(检测过程)</h2><p>基本框架如下：<br><img src="/../../images/deepLearning/FasterRCNN%E6%A1%86%E6%9E%B6.png" alt="FasterRCNN框架"></p>
 <p>具体结构如下：</p>
-<p><img src="../../images/deepLearning/FasterRCNN具体结构.png" alt="FasterRCNN具体结构"></p>
+<p><img src="/../../images/deepLearning/FasterRCNN%E5%85%B7%E4%BD%93%E7%BB%93%E6%9E%84.png" alt="FasterRCNN具体结构"></p>
 <h3 id="conv-layers"><a href="#conv-layers" class="headerlink" title="conv layers"></a>conv layers</h3><p>特征提取网络，用于提取特征。通过一组conv+relu+pooling层来提取图像的feature maps。</p>
 <ol>
 <li>13个conv层：kernel_size=3,  padding=1,  stride=1。因为$n = \frac{n + 2p - f}{s} + 1$，所以经过每个卷积层后feature map维度不变。</li>
@@ -458,7 +454,7 @@
 <li>4个pooling层：kernel_size=2,  padding=0,  stride=2。每池化一次，特征图维度变为原来的1/2，最终变为原来的1/16</li>
 </ol>
 <h3 id="RPN"><a href="#RPN" class="headerlink" title="RPN"></a>RPN</h3><p>区域候选网络，提前做了一部分检测，完成了目标定位，但还没分出具体类别。流程如下：</p>
-<p><img src="../../images/deepLearning/FasterRCNN RPN部分.png" alt="FasterRCNN RPN部分"></p>
+<p>![FasterRCNN RPN部分](../../images/deepLearning/FasterRCNN RPN部分.png)</p>
 <p>拿到conv layers的feature map（M/16 x N/16）后，先经过一个3x3卷积，卷积核个数为256，所以通过这个卷积层后feature map的通道数也是256(M/16 x N/16 x 256)。</p>
 <p>之后分成两个任务：</p>
 <ul>
@@ -491,20 +487,20 @@
 <li><p>生成的结果proposals feature maps（pooled_w x pooled_h x 256）送入后续全连接层继续做分类（具体哪一个类别）和回归。</p>
 </li>
 </ol>
+<p>补充：兴趣域池化会产生不匹配问题（misalignment），一种改进是<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/73113289">ROIAlign</a></p>
 <h3 id="classification-and-regression"><a href="#classification-and-regression" class="headerlink" title="classification and regression"></a>classification and regression</h3><ul>
 <li>利用proposals feature maps计算出具体的类别</li>
 <li>再做一次bbox regression获得检测框最终的精确位置。</li>
 </ul>
-<h2 id="训练过程（two-stage）"><a href="#训练过程（two-stage）" class="headerlink" title="训练过程（two stage）"></a>训练过程（two stage）</h2><p><img src="../../images/deepLearning/FasterRCNN双阶段.png" alt="FasterRCNN双阶段检测"></p>
+<h2 id="训练过程（two-stage）"><a href="#训练过程（two-stage）" class="headerlink" title="训练过程（two stage）"></a>训练过程（two stage）</h2><p><img src="/../../images/deepLearning/FasterRCNN%E5%8F%8C%E9%98%B6%E6%AE%B5.png" alt="FasterRCNN双阶段检测"></p>
 <ul>
 <li>训练RPN网络</li>
 <li>训练分类网络</li>
 </ul>
-<p><img src="../../images/deepLearning/FasterRCNN训练过程.png" alt="训练过程"></p>
+<p><img src="/../../images/deepLearning/FasterRCNN%E8%AE%AD%E7%BB%83%E8%BF%87%E7%A8%8B.png" alt="训练过程"></p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/kk123k/article/details/86515513">R-CNN论文详细解读</a></p>
 <p><a target="_blank" rel="noopener" href="http://t.csdnimg.cn/PnIKI">Faster RCNN</a></p>
-<p><a href="一文读懂Faster RCNN - 你再好好想想的文章 - 知乎
-https://zhuanlan.zhihu.com/p/31426458">超级详细的Faster RCNN解读</a></p>
+<p>[超级详细的Faster RCNN解读](一文读懂Faster RCNN - 你再好好想想的文章 - 知乎<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/31426458">https://zhuanlan.zhihu.com/p/31426458</a>)</p>
 
                 
             </div>
@@ -957,7 +953,7 @@ https://zhuanlan.zhihu.com/p/31426458">超级详细的Faster RCNN解读</a></p>
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">91.1k</span>&nbsp;字
+                class="white-color">96.3k</span>&nbsp;字
             
             
             

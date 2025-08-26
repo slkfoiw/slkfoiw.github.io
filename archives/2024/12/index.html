@@ -388,7 +388,7 @@ import compileall as caca.compile_dir(r'oadp/dp')
                             <div class="summary block-with-text">
                                 
                                     环境配置
-18的nvcc —version显示的CUDA版本（10.0）和nvidia-smi版本（12.4）不一样
+18的nvcc –version显示的CUDA版本（10.0）和nvidia-smi版本（12.4）不一样
 conda create -n sas_det python=3.8conda activate sas_detconda
                                 
                             </div>
@@ -534,22 +534,22 @@ conda create -n sas_det python=3.8conda activate sas_detconda
             <article class="cd-timeline-content" data-aos="fade-up">
                 <div class="article col s12 m6">
                     <div class="card">
-                        <a href="/2024/12/03/paper-reading/albef-lun-wen-bi-ji/">
+                        <a href="/2024/12/03/paper-reading/blip-lun-wen-bi-ji/">
                             <div class="card-image">
                                 
                                 
-                                <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="ALBEF论文笔记">
+                                <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="BLIP论文笔记">
                                 
-                                <span class="card-title">ALBEF论文笔记</span>
+                                <span class="card-title">BLIP论文笔记</span>
                             </div>
                         </a>
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    ALBEF论文笔记简介现有方法的缺陷
-图像特征和单词标记嵌入位于它们自己的空间中，这使得多模态编码器学习建模其交互具有挑战性；
-目标检测器既注释昂贵又计算昂贵，因为它在训练前需要边界框注释，以及高分辨率(例如。600×1000)图像；
-广泛
+                                    预训练
+
+图像编码器：ViT的架构。将输入图像分割成一个个的 Patch 并将它们编码为一系列 Image Embedding，并使用额外的 [CLS] token 来表示全局的图像特征。
+文本编码器：BERT 的架构。[CLS] toke
                                 
                             </div>
                             <div class="publish-info">
@@ -590,22 +590,22 @@ conda create -n sas_det python=3.8conda activate sas_detconda
             <article class="cd-timeline-content" data-aos="fade-up">
                 <div class="article col s12 m6">
                     <div class="card">
-                        <a href="/2024/12/03/paper-reading/blip-lun-wen-bi-ji/">
+                        <a href="/2024/12/03/paper-reading/albef-lun-wen-bi-ji/">
                             <div class="card-image">
                                 
                                 
-                                <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="BLIP论文笔记">
+                                <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="ALBEF论文笔记">
                                 
-                                <span class="card-title">BLIP论文笔记</span>
+                                <span class="card-title">ALBEF论文笔记</span>
                             </div>
                         </a>
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    预训练
-
-图像编码器：ViT的架构。将输入图像分割成一个个的 Patch 并将它们编码为一系列 Image Embedding，并使用额外的 [CLS] token 来表示全局的图像特征。
-文本编码器：BERT 的架构。[CLS] toke
+                                    ALBEF论文笔记简介现有方法的缺陷
+图像特征和单词标记嵌入位于它们自己的空间中，这使得多模态编码器学习建模其交互具有挑战性；
+目标检测器既注释昂贵又计算昂贵，因为它在训练前需要边界框注释，以及高分辨率(例如。600×1000)图像；
+广泛
                                 
                             </div>
                             <div class="publish-info">
@@ -761,21 +761,29 @@ if (m == 1) {    if (rd != reg1) {
             <article class="cd-timeline-content" data-aos="fade-up">
                 <div class="article col s12 m6">
                     <div class="card">
-                        <a href="/2024/12/01/compiler/she-ji-wen-dang/">
+                        <a href="/2024/12/01/db/db/">
                             <div class="card-image">
                                 
                                 
-                                <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="编译设计文档">
+                                <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="db">
                                 
-                                <span class="card-title">编译设计文档</span>
+                                <span class="card-title">db</span>
                             </div>
                         </a>
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    编译设计文档参考编译器介绍总体结构
-模块化设计：编译器被划分为多个模块，每个模块负责编译过程中的一个特定任务。例如，有专门处理词法分析的模块（insymbol）、语法分析的模块（block）、代码生成的模块（emit系列函数）等。
-递归下降
+                                    数据库表设计修改
+除学号、工号外id都改为INT AUTO_INCREMENT自增长整型 
+
+添加操作日志表
+
+消息表调整为两个表
+
+公告改名Notice -&gt; Annocement，因为消息会命名成Notify，区别一下
+
+
+补充：
                                 
                             </div>
                             <div class="publish-info">
@@ -786,8 +794,8 @@ if (m == 1) {    if (rd != reg1) {
                                     
                                     <i class="fas fa-bookmark fa-fw icon-category"></i>
                                     
-                                    <a href="/categories/compiler/" class="post-category">
-                                    compiler
+                                    <a href="/categories/db/" class="post-category">
+                                    db
                                     </a>
                                     
                                     
@@ -816,21 +824,21 @@ if (m == 1) {    if (rd != reg1) {
             <article class="cd-timeline-content" data-aos="fade-up">
                 <div class="article col s12 m6">
                     <div class="card">
-                        <a href="/2024/12/01/db/bug-ji-lu/">
+                        <a href="/2024/12/01/compiler/she-ji-wen-dang/">
                             <div class="card-image">
                                 
                                 
-                                <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="bug记录">
+                                <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="编译设计文档">
                                 
-                                <span class="card-title">bug记录</span>
+                                <span class="card-title">编译设计文档</span>
                             </div>
                         </a>
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    git经常出现fatal error的问题：参考这个https://blog.csdn.net/Greenhand_BN/article/details/135881590
-后端
-controller层某个api方法里service类为nu
+                                    编译设计文档参考编译器介绍总体结构
+模块化设计：编译器被划分为多个模块，每个模块负责编译过程中的一个特定任务。例如，有专门处理词法分析的模块（insymbol）、语法分析的模块（block）、代码生成的模块（emit系列函数）等。
+递归下降
                                 
                             </div>
                             <div class="publish-info">
@@ -841,8 +849,8 @@ controller层某个api方法里service类为nu
                                     
                                     <i class="fas fa-bookmark fa-fw icon-category"></i>
                                     
-                                    <a href="/categories/db/" class="post-category">
-                                    db
+                                    <a href="/categories/compiler/" class="post-category">
+                                    compiler
                                     </a>
                                     
                                     
@@ -902,7 +910,7 @@ controller层某个api方法里service类为nu
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">91.1k</span>&nbsp;字
+                class="white-color">96.3k</span>&nbsp;字
             
             
             

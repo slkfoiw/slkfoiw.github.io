@@ -419,6 +419,7 @@
             <div id="articleContent">
                 <h2 id="用户安全"><a href="#用户安全" class="headerlink" title="用户安全"></a>用户安全</h2><h3 id="密码加密存储"><a href="#密码加密存储" class="headerlink" title="密码加密存储"></a>密码加密存储</h3><p>用户的密码经过哈希加密后存储在数据库中，关键代码如下</p>
 <figure class="highlight java"><table><tbody><tr><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">gensalt</span> <span class="operator">=</span> BCrypt.gensalt();<span class="comment">// 生成盐值，用于加密密码</span></span><br><span class="line"><span class="type">String</span> <span class="variable">hashpw</span> <span class="operator">=</span> BCrypt.hashpw(bUser.getPassword(), gensalt); <span class="comment">// 使用生成的盐值对用户输入的密码进行哈希加密</span></span><br><span class="line">bUser.setPassword(hashpw);</span><br></pre></td></tr></tbody></table></figure>
+
 <h3 id="使用双token机制"><a href="#使用双token机制" class="headerlink" title="使用双token机制"></a>使用双token机制</h3><p>双Token机制使用两种令牌（即Token）来管理用户的身份验证和授权过程： assess token 和 refresh token。assess token是短期有效的令牌，用于授权用户访问受保护的资源。每次用户请求时，assess token会携带在请求的头部（<code>Authorization</code>头）进行身份验证。它的有效期通常比较短，因此能降低令牌被盗用后的风险。refresh token长期有效，用于获取新的assess token。当assess token过期时，客户端可以使用refresh token向认证服务器请求新的assess token。refresh token通常会有较长的有效期（例如几天、几周或几个月），并且只在用户的登录会话中使用。它不会频繁地发送到服务器，只在需要刷新assess token时使用。</p>
 <p>优点：</p>
 <ul>
@@ -428,7 +429,7 @@
 <li>灵活、可扩展性</li>
 </ul>
 <h3 id="关键代码"><a href="#关键代码" class="headerlink" title="关键代码"></a>关键代码</h3><p>利用了Spring Security做安全访问控制，相关配置在<code>config/SecurityConfig</code>下：</p>
-<p><img src="../../images/image-20241210113901969.png" alt="image-20241210113901969"></p>
+<p><img src="/../../images/image-20241210113901969.png" alt="image-20241210113901969"></p>
 <p>具体流程如下：</p>
 <h4 id="注册请求"><a href="#注册请求" class="headerlink" title="注册请求"></a>注册请求</h4><ol>
 <li>用户提交注册请求。</li>
@@ -896,7 +897,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">91.1k</span>&nbsp;字
+                class="white-color">96.3k</span>&nbsp;字
             
             
             

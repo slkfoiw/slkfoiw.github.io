@@ -423,9 +423,13 @@
 </ol>
 <p>相关代码如下：</p>
 <figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">preprocess_data</span>(<span class="params">data</span>):</span><br><span class="line">    <span class="comment"># 将布尔值转换为数值</span></span><br><span class="line">    data = data.replace({<span class="literal">True</span>: <span class="number">1</span>, <span class="literal">False</span>: <span class="number">0</span>}).infer_objects(copy=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 将 Diabetes 列编码为数值（0: Diabetes, 1: NoDiabetes, 2: Prediabetes）</span></span><br><span class="line">    le = LabelEncoder()</span><br><span class="line">    data[<span class="string">'Diabetes'</span>] = le.fit_transform(data[<span class="string">'Diabetes'</span>])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> data, le</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+
 <h2 id="特征选择"><a href="#特征选择" class="headerlink" title="特征选择"></a>特征选择</h2><p>数据的样本涉及到特征种类较多，为避免无关特征的影响，我们先对特征进行选择，找出与标签（即糖尿病的情况）相关性最高的几个特征。然后将特征进行标准化，让不同特征的数值范围一致，这样可以让模型更好地进行训练和收敛。</p>
 <p>相关代码在<code>model_search.py</code>文件中:</p>
 <figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line"><span class="comment"># 特征选择</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">feature_selection</span>(<span class="params">data, top_k=<span class="number">9</span></span>):</span><br><span class="line">    X = data.iloc[:, <span class="number">1</span>:-<span class="number">1</span>]  <span class="comment"># 特征变量</span></span><br><span class="line">    Y = data.iloc[:, -<span class="number">1</span>]  <span class="comment"># 目标变量</span></span><br><span class="line"></span><br><span class="line">    select_top_k = SelectKBest(score_func=chi2, k=top_k)  <span class="comment"># 选择排名前k的特征</span></span><br><span class="line">    fit = select_top_k.fit(X, Y)</span><br><span class="line">    features = fit.transform(X)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 提取特征名称</span></span><br><span class="line">    selected_features_indices = fit.get_support()</span><br><span class="line">    selected_feature_names = X.columns[selected_features_indices].tolist()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"选择的特征:"</span>, selected_feature_names)</span><br><span class="line">    <span class="keyword">return</span> features, selected_feature_names</span><br></pre></td></tr></tbody></table></figure>
+
+
+
 <h2 id="模型探索"><a href="#模型探索" class="headerlink" title="模型探索"></a>模型探索</h2><p>该问题是一个分类问题，数据集比较易于处理，考虑从简单的模型开始，如逻辑回归或决策树，逐步过渡到更复杂的模型，如随机森林或支持向量机。这里我选择了如下几种模型：</p>
 <ol>
 <li>逻辑回归（Logistic Regression）</li>
@@ -436,13 +440,15 @@
 <li>XGBoost</li>
 </ol>
 <p>通过交叉检验对每个模型进行评估，以下是各模型在训练集上的交叉验证mP：</p>
-<p><img src="../../images/image-20241201132158703.png" alt="image-20241201132158703"></p>
+<p><img src="/../../images/image-20241201132158703.png" alt="image-20241201132158703"></p>
 <p>SVM耗时较长，后续补充XGBoost模型时没有评估SVM：</p>
 <figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">LR 0.8461940174191783</span><br><span class="line">NB 0.7803187407247</span><br><span class="line">KNN 0.8286078911982038</span><br><span class="line">DT 0.7842212562301403</span><br><span class="line">XGB 0.8481994913743092</span><br></pre></td></tr></tbody></table></figure>
-<p><img src="../../images/image-20241220185448750.png" alt="image-20241220185448750"></p>
+
+<p><img src="/../../images/image-20241220185448750.png" alt="image-20241220185448750"></p>
 <p>可以看到逻辑回归、支持向量机、XGBoost的结果较好，因此可以选择这些模型进行接下来的探索。</p>
 <p>这部分的关键代码如下：</p>
 <figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line"><span class="comment">#模型选择</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">model_selection</span>(<span class="params">X_train, Y_train</span>):</span><br><span class="line">    models = []</span><br><span class="line">    models.append((<span class="string">"LR"</span>, LogisticRegression()))  <span class="comment"># 逻辑回归</span></span><br><span class="line">    models.append((<span class="string">"NB"</span>, GaussianNB()))  <span class="comment"># 高斯朴素贝叶斯</span></span><br><span class="line">    models.append((<span class="string">"KNN"</span>, KNeighborsClassifier()))  <span class="comment"># K近邻分类</span></span><br><span class="line">    models.append((<span class="string">"DT"</span>, DecisionTreeClassifier()))  <span class="comment"># 决策树分类</span></span><br><span class="line">    models.append((<span class="string">"XGB"</span>, XGBClassifier()))  <span class="comment"># XGBoost分类</span></span><br><span class="line">    <span class="comment"># models.append(("SVM", SVC(kernel='linear')))  # 支持向量机分类</span></span><br><span class="line">    <span class="comment">#模型评估</span></span><br><span class="line">    results = []</span><br><span class="line">    names = []</span><br><span class="line">    <span class="keyword">for</span> name, model <span class="keyword">in</span> models:</span><br><span class="line">        kfold = KFold(n_splits=<span class="number">10</span>)</span><br><span class="line">        cv_result = cross_val_score(</span><br><span class="line">            model, X_train, Y_train, cv=kfold, scoring=<span class="string">'accuracy'</span>)</span><br><span class="line">        names.append(name)</span><br><span class="line">        results.append(cv_result)</span><br><span class="line">    <span class="comment">#输出模型评估结果</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(names)):</span><br><span class="line">        <span class="built_in">print</span>(names[i], results[i].mean())</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 结果可视化</span></span><br><span class="line">    ax = sns.boxplot(data=results)</span><br><span class="line">    ax.set_xticklabels(names)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></tbody></table></figure>
+
 <h2 id="平衡数据集"><a href="#平衡数据集" class="headerlink" title="平衡数据集"></a>平衡数据集</h2><p>注意到数据集中NoDiabetes的类别明显比Diabetes和PreDiabetes多，可能导致结果预测不平衡，因此class_weighted选择‘balanced’。这个可以显著提高结果的mP。</p>
 <p>另外还采用了SMOTE过采样：</p>
 <p>SMOTE 的作用</p>
@@ -468,12 +474,13 @@
 </ol>
 <p>相关代码如下：</p>
 <figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line"><span class="comment"># 过采样</span></span><br><span class="line"><span class="keyword">from</span> imblearn.over_sampling <span class="keyword">import</span> SMOTE</span><br><span class="line"></span><br><span class="line"><span class="comment"># 应用 SMOTE 进行过采样</span></span><br><span class="line">smote = SMOTE()</span><br><span class="line">X_train_resampled, Y_train_resampled = smote.fit_resample(X_train, Y_train)</span><br></pre></td></tr></tbody></table></figure>
+
 <h2 id="调参"><a href="#调参" class="headerlink" title="调参"></a>调参</h2><p>使用网格搜索对参数进行调优，关键代码如下：</p>
 <figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line"><span class="comment"># 使用网格搜索进行调参，并设置 class_weight</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置逻辑回归的超参数范围</span></span><br><span class="line">param_grid = {</span><br><span class="line">    <span class="string">'C'</span>: [<span class="number">0.005</span>, <span class="number">0.01</span>, <span class="number">0.1</span>, <span class="number">1</span>],  <span class="comment"># 正则化参数</span></span><br><span class="line">    <span class="string">'solver'</span>: [<span class="string">'lbfgs'</span>, <span class="string">'liblinear'</span>],  <span class="comment"># 求解器</span></span><br><span class="line">    <span class="string">'max_iter'</span>: [<span class="number">100</span>, <span class="number">150</span>, <span class="number">200</span>]  <span class="comment"># 最大迭代次数</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> GridSearchCV</span><br><span class="line"></span><br><span class="line">grid_search = GridSearchCV(LogisticRegression(class_weight=<span class="string">'balanced'</span>), param_grid, cv=<span class="number">5</span>, scoring=<span class="string">'accuracy'</span>)</span><br><span class="line">grid_search.fit(X_train_resampled, Y_train_resampled)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出最佳参数</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f"最佳参数: <span class="subst">{grid_search.best_params_}</span>"</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f"最佳得分: <span class="subst">{grid_search.best_score_}</span>"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用最佳参数训练最终模型</span></span><br><span class="line">best_model = grid_search.best_estimator_</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+
 <p>最优参数如图：</p>
-<p><img src="../../images/img.png" alt="调参"></p>
+<p><img src="/../../images/img.png" alt="调参"></p>
 <h2 id="附：实验结果记录"><a href="#附：实验结果记录" class="headerlink" title="附：实验结果记录"></a>附：实验结果记录</h2><p>文件夹中有网站的分数截图，下表是对这些分数的具体说明</p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -481,8 +488,7 @@
 <th>分数</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>LR</td>
 <td>0.383851</td>
 </tr>
@@ -516,10 +522,9 @@
 </tr>
 <tr>
 <td></td>
+<td></td>
 </tr>
-</tbody>
-</table>
-</div>
+</tbody></table>
 <p>XGBoost:</p>
 <p>最佳参数: {‘subsample’: 0.9, ‘n_estimators’: 200, ‘max_depth’: 7, ‘learning_rate’: 0.1, ‘colsample_bytree’: 0.8}<br>最佳得分: 0.7601263601263601</p>
 <p>LR:</p>
@@ -977,7 +982,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">91.1k</span>&nbsp;字
+                class="white-color">96.3k</span>&nbsp;字
             
             
             

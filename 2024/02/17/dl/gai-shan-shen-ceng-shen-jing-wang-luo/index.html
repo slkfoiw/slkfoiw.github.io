@@ -417,95 +417,89 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="深度学习的实践方面"><a href="#深度学习的实践方面" class="headerlink" title="深度学习的实践方面"></a>深度学习的实践方面</h1><h2 id="训练集-验证集-测试集-Train-Dev-Test-set"><a href="#训练集-验证集-测试集-Train-Dev-Test-set" class="headerlink" title="训练集/验证集/测试集(Train/Dev/Test set)"></a>训练集/验证集/测试集(Train/Dev/Test set)</h2><div class="table-container">
-<table>
+                <h1 id="深度学习的实践方面"><a href="#深度学习的实践方面" class="headerlink" title="深度学习的实践方面"></a>深度学习的实践方面</h1><h2 id="训练集-验证集-测试集-Train-Dev-Test-set"><a href="#训练集-验证集-测试集-Train-Dev-Test-set" class="headerlink" title="训练集/验证集/测试集(Train/Dev/Test set)"></a>训练集/验证集/测试集(Train/Dev/Test set)</h2><table>
 <thead>
 <tr>
-<th style="text-align:left"></th>
+<th align="left"></th>
 <th>Train</th>
 <th>Dev</th>
 <th>Test</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td style="text-align:left">小数量</td>
+<tbody><tr>
+<td align="left">小数量</td>
 <td>70%</td>
 <td></td>
 <td>30%</td>
 </tr>
 <tr>
-<td style="text-align:left">or</td>
+<td align="left">or</td>
 <td>60%</td>
 <td>20%</td>
 <td>20%</td>
 </tr>
 <tr>
-<td style="text-align:left">百万级数据样本</td>
+<td align="left">百万级数据样本</td>
 <td>98%</td>
 <td>1%</td>
 <td>1%</td>
 </tr>
 <tr>
-<td style="text-align:left">超过百万</td>
+<td align="left">超过百万</td>
 <td>99.5%</td>
 <td>0.25%</td>
 <td>0.25%</td>
 </tr>
 <tr>
-<td style="text-align:left">or</td>
+<td align="left">or</td>
 <td>99.5%</td>
 <td>0.4%</td>
 <td>0.1%</td>
 </tr>
-</tbody>
-</table>
-</div>
-<h2 id="偏见与方差-bias-amp-varience"><a href="#偏见与方差-bias-amp-varience" class="headerlink" title="偏见与方差(bias&amp;varience)"></a>偏见与方差(bias&amp;varience)</h2><div class="table-container">
-<table>
+</tbody></table>
+<h2 id="偏见与方差-bias-varience"><a href="#偏见与方差-bias-varience" class="headerlink" title="偏见与方差(bias&amp;varience)"></a>偏见与方差(bias&amp;varience)</h2><table>
 <thead>
 <tr>
-<th style="text-align:left"></th>
+<th align="left"></th>
 <th></th>
 <th></th>
 <th></th>
 <th></th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td style="text-align:left">训练集错误率</td>
+<tbody><tr>
+<td align="left">训练集错误率</td>
 <td>1%</td>
 <td>15%</td>
 <td>15%</td>
 <td>0.5%</td>
 </tr>
 <tr>
-<td style="text-align:left">开发集错误率</td>
+<td align="left">开发集错误率</td>
 <td>11%</td>
 <td>16%</td>
 <td>30%</td>
 <td>1%</td>
 </tr>
 <tr>
-<td style="text-align:left"></td>
+<td align="left"></td>
 <td>high varience</td>
 <td>high bias</td>
 <td>high bias &amp; varience</td>
 <td>low bias &amp; varience</td>
 </tr>
 <tr>
-<td style="text-align:left"></td>
+<td align="left"></td>
 <td>过拟合overfitting</td>
 <td>欠拟合unfitting</td>
 <td>一些地方欠拟合，一些地方过拟合</td>
+<td></td>
 </tr>
-</tbody>
-</table>
-</div>
+</tbody></table>
 <p>以上分析基于：human=0% (optimal/base error 理想误差/基误差)</p>
 <p>解决办法</p>
 <figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">graph TD;</span><br><span class="line">    A[high bias]--&gt;B{判断};</span><br><span class="line">    B--&gt;|no|C[high varience];</span><br><span class="line">    B--&gt;|yes|D[bigger network\n train longer\n NN architecture search];</span><br><span class="line">    D--&gt;A;</span><br><span class="line">    C--&gt;|no|E[Done];</span><br><span class="line">    C--&gt;|yes|F[more data\n regularization正则化\n NN architecture search];</span><br><span class="line">    F--&gt;A;</span><br></pre></td></tr></tbody></table></figure>
+
 <h2 id="正则化"><a href="#正则化" class="headerlink" title="正则化"></a>正则化</h2><p>对较大值的系数进行惩罚</p>
 <h3 id="L2-regularization"><a href="#L2-regularization" class="headerlink" title="L2 regularization"></a>L2 regularization</h3><p>逻辑回归中：$J\left( {w,b} \right) = \frac{1}{m}\sum\limits_{i = 1}^m {L({\hat{y}^{(i)}},\mathop y\nolimits^{(i)} )} + \frac{\lambda}{2m}|w|^2$      $|w|^2=\sum\limits_{j=1}^{n_x}w_j^2=w^Tw$</p>
 <p>神经网络中：$J\left( {w^{[1]},b^{[1]}, …, w^{[l]},b^{[l]}} \right) = \frac{1}{m}\sum\limits_{i = 1}^m {L({\hat{y}^{(i)}},\mathop y\nolimits^{(i)} )} + \frac{\lambda}{2m}|w^{[l]}|^2$      $|w^{[l]}|^2=\sum\limits_{i=1}^{n^{[l-1]}}\sum\limits_{j=1}^{n^{[l]}}{w_{ij}^{[l]}}^2$</p>
@@ -517,6 +511,7 @@
 <ol>
 <li><p>定义向量d</p>
 <figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">d3=np.random.rand(a3.shape[0], a3.shape[1]) &lt; keep-prob</span><br></pre></td></tr></tbody></table></figure>
+
 <p>keep-prop表示保留某个隐藏单元的概率</p>
 </li>
 </ol>
@@ -547,38 +542,29 @@
 <li>m&lt;2000时，直接batch gradient descent(就是之前讲的常规梯度下降法)</li>
 <li>m很大时，建议分成$2^n$倍（跟电脑内存存储方式有关）</li>
 </ul>
-<h2 id="指数加权平均（Exponentially-weighted-averages）-统计学中称为指数加权移动平均"><a href="#指数加权平均（Exponentially-weighted-averages）-统计学中称为指数加权移动平均" class="headerlink" title="指数加权平均（Exponentially weighted averages）(统计学中称为指数加权移动平均)"></a>指数加权平均（Exponentially weighted averages）(统计学中称为指数加权移动平均)</h2><p>关键公式：${v_t} = \beta {v_{t - 1}} + (1 - \beta ){\theta _t}$</p>
-<p>其中$\theta_t$是实际值，整个式子可以看成$v_t$是$\frac{1}{1-\beta}$个数据的平均值</p>
+<h2 id="指数加权平均（Exponentially-weighted-averages）-统计学中称为指数加权移动平均-EWA-EMA"><a href="#指数加权平均（Exponentially-weighted-averages）-统计学中称为指数加权移动平均-EWA-EMA" class="headerlink" title="指数加权平均（Exponentially weighted averages）(统计学中称为指数加权移动平均)EWA/EMA"></a>指数加权平均（Exponentially weighted averages）(统计学中称为指数加权移动平均)EWA/EMA</h2><p>是一种给予近期数据更高权重的平均方法</p>
+<p>假设有n个数据$[\theta_1, \theta_2, .., \theta_n]$，求过去t个时刻的平均数？</p>
+<p>常规方法：$v_t = \frac{(n-1)v_{t-1} + \theta_t}{n}$</p>
+<p><strong>EWA</strong>：${v_t} = \beta {v_{t - 1}} + (1 - \beta ){\theta _t}$</p>
+<p>整个式子可以看成$v_t$是$\frac{1}{1-\beta}$个数据的平均值</p>
 <p>指数加权平均的偏差修正（bias correction）在预估初期，不用$v_t$，而用$\frac{v_t}{1-\beta^t}$</p>
 <h2 id="动量梯度下降法（Gradient-descent-with-momentum）"><a href="#动量梯度下降法（Gradient-descent-with-momentum）" class="headerlink" title="动量梯度下降法（Gradient descent  with momentum）"></a>动量梯度下降法（Gradient descent  with momentum）</h2><p>基本想法：计算梯度的指数加权平均数，并利用该梯度更新权值</p>
-<script type="math/tex; mode=display">\left\{ \begin{gathered}
-  {v_{dw}} = \beta {v_{dw}} + (1 - \beta )dw \hfill \\
-  {v_{db}} = \beta {v_{db}} + (1 - \beta )db \hfill \\ 
-\end{gathered}  \right.</script><script type="math/tex; mode=display">\left\{ \begin{gathered}
-  w: = w - \partial {v_{dw}} \hfill \\
-  b: = b - \partial {v_{db}} \hfill \\ 
-\end{gathered}  \right.</script><h2 id="RMSprop算法（RMS：root-mean-square均方根，标准差）"><a href="#RMSprop算法（RMS：root-mean-square均方根，标准差）" class="headerlink" title="RMSprop算法（RMS：root  mean  square均方根，标准差）"></a>RMSprop算法（RMS：root  mean  square均方根，标准差）</h2><script type="math/tex; mode=display">\left\{ \begin{gathered}
-  {S_{dw}} = \beta {S_{dw}} + (1 - \beta )(dw)^2 \hfill \\
-  {S_{db}} = \beta {S_{db}} + (1 - \beta )(db)^2 \hfill \\ 
-\end{gathered}  \right.</script><script type="math/tex; mode=display">\left\{ \begin{gathered}
-  w: = w - \partial \frac{dw}{\sqrt {S_{dw}} } \hfill \\
-  b: = b - \partial \frac{db}{\sqrt {S_{db}} } \hfill \\ 
-\end{gathered}  \right.</script><p>原理：<br><img src="../../images/deepLearning/RMSprop算法示意图.jpg" alt="RMSprop算法示意图"></p>
-<p>我们希望在横轴（w方向）学习速度快，纵轴（b方向）减缓摆动，所有有了$S_{dw}$,、$S_{db}$，w要除以一个较小的数（$S_{dw}$相对较小），b要除以一个相对较大的数（$S_{db}$较大）。</p>
+<p>$$\left{ \begin{gathered}<br>  {v_{dw}} = \beta {v_{dw}} + (1 - \beta )dw \hfill \<br>  {v_{db}} = \beta {v_{db}} + (1 - \beta )db \hfill \<br>\end{gathered}  \right.$$</p>
+<p>$$\left{ \begin{gathered}<br>  w: = w - \partial {v_{dw}} \hfill \<br>  b: = b - \partial {v_{db}} \hfill \<br>\end{gathered}  \right.$$</p>
+<h2 id="RMSprop算法（RMS：root-mean-square均方根，标准差）"><a href="#RMSprop算法（RMS：root-mean-square均方根，标准差）" class="headerlink" title="RMSprop算法（RMS：root  mean  square均方根，标准差）"></a>RMSprop算法（RMS：root  mean  square均方根，标准差）</h2><p>$$\left{ \begin{gathered}<br>  {S_{dw}} = \beta {S_{dw}} + (1 - \beta )(dw)^2 \hfill \<br>  {S_{db}} = \beta {S_{db}} + (1 - \beta )(db)^2 \hfill \<br>\end{gathered}  \right.$$</p>
+<p>$$\left{ \begin{gathered}<br>  w: = w - \partial \frac{dw}{\sqrt {S_{dw}} } \hfill \<br>  b: = b - \partial \frac{db}{\sqrt {S_{db}} } \hfill \<br>\end{gathered}  \right.$$</p>
+<p>原理：<br><img src="/../../images/deepLearning/RMSprop%E7%AE%97%E6%B3%95%E7%A4%BA%E6%84%8F%E5%9B%BE.jpg" alt="RMSprop算法示意图"></p>
+<p>我们希望在横轴（w方向）学习速度快，纵轴（b方向）减缓摆动，所以有了$S_{dw}$,、$S_{db}$，w要除以一个较小的数（$S_{dw}$相对较小），b要除以一个相对较大的数（$S_{db}$较大）。</p>
 <h2 id="Adam优化算法（Momentum和RMSprop的结合）"><a href="#Adam优化算法（Momentum和RMSprop的结合）" class="headerlink" title="Adam优化算法（Momentum和RMSprop的结合）"></a>Adam优化算法（Momentum和RMSprop的结合）</h2><p>步骤：</p>
 <ol>
 <li><p>初始化：$v_{dw}=0$ $S_{dw}=0$ $v_{db}=0$ $S_{db}=0$</p>
 </li>
 <li><p>计算Momentum指数加权平均数：</p>
-<script type="math/tex; mode=display">\left\{ \begin{gathered}
-  {v_{dw}} = \beta_1 {v_{dw}} + (1 - \beta_1 )dw \hfill \\
-  {v_{db}} = \beta_1 {v_{db}} + (1 - \beta_1 )db \hfill \\ 
-\end{gathered}  \right.</script></li>
+<p>$$\left{ \begin{gathered}<br>  {v_{dw}} = \beta_1 {v_{dw}} + (1 - \beta_1 )dw \hfill \<br>  {v_{db}} = \beta_1 {v_{db}} + (1 - \beta_1 )db \hfill \<br>\end{gathered}  \right.$$</p>
+</li>
 <li><p>使用RMSprop进行更新</p>
-<script type="math/tex; mode=display">\left\{ \begin{gathered}
-  {S_{dw}} = \beta_2 {S_{dw}} + (1 - \beta_2 )(dw)^2 \hfill \\
-  {S_{db}} = \beta_2 {S_{db}} + (1 - \beta_2 )(db)^2 \hfill \\ 
-\end{gathered}  \right.</script></li>
+<p>$$\left{ \begin{gathered}<br>  {S_{dw}} = \beta_2 {S_{dw}} + (1 - \beta_2 )(dw)^2 \hfill \<br>  {S_{db}} = \beta_2 {S_{db}} + (1 - \beta_2 )(db)^2 \hfill \<br>\end{gathered}  \right.$$</p>
+</li>
 <li><p>使用Adam算法，一般要计算偏差修正</p>
 <p>$v_{dw}^{corrected} = \frac{v_{dw}}{1 - \beta _1^t}$</p>
 <p>$v_{db}^{corrected} = \frac{v_{db}}{1 - \beta _1^t}$</p>
@@ -586,17 +572,15 @@
 <p>$S_{db}^{corrected} = \frac{S_{db}}{1 - \beta _2^t}$</p>
 </li>
 <li><p>更新权重</p>
-<script type="math/tex; mode=display">\left\{ \begin{gathered}
-  w: = w - \partial \frac{v_{dw}^{corrected}}{\sqrt {S_{dw}^{corrected}} + \epsilon } \hfill \\
-  b: = b - \partial \frac{v_{db}^{corrected}}{\sqrt {S_{db}^{corrected}} + \epsilon } \hfill \\ 
-\end{gathered}  \right.</script></li>
+<p>$$\left{ \begin{gathered}<br>  w: = w - \partial \frac{v_{dw}^{corrected}}{\sqrt {S_{dw}^{corrected}} + \epsilon } \hfill \<br>  b: = b - \partial \frac{v_{db}^{corrected}}{\sqrt {S_{db}^{corrected}} + \epsilon } \hfill \<br>\end{gathered}  \right.$$</p>
+</li>
 </ol>
 <h2 id="学习率衰减（learning-rate-decay）"><a href="#学习率衰减（learning-rate-decay）" class="headerlink" title="学习率衰减（learning rate decay）"></a>学习率衰减（learning rate decay）</h2><p>加快学习算法的一个办法是随时间慢慢减少学习率</p>
 <p>$\partial  = \frac{1}{1 + decayrate \cdot epoch - num}{\partial _0}$，epoch-num是训练的代数</p>
 <p>$\partial  = {0.95^{epoch - num}}{\partial _0}$</p>
 <p>$\partial  = \frac{k}{\sqrt {epoch - num} }{\partial _0}$</p>
 <p>$\partial  = \frac{k}{\sqrt t }{\partial _0}$</p>
-<h2 id="局部最优问题"><a href="#局部最优问题" class="headerlink" title="局部最优问题"></a>局部最优问题</h2><p><img src="../../images/deepLearning/局部最优解释.jpg" alt="局部最优问题"></p>
+<h2 id="局部最优问题"><a href="#局部最优问题" class="headerlink" title="局部最优问题"></a>局部最优问题</h2><p><img src="/../../images/deepLearning/%E5%B1%80%E9%83%A8%E6%9C%80%E4%BC%98%E8%A7%A3%E9%87%8A.jpg" alt="局部最优问题"></p>
 
                 
             </div>
@@ -1049,7 +1033,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">91.1k</span>&nbsp;字
+                class="white-color">96.3k</span>&nbsp;字
             
             
             

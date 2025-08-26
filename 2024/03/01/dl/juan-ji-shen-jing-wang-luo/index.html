@@ -417,20 +417,18 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="卷积神经网络构成部分"><a href="#卷积神经网络构成部分" class="headerlink" title="卷积神经网络构成部分"></a>卷积神经网络构成部分</h1><script type="math/tex; mode=display">n_H^{[l]} = [\frac{ {n_H^{[l - 1]} + 2{p^{[l]}} - {f^{[l]}}}}{s^{[l]}}] + 1</script><script type="math/tex; mode=display">n_W^{[l]} = [\frac{ {n_W^{[l - 1]} + 2{p^{[l]}} - {f^{[l]}}}}{s^{[l]}}] + 1</script><ul>
+                <h1 id="卷积神经网络构成部分"><a href="#卷积神经网络构成部分" class="headerlink" title="卷积神经网络构成部分"></a>卷积神经网络构成部分</h1><p>$$n_H^{[l]} = [\frac{ {n_H^{[l - 1]} + 2{p^{[l]}} - {f^{[l]}}}}{s^{[l]}}] + 1$$<br>$$n_W^{[l]} = [\frac{ {n_W^{[l - 1]} + 2{p^{[l]}} - {f^{[l]}}}}{s^{[l]}}] + 1$$</p>
+<ul>
 <li>输入：$n_H^{[l-1]} \times n_W^{[l-1]} \times n_C^{[l-1]}$</li>
 <li>权重参数$w^{[l]} : f^{[l]} \times f^{[l]} \times n_c^{[l-1]} \times n_c^{[l]}$ （$n_c^{[l]}$表示过滤器总数量）</li>
 <li>偏差参数$b^{[l]}: 1 \times 1 \times 1 \times n_c^{[l]}$</li>
 </ul>
-<script type="math/tex; mode=display">\begin{gathered}
-  {a^{[0]}} = x \\
-  a^{[1]} = g({z^{[1]}}) \\
-  {z^{[1]}} = {w^{[1]}}{a^{[0]}} + {b^{[1]}}\\ 
-\end{gathered}</script><p>${w^{[1]}}{a^{[0]}}$卷积计算，$+{b^{[1]}}$加上偏差</p>
+<p>$$\begin{gathered}<br>  {a^{[0]}} = x \<br>  a^{[1]} = g({z^{[1]}}) \<br>  {z^{[1]}} = {w^{[1]}}{a^{[0]}} + {b^{[1]}}\<br>\end{gathered}$$</p>
+<p>${w^{[1]}}{a^{[0]}}$卷积计算，$+{b^{[1]}}$加上偏差</p>
 <p>卷积网络通常有三层：</p>
 <h2 id="卷积层（convolution-layer，简称Conv）"><a href="#卷积层（convolution-layer，简称Conv）" class="headerlink" title="卷积层（convolution layer，简称Conv）"></a>卷积层（convolution layer，简称Conv）</h2><h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><p>提取输入图片的特征，使图像从具体到抽象</p>
 <h3 id="填充-padding"><a href="#填充-padding" class="headerlink" title="填充(padding)"></a>填充(padding)</h3><p>如果有一个$n \times n$的图像，用$f \times f$的过滤器做卷积，那么输出的维度为$(n-f+1)\times (n-f+1)$。这样存在缺点：1. 输出缩小；2. 图像边缘的大部分信息都丢失了</p>
-<p>padding：在图像四周均填充p个像素点，这样输出维度变成了（一般向下取整）$(n+2p-f+1)\times (n+wp-f+1)$</p>
+<p>padding：在图像四周均填充p个像素点，这样输出维度变成了（一般向下取整）$(n+2p-f+1)\times (n+2p-f+1)$</p>
 <ul>
 <li>Valid卷积：不填充</li>
 <li>Same卷积：填充后输入大小和输出大小相同，即$n+2p-f+1=n -&gt; p = (f-1)/2$</li>
@@ -441,8 +439,8 @@
 <li>奇数维过滤器有中心像素点，便于指出过滤器的位置</li>
 </ul>
 <h3 id="卷积步长-strided-convolutions"><a href="#卷积步长-strided-convolutions" class="headerlink" title="卷积步长(strided convolutions)"></a>卷积步长(strided convolutions)</h3><p>设步长为s，输出大小为$[\frac{n + 2p - f}{s} + 1] \times [\frac{n + 2p - f}{s} + 1]$(向下取整)</p>
-<h3 id="三维卷积"><a href="#三维卷积" class="headerlink" title="三维卷积"></a>三维卷积</h3><script type="math/tex; mode=display">
-输入图像（n\times n \times {n_c}） * 过滤器(f\times f \times {n_c})\xrightarrow{s = 1,p = 0}输出((n-f+1)\times (n-f+1))</script><p>${n_c}$表示通道数，对应位置相乘后全部数相加</p>
+<h3 id="三维卷积"><a href="#三维卷积" class="headerlink" title="三维卷积"></a>三维卷积</h3><p>$$<br>输入图像（n\times n \times {n_c}） * 过滤器(f\times f \times {n_c})\xrightarrow{s = 1,p = 0}输出((n-f+1)\times (n-f+1))<br>$$</p>
+<p>${n_c}$表示通道数，对应位置相乘后全部数相加</p>
 <blockquote>
 <p>对于某个卷积层，无论输入图像有多少个通道，输出图像通道数总是等于卷积核数量</p>
 </blockquote>
@@ -502,7 +500,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://slkfoiw.github.io/2024/03/01/dl/cnn/">https://slkfoiw.github.io/2024/03/01/dl/cnn/</a>
+                    <a href="https://slkfoiw.github.io/2024/03/01/dl/juan-ji-shen-jing-wang-luo/">https://slkfoiw.github.io/2024/03/01/dl/juan-ji-shen-jing-wang-luo/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -935,7 +933,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">91.1k</span>&nbsp;字
+                class="white-color">96.3k</span>&nbsp;字
             
             
             

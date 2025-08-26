@@ -418,10 +418,12 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="第五章实验部分作业"><a href="#第五章实验部分作业" class="headerlink" title="第五章实验部分作业"></a>第五章实验部分作业</h1><h2 id="1"><a href="#1" class="headerlink" title="1"></a>1</h2><figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line"># （1）创建用户王明，并授予他对学生表的SELECT权限</span><br><span class="line">    CREATE USER '王明'@'localhost' IDENTIFIED BY '123456';</span><br><span class="line">    GRANT SELECT ON 学生 TO '王明'@'localhost';</span><br><span class="line"># （2）授予用户王明对学生表的INSERT和DELETE权限</span><br><span class="line">    GRANT INSERT, DELETE ON 学生 TO '王明'@'localhost';</span><br><span class="line"># （3）授予用户王明对选课表的SELECT权限和对成绩字段的UPDATE权限</span><br><span class="line">    GRANT SELECT, UPDATE(成绩) ON 选课 TO '王明'@'localhost';</span><br><span class="line"># （4）授予用户王明创建表的权限</span><br><span class="line">    GRANT CREATE ON *.* TO '王明'@'localhost';</span><br><span class="line"># （5）授予用户王明对学生表的所有权限，并具有转授给他人的权力。</span><br><span class="line">    GRANT ALL ON 学生 TO '王明'@'localhost' WITH GRANT OPTION;</span><br><span class="line"># （6）撤销用户王明对学生表的INSERT和DELETE权限</span><br><span class="line">    REVOKE INSERT, DELETE ON 学生 FROM '王明'@'localhost';</span><br><span class="line"># （7）撤销用户王明对选课表的SELECT权限和对成绩字段的UPDATE权限</span><br><span class="line">    REVOKE SELECT, UPDATE(成绩) ON 选课 FROM '王明'@'localhost';</span><br><span class="line"># （8）撤销用户王明创建表的权限</span><br><span class="line">    REVOKE CREATE ON *.* FROM '王明'@'localhost';</span><br><span class="line"># （9）使得用户王明只能查看每个班级的最高分、最低分、平均分，但不能查看每个学生所选课程的具体成绩。</span><br><span class="line">    CREATE VIEW 班级统计数据 AS</span><br><span class="line">    SELECT 学生.系号, MAX(选课.成绩) AS 最高分, MIN(选课.成绩) AS 最低分, AVG(选课.成绩) AS 平均分 FROM 学生</span><br><span class="line">    JOIN 选课 ON 学生.学号 = 选课.学号</span><br><span class="line">    GROUP BY 学生.系号;</span><br><span class="line"></span><br><span class="line">    GRANT SELECT ON 班级统计数据 TO '王明'@'localhost';</span><br></pre></td></tr></tbody></table></figure>
-<p>执行结果如下：<br><img src="../../images/image-20241107164210908.png" alt="执行结果"></p>
+
+<p>执行结果如下：<br><img src="/../../images/image-20241107164210908.png" alt="执行结果"></p>
 <h2 id="2"><a href="#2" class="headerlink" title="2"></a>2</h2><figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">CREATE TABLE 员工表(</span><br><span class="line">    工号 INT PRIMARY KEY,</span><br><span class="line">    姓名 VARCHAR(50),</span><br><span class="line">    每月工资 FLOAT</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">INSERT INTO 员工表(工号, 姓名, 每月工资) VALUES (1, '张三', 10000);</span><br><span class="line"></span><br><span class="line">DELIMITER //</span><br><span class="line"></span><br><span class="line">CREATE TRIGGER 工资修改约束</span><br><span class="line">    BEFORE UPDATE ON 员工表</span><br><span class="line">    FOR EACH ROW</span><br><span class="line">BEGIN</span><br><span class="line">    IF NEW.每月工资 &lt; OLD.每月工资 THEN</span><br><span class="line">        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '工资不能降低！';</span><br><span class="line">    end if;</span><br><span class="line">end;</span><br><span class="line">//</span><br><span class="line">DELIMITER ;</span><br><span class="line"></span><br><span class="line">UPDATE 员工表 SET 每月工资 = 5000 WHERE 工号 = 1;</span><br></pre></td></tr></tbody></table></figure>
+
 <p>测试结果如下</p>
-<p><img src="../../images/image-20241107171704502.png" alt="image-20241107171704502"></p>
+<p><img src="/../../images/image-20241107171704502.png" alt="image-20241107171704502"></p>
 
                 
             </div>
@@ -657,13 +659,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2024/12/01/db/db/">
+                <a href="/2024/12/01/db/bug-ji-lu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="db">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="bug记录">
                         
-                        <span class="card-title">db</span>
+                        <span class="card-title">bug记录</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -698,13 +700,13 @@
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2024/12/01/db/springboot/">
+                <a href="/2024/12/01/db/db-di-san-zhang-zuo-ye/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="springboot">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="db第三章作业">
                         
-                        <span class="card-title">springboot</span>
+                        <span class="card-title">db第三章作业</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -874,7 +876,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">91.1k</span>&nbsp;字
+                class="white-color">96.3k</span>&nbsp;字
             
             
             

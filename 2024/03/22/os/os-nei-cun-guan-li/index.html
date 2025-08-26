@@ -424,7 +424,7 @@
 <li>collect2: 链接器</li>
 </ul>
 <p>ELF(Executable and Linkable Format)——可执行文件格式</p>
-<p><img src="../../images/OS/ELF结构.png" alt="ELF结构图"></p>
+<p><img src="/../../images/OS/ELF%E7%BB%93%E6%9E%84.png" alt="ELF结构图"></p>
 <p><strong>几个重要节头：</strong></p>
 <ul>
 <li>.bss: 存储未初始化的全局变量和静态变量。此节类型是SHT_NOBITS,因此不占⽂件空间</li>
@@ -577,7 +577,7 @@
 </ul>
 <h3 id="紧凑技术"><a href="#紧凑技术" class="headerlink" title="紧凑技术"></a>紧凑技术</h3><p>实现支撑：动态重定位（作业在内存中的位置发生了变化，这就必须对其地址加以修改或变换。）</p>
 <h3 id="可重定位分区分配"><a href="#可重定位分区分配" class="headerlink" title="可重定位分区分配"></a>可重定位分区分配</h3><p>结合紧凑技术的动态分区技术</p>
-<p><img src="../../images/OS/可重定位分区分配算法示意图.png" alt="算法示意图"></p>
+<p><img src="/../../images/OS/%E5%8F%AF%E9%87%8D%E5%AE%9A%E4%BD%8D%E5%88%86%E5%8C%BA%E5%88%86%E9%85%8D%E7%AE%97%E6%B3%95%E7%A4%BA%E6%84%8F%E5%9B%BE.png" alt="算法示意图"></p>
 <h3 id="多重分区分配"><a href="#多重分区分配" class="headerlink" title="多重分区分配"></a>多重分区分配</h3><p>为了支持结构化程序设计，操作系统往往把一道作业分成若干片段（如子程序、主程序、数据组等）。这样，片段之间就不需要连续了。只要增加一些重定位寄存器，就可以有效地控制一道作业片段之间的调用</p>
 <h1 id="页式内存管理"><a href="#页式内存管理" class="headerlink" title="页式内存管理"></a>页式内存管理</h1><p>基本思想：把一个逻辑地址连续的程序分散存放到若干个不连续的内存区域，并保证程序的正确执行。</p>
 <p>纯分页/基本分页存储管理方式：在调度一个作业时，必须把它的所有页一次装到主存的页框内；如果当时页框数不足，则该作业必须等待，系统再调度另外作业。不具备页面对换功能，不支持虚拟存储器功能。</p>
@@ -620,8 +620,7 @@
 <h1 id="段式内存管理（类比页式）"><a href="#段式内存管理（类比页式）" class="headerlink" title="段式内存管理（类比页式）"></a>段式内存管理（类比页式）</h1><p>将地址空间按照程序自身的逻辑关系划分为若干个段（类比页式的”分成若干页面“）。</p>
 <p>段表项：段号（隐含在地址下标）、<strong>段长</strong>+基址（区别于页式，段的长度不固定，页的大小固定）</p>
 <p>地址变换（类比页式的地址变换，需增加一步：根据段表内的段长检查段内地址/偏移是否越界）</p>
-<h2 id="分段和分页对比"><a href="#分段和分页对比" class="headerlink" title="分段和分页对比"></a>分段和分页对比</h2><div class="table-container">
-<table>
+<h2 id="分段和分页对比"><a href="#分段和分页对比" class="headerlink" title="分段和分页对比"></a>分段和分页对比</h2><table>
 <thead>
 <tr>
 <th></th>
@@ -629,8 +628,7 @@
 <th>分页</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>对用户</td>
 <td>可见</td>
 <td>不可见</td>
@@ -653,10 +651,9 @@
 <tr>
 <td>都需要两次访存，都可引入快表机构</td>
 <td></td>
+<td></td>
 </tr>
-</tbody>
-</table>
-</div>
+</tbody></table>
 <h2 id="段页式内存管理"><a href="#段页式内存管理" class="headerlink" title="段页式内存管理"></a>段页式内存管理</h2><p>段里再分页</p>
 <p>逻辑地址结构：段号+页号+页内偏移量</p>
 <p>段表项：段号（隐含在地址下标）、页表长度（一个段里有几页）+页表存放块号（页表起始地址）</p>
@@ -666,7 +663,6 @@
 <p>空间局部性：很多数据在内存中是连续存放的</p>
 <p>基于局部性原理产生了高速缓存技术</p>
 <h2 id="虚拟内存的定义和特征"><a href="#虚拟内存的定义和特征" class="headerlink" title="虚拟内存的定义和特征"></a>虚拟内存的定义和特征</h2><p>定义：程序不需全部装入即可运行，运行时根据需要动态调入数据，若内存不够，还需换出一些数据</p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -675,8 +671,7 @@
 <th>传统存储管理方式</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td></td>
 <td>多次性</td>
 <td>一次性</td>
@@ -694,10 +689,9 @@
 <tr>
 <td></td>
 <td>离散性</td>
+<td></td>
 </tr>
-</tbody>
-</table>
-</div>
+</tbody></table>
 <h2 id="虚拟内存的实现"><a href="#虚拟内存的实现" class="headerlink" title="虚拟内存的实现"></a>虚拟内存的实现</h2><ul>
 <li>请求分页式存储</li>
 <li>请求分段式存储</li>
@@ -733,8 +727,7 @@
 <p>实际应用中，可以为每个进程维护一个当前工作集（<strong>进程运行正在使用的页面集合</strong>）中的页的列表，如果进程在暂停之后需要重启时，根据这个列表使用预调页将所有工作集合中的页一次性调入内存</p>
 </li>
 </ol>
-<h2 id="页面置换策略"><a href="#页面置换策略" class="headerlink" title="页面置换策略"></a>页面置换策略</h2><div class="table-container">
-<table>
+<h2 id="页面置换策略"><a href="#页面置换策略" class="headerlink" title="页面置换策略"></a>页面置换策略</h2><table>
 <thead>
 <tr>
 <th>算法</th>
@@ -742,8 +735,7 @@
 <th>优缺点</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>最优置换（OPT）</td>
 <td>从主存中移出永远不再需要的页面，如这样的页面不存在，则应选择最长时间不需要访问的页面。</td>
 <td>所有页置换算法中页错误率最低<br>但它需要引用串（即页面访问序列）的先验知识，因此无法实现。但通常用于比较性研究，衡量其他页置换算法的效果</td>
@@ -781,10 +773,9 @@
 <tr>
 <td>WSClock工作集时钟页面置换算法</td>
 <td>和时钟算法很像，将页框组成一个循环表，每个表项包含来自基本工作集算法的上次使用时间</td>
+<td></td>
 </tr>
-</tbody>
-</table>
-</div>
+</tbody></table>
 <hr>
 <p>前面是从一个进程的角度讨论虚存管理的相关问题，下面是从系统管理者（OS）的角度讨论多个进程情况下虚存管理的问题</p>
 <h3 id="概念：工作集和驻留集"><a href="#概念：工作集和驻留集" class="headerlink" title="概念：工作集和驻留集"></a>概念：工作集和驻留集</h3><ul>
@@ -800,6 +791,7 @@
 <li>全局</li>
 </ul>
 <h2 id="分配与置换的搭配"><a href="#分配与置换的搭配" class="headerlink" title="分配与置换的搭配"></a>分配与置换的搭配</h2><figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">graph LR;</span><br><span class="line">    A[固定分配策略]--&gt;C[局部置换策略];</span><br><span class="line">    B[可变分配策略]--&gt;C;</span><br><span class="line">    B--&gt;D[全局置换策略];</span><br></pre></td></tr></tbody></table></figure>
+
 <h2 id="抖动问题（thrashing）"><a href="#抖动问题（thrashing）" class="headerlink" title="抖动问题（thrashing）"></a>抖动问题（thrashing）</h2><p>随着驻留内存的进程数目增加，即进程并发程度的提高，处理器利用率先上升，然后下降。因为每个进程的驻留集不断减小，当驻留集小于工作集后，缺页率急剧上升，频繁调页使得调页开销增大。</p>
 <h3 id="抖动的消除与预防"><a href="#抖动的消除与预防" class="headerlink" title="抖动的消除与预防"></a>抖动的消除与预防</h3><p>局部置换策略：使抖动局限在一个小的范围内，但是并未消除抖动的方式。</p>
 <p>引入工作集算法</p>
@@ -1090,13 +1082,13 @@
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2024/03/19/oo/oo-unit1-summary/">
+                <a href="/2024/03/19/oo/oopre-summary/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="OO第一单元总结">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="OOpre反思总结">
                         
-                        <span class="card-title">OO第一单元总结</span>
+                        <span class="card-title">OOpre反思总结</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1266,7 +1258,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">91.1k</span>&nbsp;字
+                class="white-color">96.3k</span>&nbsp;字
             
             
             

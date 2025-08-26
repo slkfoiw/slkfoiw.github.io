@@ -417,7 +417,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="双token机制"><a href="#双token机制" class="headerlink" title="双token机制"></a>双token机制</h2><h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p> <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/699850219">https://zhuanlan.zhihu.com/p/699850219</a></p>
+                <h2 id="双token机制"><a href="#双token机制" class="headerlink" title="双token机制"></a>双token机制</h2><h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/699850219">https://zhuanlan.zhihu.com/p/699850219</a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/tzyaaaaaa/article/details/140934877">简答易懂的springsecurity认证流程！</a> </p>
 <h3 id="1-各文件作用"><a href="#1-各文件作用" class="headerlink" title="1. 各文件作用"></a>1. 各文件作用</h3><h4 id="LoginSuccessHandler-java"><a href="#LoginSuccessHandler-java" class="headerlink" title="LoginSuccessHandler.java"></a><code>LoginSuccessHandler.java</code></h4><ul>
 <li><strong>功能</strong>：处理用户登录成功后的操作。</li>
@@ -551,6 +551,7 @@
 <li><code>RefreshTokenAspect</code>通过AOP切面，在控制器方法执行前后，检查并刷新token，确保用户在使用过程中不会因为token过期而中断。</li>
 </ul>
 <p>通过上述机制，该项目实现了双token机制，确保在<code>accessToken</code>过期后可以通过<code>refreshToken</code>重新生成新的<code>accessToken</code>，从而提高了系统的安全性和用户体验。</p>
+<h4 id="RSA加密"><a href="#RSA加密" class="headerlink" title="RSA加密"></a>RSA加密</h4><p>学习：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36665989/article/details/123184780">https://blog.csdn.net/qq_36665989/article/details/123184780</a></p>
 <h3 id="Column和-TableField"><a href="#Column和-TableField" class="headerlink" title="@Column和@TableField"></a>@Column和@TableField</h3><p>@Column用在jpa框架</p>
 <p>@TableField用在MyBatis-Plus</p>
 <h2 id="Slf4j"><a href="#Slf4j" class="headerlink" title="@Slf4j"></a>@Slf4j</h2><p><a target="_blank" rel="noopener" href="https://www.jb51.net/program/322645laz.htm">https://www.jb51.net/program/322645laz.htm</a></p>
@@ -607,15 +608,16 @@
 <figure class="highlight java"><table><tbody><tr><td class="code"><pre><span class="line">Page&lt;T&gt; <span class="title function_">page</span><span class="params">(Page&lt;T&gt; page)</span>;</span><br><span class="line"><span class="comment">// 假设要进行无条件的分页查询，每页显示10条记录，查询第1页</span></span><br><span class="line">IPage&lt;User&gt; page = <span class="keyword">new</span> <span class="title class_">Page</span>&lt;&gt;(<span class="number">1</span>, <span class="number">10</span>);</span><br><span class="line">IPage&lt;User&gt; userPage = userService.page(page); <span class="comment">// 调用 page 方法</span></span><br><span class="line">List&lt;User&gt; userList = userPage.getRecords();</span><br><span class="line"><span class="type">long</span> <span class="variable">total</span> <span class="operator">=</span> userPage.getTotal();</span><br><span class="line">System.out.println(<span class="string">"Total users: "</span> + total);</span><br><span class="line"><span class="keyword">for</span> (User user : userList) {</span><br><span class="line">    System.out.println(<span class="string">"User: "</span> + user);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li><p><strong>根据条件分页查询数据</strong>：</p>
-<figure class="highlight java"><table><tbody><tr><td class="code"><pre><span class="line">Page&lt;T&gt; <span class="title function_">page</span><span class="params">(Page&lt;T&gt; page, Wrapper&lt;T&gt; queryWrapper)</span>;</span><br></pre></td></tr></tbody></table></figure>
-</li>
+<figure class="highlight java"><table><tbody><tr><td class="code"><pre><span class="line">Page&lt;T&gt; <span class="title function_">page</span><span class="params">(Page&lt;T&gt; page, Wrapper&lt;T&gt; queryWrapper)</span>;</span><br></pre></td></tr></tbody></table></figure></li>
 </ol>
 <p>这些方法提供了对数据库进行增删改查的基本操作。</p>
 <h2 id="sql映射"><a href="#sql映射" class="headerlink" title="sql映射"></a>sql映射</h2><p>在 MyBatis 中，可以通过在映射文件中定义 SQL 语句，并将其与 Java 接口方法关联起来。以下是一个简单的例子，展示了如何在 <code>BUserMapper.xml</code> 文件中定义 SQL 语句，并将其与 <code>BUserMapper</code> 接口中的方法进行映射。</p>
 <p>首先，定义 <code>BUserMapper</code> 接口：</p>
 <figure class="highlight java"><table><tbody><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.mysecurity.dao;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.mysecurity.model.BUser;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.annotations.Select;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">BUserMapper</span> {</span><br><span class="line">    <span class="meta">@Select("SELECT * FROM b_user WHERE username = #{username}")</span></span><br><span class="line">    BUser <span class="title function_">findByUsername</span><span class="params">(String username)</span>;</span><br><span class="line"></span><br><span class="line">    List&lt;BUser&gt; <span class="title function_">findAll</span><span class="params">()</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
 <p>然后，在 <code>BUserMapper.xml</code> 文件中定义 SQL 语句：</p>
 <figure class="highlight xml"><table><tbody><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span>?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">mapper</span> <span class="keyword">PUBLIC</span> <span class="string">"-//mybatis.org//DTD Mapper 3.0//EN"</span> <span class="string">"http://mybatis.org/dtd/mybatis-3-mapper.dtd"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">"com.example.mysecurity.dao.BUserMapper"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 定义 findAll 方法的 SQL 语句 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"findAll"</span> <span class="attr">resultType</span>=<span class="string">"com.example.mysecurity.model.BUser"</span>&gt;</span></span><br><span class="line">        SELECT * FROM b_user</span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
 <p>在这个例子中：</p>
 <ol>
 <li><code>BUserMapper</code> 接口中定义了两个方法：<code>findByUsername</code> 和 <code>findAll</code>。</li>
@@ -624,6 +626,7 @@
 </ol>
 <p>通过这种方式，MyBatis 可以根据接口方法调用相应的 SQL 语句。</p>
 <h2 id="logaspect"><a href="#logaspect" class="headerlink" title="logaspect"></a>logaspect</h2><figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">package com.example.dorm.aspect;</span><br><span class="line"></span><br><span class="line">import com.example.dorm.entity.AccessLog;</span><br><span class="line">import com.example.dorm.mapper.LogMapper;</span><br><span class="line">import org.aspectj.lang.ProceedingJoinPoint;</span><br><span class="line">import org.aspectj.lang.annotation.Around;</span><br><span class="line">import org.aspectj.lang.annotation.Aspect;</span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.security.core.Authentication;</span><br><span class="line">import org.springframework.security.core.context.SecurityContextHolder;</span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line">import org.springframework.web.context.request.RequestContextHolder;</span><br><span class="line">import org.springframework.web.context.request.ServletRequestAttributes;</span><br><span class="line"></span><br><span class="line">import javax.servlet.http.HttpServletRequest;</span><br><span class="line">import java.time.LocalDateTime;</span><br><span class="line"></span><br><span class="line">@Aspect</span><br><span class="line">@Component</span><br><span class="line">public class LogAspect {</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private LogMapper LogMapper;</span><br><span class="line"></span><br><span class="line">    @Around("execution(* com.example.dorm.controller.*.*(..))")  // 拦截 controller 包下的所有方法</span><br><span class="line">    public Object logAccess(ProceedingJoinPoint joinPoint) throws Throwable {</span><br><span class="line">        // 获取用户信息，这里假设用户ID和IP可以通过 Security Context 获取</span><br><span class="line">        String username = getUserIdFromContext();</span><br><span class="line">        String userIp = getUserIp();</span><br><span class="line"></span><br><span class="line">        // 获取访问的页面</span><br><span class="line">        String accessedPage = joinPoint.getSignature().toString();</span><br><span class="line"></span><br><span class="line">        // 获取操作类型（假设可以通过请求方法获取）</span><br><span class="line">        String actionType = getRequestActionType();  // 比如 GET, POST 等</span><br><span class="line"></span><br><span class="line">        // 创建并保存访问日志</span><br><span class="line">        AccessLog accessLog = new AccessLog();</span><br><span class="line">        accessLog.setUsername(username);</span><br><span class="line">        accessLog.setUserIp(userIp);</span><br><span class="line">        accessLog.setAccessedPage(accessedPage);</span><br><span class="line">        accessLog.setDate(LocalDateTime.now());</span><br><span class="line">        accessLog.setType(actionType);</span><br><span class="line"></span><br><span class="line">        // 保存日志</span><br><span class="line">        LogMapper.insert(accessLog);</span><br><span class="line"></span><br><span class="line">        return joinPoint.proceed();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    private String getUserIdFromContext() {</span><br><span class="line">        // 从 Spring Security 获取当前用户的 ID</span><br><span class="line">        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();</span><br><span class="line">        return authentication.getName(); // 假设用户名是用户 ID</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    private String getUserIp() {</span><br><span class="line">        // 获取用户的 IP 地址，通常通过 HTTP 请求头获取</span><br><span class="line">        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();</span><br><span class="line">        return request.getRemoteAddr();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    private String getRequestActionType() {</span><br><span class="line">        // 通过 HTTP 请求方法获取操作类型，例如 GET、POST 等</span><br><span class="line">        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();</span><br><span class="line">        return request.getMethod();</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+
 
                 
             </div>
@@ -859,13 +862,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2024/12/01/db/db-di-san-zhang-zuo-ye/">
+                <a href="/2024/12/01/db/springboot/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="db第三章作业">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="springboot">
                         
-                        <span class="card-title">db第三章作业</span>
+                        <span class="card-title">springboot</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1076,7 +1079,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">91.1k</span>&nbsp;字
+                class="white-color">96.3k</span>&nbsp;字
             
             
             

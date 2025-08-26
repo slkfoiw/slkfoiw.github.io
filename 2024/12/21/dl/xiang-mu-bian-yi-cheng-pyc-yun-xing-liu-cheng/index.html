@@ -426,7 +426,10 @@
 </li>
 </ol>
 <figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rename_files_in_directory</span>(<span class="params">directory_path</span>):</span><br><span class="line">    <span class="keyword">for</span> filename <span class="keyword">in</span> os.listdir(directory_path):</span><br><span class="line">        <span class="keyword">if</span> <span class="string">".cpython-310"</span> <span class="keyword">in</span> filename:</span><br><span class="line">            new_filename = filename.replace(<span class="string">".cpython-310"</span>, <span class="string">""</span>)</span><br><span class="line">            old_file_path = os.path.join(directory_path, filename)</span><br><span class="line">            new_file_path = os.path.join(directory_path, new_filename)</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                os.rename(old_file_path, new_file_path)</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">f"Renamed: <span class="subst">{filename}</span> -&gt; <span class="subst">{new_filename}</span>"</span>)</span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">f"Error renaming <span class="subst">{filename}</span>: <span class="subst">{e}</span>"</span>)</span><br><span class="line"></span><br><span class="line">directory_path = <span class="string">"oadp/dp/"</span></span><br><span class="line"></span><br><span class="line">rename_files_in_directory(directory_path)</span><br></pre></td></tr></tbody></table></figure>
-<ol>
+
+
+
+<ol start="2">
 <li>运行命令和之前一样，例如<code>torchrun --nproc_per_node=1 -m oadp.dp.train oadp_ori_ov_coco configs/dp/oadp_ov_coco.py</code></li>
 </ol>
 
@@ -877,7 +880,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">91.1k</span>&nbsp;字
+                class="white-color">96.3k</span>&nbsp;字
             
             
             

@@ -397,7 +397,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    874
+                    873
                 </div>
                 
 
@@ -419,13 +419,13 @@
             <div id="articleContent">
                 <p>CLIP:Constrastive Language-Image Pre-training</p>
 <h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>embedding：一种将高维数据(如文本或图像)转换为较低维度的向量表示的技术</p>
-<h1 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h1><p><img src="../../images/deepLearning/CLIP.png" alt="CLIP结构"></p>
+<h1 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h1><p><img src="/../../images/deepLearning/CLIP.png" alt="CLIP结构"></p>
 <h1 id="推理过程"><a href="#推理过程" class="headerlink" title="推理过程"></a>推理过程</h1><p>把需要分类的图片送入image encoder得到特征，拿图片的特征和所有文本特征算余弦相似性，选最相似的那个文本特征对应的句子，从而完成了分类任务</p>
 <h2 id="余弦相似度cosine-similarity"><a href="#余弦相似度cosine-similarity" class="headerlink" title="余弦相似度cosine similarity"></a>余弦相似度cosine similarity</h2><p>用来度量文本与图像之间的对应关系，值越大表示对应关系越强。其实就是计算两个向量夹角的余弦值。</p>
 <h1 id="训练过程"><a href="#训练过程" class="headerlink" title="训练过程"></a>训练过程</h1><p>图片和文字配对，分别输入到Image Encoder、Text Encoder得到特征。若每个training batch有n个图像-文本对，就可以得到n个图片-文本对。</p>
 <p>配对的图片-文本对就是正样本，描述的是同一个东西。特征矩阵里对角线上的都是正样本，矩阵中非对角线上的元素都是负样本。有了正负样本，模型就可以通过<strong>对比学习</strong>的方式去训练，不需要任何手工标注。</p>
 <h2 id="Image-Encoder：ViT"><a href="#Image-Encoder：ViT" class="headerlink" title="Image Encoder：ViT"></a>Image Encoder：ViT</h2><p>结构如图，概括一下就是一个Patch+Position Embedding加多个Transformer Encoder</p>
-<p><img src="../../images/deepLearning/ViT结构.png" alt="ViT结构"></p>
+<p><img src="/../../images/deepLearning/ViT%E7%BB%93%E6%9E%84.png" alt="ViT结构"></p>
 <h3 id="一个Patch-Position-Embedding"><a href="#一个Patch-Position-Embedding" class="headerlink" title="一个Patch+Position Embedding"></a>一个Patch+Position Embedding</h3><p>对输入图像进行卷积，得到的矩阵平铺展开为一个一维向量存储图片的序列信息（mx1)。向量中的每个值代表原图像中的一个卷积核大小的块状区域，代表一个序列单元。当然卷积核会有n个，所有是个mxn的特征矩阵</p>
 <blockquote>
 <p>平铺完成后，我们会在图片序列中添加上Cls Token，<strong>该Token会作为一个单位的序列信息</strong>一起进行特征提取，<strong>图中的这个0*就是Cls Token</strong></p>
@@ -442,11 +442,11 @@
 <ol>
 <li>Unicode编码几乎可以表示全世界的所有语言字符，常说的ASCII编码是Unicode编码的一个子集。Unicode码点是字符在Unicode字符集中的唯一标识，而UTF-8则是将Unicode码点转换为字节序列的一种编码方式。</li>
 <li>UTF-8是Unicode的一种实现方式，也被称为Unicode转换格式（UTF），是“二进制表示”。它是对Unicode字符集进行编码的一种编码方式，给Unicode字符集加了一个存储类型前缀。</li>
-<li>有时为了不让字典太大,只会把出现频次大于某个阈值的词丢到字典里边,剩下所有的词都统一编码成#UNK </li>
+<li>有时为了不让字典太大,只会把出现频次大于某个阈值的词丢到字典里边,剩下所有的词都统一编码成#UNK</li>
 </ol>
 </blockquote>
-<h2 id="综合图像和文本特征"><a href="#综合图像和文本特征" class="headerlink" title="综合图像和文本特征"></a>综合图像和文本特征</h2><script type="math/tex; mode=display">
-min(\sum_{i=1}^N\sum_{j=1}^N (I_i \cdot T_j)_{i \not= j} - \sum_{i=1}^N (I_i \cdot T_i))</script><p>得到图像特征和文本特征后，接下来的训练任务转为最大化 N 个正样本的余弦相似度, 最小化$N^2 - N$个负样本的余弦相似度，即最大化对角线中的数值, 最小化其它非对角线的数值</p>
+<h2 id="综合图像和文本特征"><a href="#综合图像和文本特征" class="headerlink" title="综合图像和文本特征"></a>综合图像和文本特征</h2><p>$$<br>min(\sum_{i=1}^N\sum_{j=1}^N (I_i \cdot T_j)<em>{i \not= j} - \sum</em>{i=1}^N (I_i \cdot T_i))<br>$$</p>
+<p>得到图像特征和文本特征后，接下来的训练任务转为最大化 N 个正样本的余弦相似度, 最小化$N^2 - N$个负样本的余弦相似度，即最大化对角线中的数值, 最小化其它非对角线的数值</p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://www.zhihu.com/tardis/zm/art/34656727?source_id=1005">zero-shot learning</a></p>
 
                 
@@ -907,7 +907,7 @@ min(\sum_{i=1}^N\sum_{j=1}^N (I_i \cdot T_j)_{i \not= j} - \sum_{i=1}^N (I_i \cd
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">91.1k</span>&nbsp;字
+                class="white-color">96.3k</span>&nbsp;字
             
             
             

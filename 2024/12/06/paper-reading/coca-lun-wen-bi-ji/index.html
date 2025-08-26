@@ -397,7 +397,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    1.1k
+                    2.2k
                 </div>
                 
 
@@ -435,26 +435,24 @@
 <li>在广泛的下游任务上通过零样本迁移或minimal task adaptation有很好的表现。</li>
 </ul>
 <h2 id="具体方法"><a href="#具体方法" class="headerlink" title="具体方法"></a>具体方法</h2><p>作者首先回顾了三个不同方式使用自然语言监督的基础模型：单编码器分类预训练、双编码器对比学习和编码器解码器图像字幕。然后引入了CoCa，它们在一个简单的架构下同时具有对比学习和图像到字幕生成的优点。进一步讨论了CoCa模型如何通过zero-shot transfer或minimal task adaptation快速转移到下游任务。</p>
-<h3 id="三种用自然语言监督的基础模型"><a href="#三种用自然语言监督的基础模型" class="headerlink" title="三种用自然语言监督的基础模型"></a>三种用自然语言监督的基础模型</h3><h4 id="1-Single-Encoder-Classification"><a href="#1-Single-Encoder-Classification" class="headerlink" title="1. Single-Encoder Classification"></a>1. Single-Encoder Classification</h4><p>用交叉熵损失计算：</p>
-<script type="math/tex; mode=display">
-\mathcal{L}_{cls} = -p(y)\log{q_{\theta}(x)}</script><p>$ p(y)$ 是 GT 标签的 one-hot、multi-hot 或平滑分布， $q_θ(x)$ 是以$ θ $为参数的模型在输入 $x$ 时的预测结果</p>
-<h4 id="2-Dual-Encoder-Contrastive-Learning"><a href="#2-Dual-Encoder-Contrastive-Learning" class="headerlink" title="2. Dual-Encoder Contrastive Learning"></a>2. Dual-Encoder Contrastive Learning</h4><script type="math/tex; mode=display">
-\mathcal{L}_{Con} = - \frac{1}{N} (\sum_{i}^{N} \log{\frac{exp(x_i^{T}y_i/\sigma)}{\sum_{j=1}^{N} exp(x_i^{T}y_j/\sigma)}} + \sum_{i}^{N} \log{\frac{exp(y_i^{T}x_i/\sigma)}{\sum_{j=1}^{N} exp(y_i^{T}x_j/\sigma)}})</script><p>$x_i$代表第i个图像-文本对的图像embeddings(归一化的)，$y_i$代表第i个图像-文本对的文本embeddings(归一化的)。式子括号里前半部分是计算image-to-text，后半部分是text-to-imge。$N$是batch size</p>
+<h3 id="三种用自然语言监督的基础模型"><a href="#三种用自然语言监督的基础模型" class="headerlink" title="三种用自然语言监督的基础模型"></a>三种用自然语言监督的基础模型</h3><h4 id="1-Single-Encoder-Classification"><a href="#1-Single-Encoder-Classification" class="headerlink" title="1. Single-Encoder Classification"></a>1. Single-Encoder Classification</h4><p>用交叉熵损失计算：<br>$$<br>\mathcal{L}<em>{cls} = -p(y)\log{q</em>{\theta}(x)}<br>$$</p>
+<p>$ p(y)$ 是 GT 标签的 one-hot、multi-hot 或平滑分布， $q_θ(x)$ 是以$ θ $为参数的模型在输入 $x$ 时的预测结果</p>
+<h4 id="2-Dual-Encoder-Contrastive-Learning"><a href="#2-Dual-Encoder-Contrastive-Learning" class="headerlink" title="2. Dual-Encoder Contrastive Learning"></a>2. Dual-Encoder Contrastive Learning</h4><p>$$<br>\mathcal{L}<em>{Con} = - \frac{1}{N} (\sum</em>{i}^{N} \log{\frac{exp(x_i^{T}y_i/\sigma)}{\sum_{j=1}^{N} exp(x_i^{T}y_j/\sigma)}} + \sum_{i}^{N} \log{\frac{exp(y_i^{T}x_i/\sigma)}{\sum_{j=1}^{N} exp(y_i^{T}x_j/\sigma)}})<br>$$</p>
+<p>$x_i$代表第i个图像-文本对的图像embeddings(归一化的)，$y_i$代表第i个图像-文本对的文本embeddings(归一化的)。式子括号里前半部分是计算image-to-text，后半部分是text-to-imge。$N$是batch size</p>
 <h4 id="3-Encoder-Decoder-Captioning"><a href="#3-Encoder-Decoder-Captioning" class="headerlink" title="3. Encoder-Decoder Captioning"></a>3. Encoder-Decoder Captioning</h4><p>图像编码器提供潜在的编码特征，文本解码器学习在前向自回归分解（ forward autoregressive factorization）下最大化成对文本$y$的条件似然：</p>
-<script type="math/tex; mode=display">
-\mathcal{L}_{Cap} = - \sum_{t=1}^{T} \log{P_{\theta}(y_t | y_{<t}, x)}</script><p>利用teacher-forcing对编-解码器进行训练，以并行化计算和学习效率最大化。与之前的方法不同，字幕处理器方法产生了一个联合的图像-文本表示，可以用于视觉语言理解，并且也能够通过自然语言生成图像字幕应用程序。</p>
+<p>$$<br>\mathcal{L}<em>{Cap} = - \sum</em>{t=1}^{T} \log{P_{\theta}(y_t | y_{&lt;t}, x)}<br>$$</p>
+<p>利用teacher-forcing对编-解码器进行训练，以并行化计算和学习效率最大化。与之前的方法不同，字幕处理器方法产生了一个联合的图像-文本表示，可以用于视觉语言理解，并且也能够通过自然语言生成图像字幕应用程序。</p>
 <blockquote>
 <p>自回归：在训练过程中使用模型自身的预测结果作为输入</p>
 <p>teacher-forcing: 在训练过程中使用真实的输出序列作为输入。在Teacher Forcing模式下，模型在每个timesteps t预测输出后，不是将这个预测值用作时间t+1的输入，而是使用真实的数据，即目标序列在时间t+1的真实值。这样，即使前一个预测不准确，网络也可以在准确的数据指导下继续学习‌12。这种方法可以防止错误的累积和传播，使得训练过程更加稳定‌</p>
 </blockquote>
-<h3 id="CoCa"><a href="#CoCa" class="headerlink" title="CoCa"></a>CoCa</h3><p><img src="../../images/deepLearning/CoCa结构.png" alt="CoCa结构"></p>
+<h3 id="CoCa"><a href="#CoCa" class="headerlink" title="CoCa"></a>CoCa</h3><p><img src="/../../images/deepLearning/CoCa%E7%BB%93%E6%9E%84.png" alt="CoCa结构"></p>
 <p>顾名思义，在训练的时候有两个训练目标：基于对比学习的损失函数 Contrastive Loss 和基于生成式图像字幕任务的目标函数 Captioning Loss (一种生成式任务)。</p>
 <p>类似于标准的图像-文本编码解码器模型，CoCa通过神经网络编码器将图像编码为潜在表示，例如ViT，并使用causal masking transformer解码器解码文本</p>
 <blockquote>
 <p>causal mask：因果掩码或未来掩码，用于自回归模型中，以防止模型在生成序列时窥视未来的符号。这确保了给定位置的预测仅依赖于该位置之前的符号</p>
 </blockquote>
-<script type="math/tex; mode=display">
-\mathcal{L}_{CoCa} = \lambda_{Con} \mathcal{L}_{Con} + \lambda_{Cap} \mathcal{L}_{Cap}</script><p> Unimodal Text Decoder的结构和 MultiModal Text Decoder 不同，前者没有 Cross-Attention 后者有，因此前者就只是提取纯文本特征，后者学习图像文本的多模态联合表征。</p>
+<p>$$<br>\mathcal{L}<em>{CoCa} = \lambda</em>{Con} \mathcal{L}<em>{Con} + \lambda</em>{Cap} \mathcal{L}_{Cap}<br>$$<br> Unimodal Text Decoder的结构和 MultiModal Text Decoder 不同，前者没有 Cross-Attention 后者有，因此前者就只是提取纯文本特征，后者学习图像文本的多模态联合表征。</p>
 <blockquote>
 <p>交叉注意力机制：计算流程类似于自注意力机制，但自注意力机制中的查询、键和值都来自同一个输入序列，而交叉注意力机制的查询和键/值来自<strong>不同的输入序列</strong>。</p>
 </blockquote>
@@ -463,7 +461,8 @@
 <blockquote>
 <p>我们的实验表明，一个单一的池化的图像embedding有助于视觉识别任务作为一个全局表示，而更多的视觉tokens（因此更细粒度）有利于需要区域级特征的多模态理解任务。</p>
 </blockquote>
-<p><img src="../../images/deepLearning/CoCa伪代码.png" alt="CoCa结构" style="zoom:150%;"></p>
+<img src="../../images/deepLearning/CoCa伪代码.png" alt="CoCa结构" style="zoom:150%;">
+
 <ul>
 <li>Contrastive Loss 应用于 Image Encoder 和 Text Decoder 的输出端，使得二者都具备独立提取图像特征和文本特征的能力，而且学习到的是<strong>偏全局的图文表征</strong>。</li>
 <li>Captioning Loss 应用于 MultiModal Decoder 的输出端，使得其具有联合提取图像文本联合表征的能力，而且学习到的是<strong>偏细粒度的图文表征</strong>。</li>
@@ -758,13 +757,13 @@
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2024/12/03/paper-reading/albef-lun-wen-bi-ji/">
+                <a href="/2024/12/03/paper-reading/blip-lun-wen-bi-ji/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="ALBEF论文笔记">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="BLIP论文笔记">
                         
-                        <span class="card-title">ALBEF论文笔记</span>
+                        <span class="card-title">BLIP论文笔记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -941,7 +940,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">91.1k</span>&nbsp;字
+                class="white-color">96.3k</span>&nbsp;字
             
             
             

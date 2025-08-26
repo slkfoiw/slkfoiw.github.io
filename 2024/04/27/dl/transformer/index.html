@@ -397,7 +397,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    465
+                    493
                 </div>
                 
 
@@ -417,25 +417,24 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="整体架构"><a href="#整体架构" class="headerlink" title="整体架构"></a>整体架构</h1><p><img src="../../images/deepLearning/Transformer整体架构.png" alt="Transformer整体架构"></p>
+                <h1 id="整体架构"><a href="#整体架构" class="headerlink" title="整体架构"></a>整体架构</h1><p><img src="/../../images/deepLearning/Transformer%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84.png" alt="Transformer整体架构"></p>
 <p>图上全部为训练过程，去掉虚线框里的就是推理过程（没有正确答案输入的部分了）</p>
 <h2 id="Word-Embedding词嵌入"><a href="#Word-Embedding词嵌入" class="headerlink" title="Word Embedding词嵌入"></a>Word Embedding词嵌入</h2><p>将输入(输入句子有m个词)转化为向量，假设嵌入维度为n，则一个词对应一个n维向量，整个向量维度为m x n。</p>
-<h2 id="Positional-Encoding位置编码"><a href="#Positional-Encoding位置编码" class="headerlink" title="Positional Encoding位置编码"></a>Positional Encoding位置编码</h2><script type="math/tex; mode=display">
-PE(pos, 2i) = sin(\frac{pos}{10000^{2i/d_{model}}}) \\
-PE(pos, 2i+1) = cos(\frac{pos}{10000^{2i/d_{model}}})</script><p>将每个位置信息编码后与对应位置词的编码相加，这样后面的自注意力机制可以同时考虑输入的词本身和顺序信息。</p>
-<h2 id="Encoder-多次反复使用，一般为6次"><a href="#Encoder-多次反复使用，一般为6次" class="headerlink" title="Encoder(多次反复使用，一般为6次)"></a>Encoder(多次反复使用，一般为6次)</h2><h3 id="多头注意力机制"><a href="#多头注意力机制" class="headerlink" title="多头注意力机制"></a>多头注意力机制</h3><h3 id="Add-amp-Norm"><a href="#Add-amp-Norm" class="headerlink" title="Add&amp;Norm"></a>Add&amp;Norm</h3><ol>
+<h2 id="Positional-Encoding位置编码"><a href="#Positional-Encoding位置编码" class="headerlink" title="Positional Encoding位置编码"></a>Positional Encoding位置编码</h2><p>$$<br>PE(pos, 2i) = sin(\frac{pos}{10000^{2i/d_{model}}}) \<br>PE(pos, 2i+1) = cos(\frac{pos}{10000^{2i/d_{model}}})<br>$$</p>
+<p>将每个位置信息编码后与对应位置词的编码相加，这样后面的自注意力机制可以同时考虑输入的词本身和顺序信息。</p>
+<p>具体这样设置的原因可以参考这篇文章解读：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/454482273">Transformer学习笔记一：Positional Encoding</a></p>
+<h2 id="Encoder-多次反复使用，一般为6次"><a href="#Encoder-多次反复使用，一般为6次" class="headerlink" title="Encoder(多次反复使用，一般为6次)"></a>Encoder(多次反复使用，一般为6次)</h2><h3 id="多头注意力机制"><a href="#多头注意力机制" class="headerlink" title="多头注意力机制"></a>多头注意力机制</h3><h3 id="Add-Norm"><a href="#Add-Norm" class="headerlink" title="Add&amp;Norm"></a>Add&amp;Norm</h3><ol>
 <li>残差结构：将输入矩阵X与上一步得到的矩阵相加，这里是经过多头注意力机制得到的矩阵Z，待会Feed Forward后得到的矩阵还会有一个Add&amp;Norm步骤</li>
 <li>LayerNorm：对一个样本的所有特征计算均值和方差，然后归一化</li>
 </ol>
-<h3 id="Feed-Forward"><a href="#Feed-Forward" class="headerlink" title="Feed Forward"></a>Feed Forward</h3><p>就是普通的全连接网络</p>
-<script type="math/tex; mode=display">
-FFN(x) = max(0, xW_1 + b_1)W_2 + b_2</script><h2 id="Decoder-多次反复使用，一般为6次"><a href="#Decoder-多次反复使用，一般为6次" class="headerlink" title="Decoder(多次反复使用，一般为6次)"></a>Decoder(多次反复使用，一般为6次)</h2><p>与Encoder差不多，但是新增加了一个Masked Multi-Head Attention。</p>
+<h3 id="Feed-Forward"><a href="#Feed-Forward" class="headerlink" title="Feed Forward"></a>Feed Forward</h3><p>就是普通的全连接网络<br>$$<br>FFN(x) = max(0, xW_1 + b_1)W_2 + b_2<br>$$</p>
+<h2 id="Decoder-多次反复使用，一般为6次"><a href="#Decoder-多次反复使用，一般为6次" class="headerlink" title="Decoder(多次反复使用，一般为6次)"></a>Decoder(多次反复使用，一般为6次)</h2><p>与Encoder差不多，但是新增加了一个Masked Multi-Head Attention。</p>
 <h3 id="Masked-Multi-Head-Attention（带掩码的多头注意力机制）"><a href="#Masked-Multi-Head-Attention（带掩码的多头注意力机制）" class="headerlink" title="Masked Multi-Head Attention（带掩码的多头注意力机制）"></a>Masked Multi-Head Attention（带掩码的多头注意力机制）</h3><blockquote>
 <p>Transformer训练过程采用了Teacher Forcing的训练模型，会将原始输入和正确答案都会喂给模型</p>
 </blockquote>
 <p>为了防止模型知道后续输出单词（正确答案）的信息，需要掩码机制掩盖后面词的信息。</p>
 <p>实现方式：构造掩码矩阵（下三角矩阵），将归一化后的注意力分数与掩码矩阵按位相乘。其他部分和多头注意力机制一样。</p>
-<p><img src="../../images/deepLearning/掩码矩阵.png" alt="掩码矩阵"></p>
+<p><img src="/../../images/deepLearning/%E6%8E%A9%E7%A0%81%E7%9F%A9%E9%98%B5.png" alt="掩码矩阵"></p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="http://t.csdnimg.cn/lire2">自然语言处理Transformer模型最详细讲解（图解版）</a></p>
 
                 
@@ -896,7 +895,7 @@ FFN(x) = max(0, xW_1 + b_1)W_2 + b_2</script><h2 id="Decoder-多次反复使用�
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">91.1k</span>&nbsp;字
+                class="white-color">96.3k</span>&nbsp;字
             
             
             

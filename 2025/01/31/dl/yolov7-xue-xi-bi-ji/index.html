@@ -418,7 +418,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="yolov7"><a href="#yolov7" class="headerlink" title="yolov7"></a>yolov7</h1><h2 id="整体结构"><a href="#整体结构" class="headerlink" title="整体结构"></a>整体结构</h2><p>输入input、骨干网络backbone、颈部neck、头部head</p>
-<p><img src="../../images/deepLearning/yolov7" alt="yolov7"></p>
+<p><img src="/../../images/deepLearning/yolov7" alt="yolov7"></p>
 <ol>
 <li>图片经过input部分数据增强等一系列操作进行预处理后，被送入backbone</li>
 <li>backbone对处理后的图片提取特征</li>
@@ -430,6 +430,9 @@
 <p><a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content/CVPR2021/papers/Zhu_Prototype_Augmentation_and_Self-Supervision_for_Incremental_Learning_CVPR_2021_paper.pdf">https://openaccess.thecvf.com/content/CVPR2021/papers/Zhu_Prototype_Augmentation_and_Self-Supervision_for_Incremental_Learning_CVPR_2021_paper.pdf</a></p>
 <h2 id="trick"><a href="#trick" class="headerlink" title="trick"></a>trick</h2><p>CBAM加一个，在yolov7_backbone处</p>
 <figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">def forward(self, x):</span><br><span class="line">        x0 = self.stage0(x) </span><br><span class="line">        x1 = self.stage1(x0) </span><br><span class="line"></span><br><span class="line">        x2 = self.elan_0(x1)</span><br><span class="line">        x2 = self.cbam_0(x2) #! 添加 CBAM</span><br><span class="line">        </span><br><span class="line">        x3 = self.elan_1(x2)</span><br><span class="line">        # x3 = self.cbam_1(x3) #! 添加 CBAM</span><br><span class="line">        </span><br><span class="line">        x4 = self.elan_2(x3)</span><br><span class="line">        # x4 = self.cbam_2(x4) #! 添加 CBAM</span><br><span class="line">        </span><br><span class="line">        x5 = self.elan_3(x4)</span><br><span class="line">        # x5 = self.cbam_3(x5) #! 添加 CBAM </span><br><span class="line">       </span><br><span class="line">        return x3, x4, x5</span><br></pre></td></tr></tbody></table></figure>
+
+
+
 
                 
             </div>
@@ -882,7 +885,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">91.1k</span>&nbsp;字
+                class="white-color">96.3k</span>&nbsp;字
             
             
             

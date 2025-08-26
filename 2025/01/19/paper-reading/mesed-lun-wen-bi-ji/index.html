@@ -420,7 +420,7 @@
                 <h1 id="MESED"><a href="#MESED" class="headerlink" title="MESED"></a>MESED</h1><p>A Multi-modal Entity Set Expansion Dataset with Fine-grained Semantic Classes and Hard Negative Entities</p>
 <p>具有细粒度语义类和硬否定实体的多模态实体集扩展数据集</p>
 <h2 id="实体集扩展介绍"><a href="#实体集扩展介绍" class="headerlink" title="实体集扩展介绍"></a>实体集扩展介绍</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>实体集扩展（Entity Set Expansion，ESE）任务旨在用属于同一语义类别的新实体扩展少量种子实体。例如，给定{Washington D.C., Chicago, Los Angeles}，ESE 会尝试检索具有目标语义类别 US 的其他实体城市，如New York, NYC, Boston。</p>
-<h3 id="存在问题"><a href="#存在问题" class="headerlink" title="存在问题"></a>存在问题</h3><p><img src="../../images/deepLearning/MESED1.png" alt="image-20250110101845737"></p>
+<h3 id="存在问题"><a href="#存在问题" class="headerlink" title="存在问题"></a>存在问题</h3><p><img src="/../../images/deepLearning/MESED1.png" alt="image-20250110101845737"></p>
 <p>传统的ESE 方法基于单模态（即字面模态），难以处理现实世界中的复杂实体，例如：</p>
 <ol>
 <li>具有细粒度语义差异的否定实体：指属于同一粗粒度语义类作为目标类的实体。这些实体共享文本内涵的语义，因此很难进行详细区分。例如，在扩展US Cities时，不可避免地要扩展具有相同父类（即US Location）的实体，如同样位于美国的<em>佛罗里达州</em>和<em>德克萨斯州</em>（US states）。</li>
@@ -452,7 +452,7 @@
 </ol>
 <h2 id="MultiExpan-方法"><a href="#MultiExpan-方法" class="headerlink" title="MultiExpan 方法"></a>MultiExpan 方法</h2><p>将 Multi-Expan 分成两个步骤：多模态实体表示阶段和实体扩展阶段。</p>
 <p>在第一阶段，我们设计了一个多模态实体级编码器，其输出是候选实体的掩蔽跨度概率分布。实体表示为包含该实体的所有句子的预测实体分布的平均值。我们提出了一个多模态掩蔽实体预测任务和三个辅助自学习预训练任务，以重新完善实体表示。在第二阶段，MultiExpan 会根据实体概率表征的相似性获取目标实体。提出 MultiExpan 的目的是为了提供一个稳健的多模态baseline，并探索不同预训练任务的有效性</p>
-<h3 id="多模态实体表示阶段"><a href="#多模态实体表示阶段" class="headerlink" title="多模态实体表示阶段"></a>多模态实体表示阶段</h3><p><img src="../../images/deepLearning/MESED3" alt="多模态实体表示"></p>
+<h3 id="多模态实体表示阶段"><a href="#多模态实体表示阶段" class="headerlink" title="多模态实体表示阶段"></a>多模态实体表示阶段</h3><p><img src="/../../images/deepLearning/MESED3" alt="多模态实体表示"></p>
 <p>多模态编码器首先利用自注意Transformer分别处理文本和图像，然后将它们结合起来，进行深度跨模态交互。</p>
 <ol>
 <li><p>文本：上下文文本用$BERT_{base}$初始化的12层Transformer编码，获得文本嵌入$\hat{W} = {\hat{w_1}, \hat{w_2}, …, \hat{w_{L_1}} = BERT_{BASE}(T)}$。$L_1$ 是句子中词块的最大长度</p>
@@ -464,45 +464,31 @@
 <li><p>跨模态融合：通过文本特征和视觉特征的组合$concat(\hat{W}, \hat{V})$得到隐藏状态${h_1,h_2,…,h_L}$。然后，我们将其输入一个 3 层Transformer进行交互和融合，使图像-文本对完全对齐：${\hat{h_1},\hat{h_2},…,\hat{h_L}} = Encoder_{cross}({h_1,h_2,…,h_L})$，这里$L=L_1+L_2$</p>
 </li>
 </ol>
-<p>多模态嵌入编码器后面有一个分类 f。在得到掩码位置的隐藏状态后，嵌入向量通过 MLP 和 Softmax 函数转换为掩码实体在可能的候选实体中的概率分布：</p>
-<script type="math/tex; mode=display">
-\hat{y}=f(\hat{h}_{[MASK]}) = Softmax(MLP(\hat{h}_{[MASK]})), \hat{y} \in R^{V_e}</script><p>$V_e$表示候选实体词汇量的大小。</p>
+<p>多模态嵌入编码器后面有一个分类 f。在得到掩码位置的隐藏状态后，嵌入向量通过 MLP 和 Softmax 函数转换为掩码实体在可能的候选实体中的概率分布：<br>$$<br>\hat{y}=f(\hat{h}<em>{[MASK]}) = Softmax(MLP(\hat{h}</em>{[MASK]})), \hat{y} \in R^{V_e}<br>$$<br>$V_e$表示候选实体词汇量的大小。</p>
 <h3 id="训练目标"><a href="#训练目标" class="headerlink" title="训练目标"></a>训练目标</h3><p>在多模态编码器的训练中，四种自监督预训练目标包括：Masked实体预测损失、对比学习损失、聚类学习损失和动量蒸馏损失。最终，多模态编码器对这四个目标进行迭代优化。</p>
-<h4 id="Masked实体预测损失"><a href="#Masked实体预测损失" class="headerlink" title="Masked实体预测损失"></a>Masked实体预测损失</h4><script type="math/tex; mode=display">
-L_{mask} = - \frac{1}{N} \sum_{i}^{N} \sum_{j}^{V_e} y_i[j] \cdot (1 - \eta) \cdot \log (\hat{y_i}[j]) + (1 - y_i[j]) \cdot \eta \cdot \log(1 - \hat{y_i}[j])</script><p>用交叉熵损失计算，$y$表示one-hot向量，$N$表示batch size，$\eta$表示平滑因子，用于防止与目标实体共享序列的实体被过度压制。</p>
+<h4 id="Masked实体预测损失"><a href="#Masked实体预测损失" class="headerlink" title="Masked实体预测损失"></a>Masked实体预测损失</h4><p>$$<br>L_{mask} = - \frac{1}{N} \sum_{i}^{N} \sum_{j}^{V_e} y_i[j] \cdot (1 - \eta) \cdot \log (\hat{y_i}[j]) + (1 - y_i[j]) \cdot \eta \cdot \log(1 - \hat{y_i}[j])<br>$$</p>
+<p>用交叉熵损失计算，$y$表示one-hot向量，$N$表示batch size，$\eta$表示平滑因子，用于防止与目标实体共享序列的实体被过度压制。</p>
 <h4 id="对比学习损失"><a href="#对比学习损失" class="headerlink" title="对比学习损失"></a>对比学习损失</h4><p>对比学习通过拉近相同语义类别实体的代表和拉远不同语义类别实体的</p>
 <p>代表，使语义类别的语义边界更加清晰。</p>
 <p>从上一次迭代中获得的扩展列表中为每个语义类生成正反两方面的实体。排在前$K_{pos}$ 位的实体被定义为正实体，排在$L_{neg}$至$U_{neg}$之间的实体则被视为负实体。来自正/负实体的样本配对形成正/负样本对。对于大小为𝑁 的迷你批次，每个样本$x_{2𝑖− 1}$ 与其他样本形成 $2𝑁−1$对，其中，我们将$x_{2𝑖− 1}，x_{2i}$对视为正，并定义其他 $2𝑁−2$对为负。</p>
-<p>由于直接对隐藏特征$\hat{h}_{MASK}$使用对比学习可能导致信息丢失，所以在多模态编码器后面插入了一个双层MLP（用$p_{con}(\cdot)$表示）来把隐藏特征映射到正则子空间：$z_i= p_{con}(\hat{h}_{MASK})$。相似度计算用点积：</p>
-<script type="math/tex; mode=display">
-s(z_i,z_j) = z_i \cdot z_j^T,i,j \in [1, 2N]</script><p>对比学习的损失集中在硬性的负面实体，对于一个样本$z_i$（假设它与$z_j$形成正样本对），则损失为：</p>
-<script type="math/tex; mode=display">
-l_i = -\log \frac{e^{s(z_i,z_j)/t}}{e^{s(z_i,z_j)/t} + R_i^-} \\
-R_i^- = max(\frac{-(2N-2) \cdot \iota \cdot e^{s(z_i,z_j)/t} + \tilde{R_i^-}}{1 - \iota^+}, e^{-\frac{1}{t}}) \\
-\tilde{R_i^-} = \frac{(2N-2)\sum_{k:k \not= i \not= j} e^{(1+\beta) \cdot s(z_i,z_k)/t}}{sum_{k:k \not= i \not= j} e^{\beta \cdot s(z_i,z_k)/t}} \\
-L_{con} = \sum_{i=1}^{2N} l_i</script><h4 id="聚类学习损失"><a href="#聚类学习损失" class="headerlink" title="聚类学习损失"></a>聚类学习损失</h4><p>采用另一种投影头（表示为$p_{clu}$ ），将输入样本$x_i$ 映射到一个语义类子空间，结果是$c_i = p_{clu}(\hat{h}[MASK])$。$c_i$的维数$M$与聚类的数量（即目标语义类别的数量）有关。我们认为，一个语义类别可以通过一批实体对它的概率反应来表征。让$C = [c_1,…,c_{2i-1},…,c_{2N-1}] \in R^{N \times M}$表示样本${x_1,…,x_{2i-1},…,x_{2N-1}}$的类可能分布，$C’ = [c_2,…,c_{2i},…,c_{2N}]$表示样本${x_2,…,x_{2i},…,x_{2N}}$的类可能分布。正聚类对是由矩阵$C$和$C’$的相同列所代表的语义类别形成的，这是因为与这些列向量的每个元素相对应的实体$x_{2𝑖− 1}$ 和$x_{2i}$ 是源自同一语义类别的正样本对。</p>
-<script type="math/tex; mode=display">
-\hat{s}(\hat{c_i}, \hat{c_j}) = \hat{c_i^T} \cdot \hat{c_j} \\
-...\text{其他公式和对比损失计算类似} \\
-L_{clu} = \sum_{i=1}^{2M} \hat{l_i}</script><h4 id="动量蒸馏损失"><a href="#动量蒸馏损失" class="headerlink" title="动量蒸馏损失"></a>动量蒸馏损失</h4><p>MESED 中的图像-句子对是从网络中收集的，通常伴有噪声，这就导致收集到的图像可能与句子关系不强，或者属于语义类的扩展实体没有包含在地面实况中。为了缓解上述问题，我们引入了动量蒸馏学习。在训练过程中，模型的动量版本会以指数方式缓慢更新。</p>
+<p>由于直接对隐藏特征$\hat{h}<em>{MASK}$使用对比学习可能导致信息丢失，所以在多模态编码器后面插入了一个双层MLP（用$p</em>{con}(\cdot)$表示）来把隐藏特征映射到正则子空间：$z_i= p_{con}(\hat{h}<em>{MASK})$。相似度计算用点积：<br>$$<br>s(z_i,z_j) = z_i \cdot z_j^T,i,j \in [1, 2N]<br>$$<br>对比学习的损失集中在硬性的负面实体，对于一个样本$z_i$（假设它与$z_j$形成正样本对），则损失为：<br>$$<br>l_i = -\log \frac{e^{s(z_i,z_j)/t}}{e^{s(z_i,z_j)/t} + R_i^-} \<br>R_i^- = max(\frac{-(2N-2) \cdot \iota \cdot e^{s(z_i,z_j)/t} + \tilde{R_i^-}}{1 - \iota^+}, e^{-\frac{1}{t}}) \<br>\tilde{R_i^-} = \frac{(2N-2)\sum</em>{k:k \not= i \not= j} e^{(1+\beta) \cdot s(z_i,z_k)/t}}{sum_{k:k \not= i \not= j} e^{\beta \cdot s(z_i,z_k)/t}} \<br>L_{con} = \sum_{i=1}^{2N} l_i<br>$$</p>
+<h4 id="聚类学习损失"><a href="#聚类学习损失" class="headerlink" title="聚类学习损失"></a>聚类学习损失</h4><p>采用另一种投影头（表示为$p_{clu}$ ），将输入样本$x_i$ 映射到一个语义类子空间，结果是$c_i = p_{clu}(\hat{h}[MASK])$。$c_i$的维数$M$与聚类的数量（即目标语义类别的数量）有关。我们认为，一个语义类别可以通过一批实体对它的概率反应来表征。让$C = [c_1,…,c_{2i-1},…,c_{2N-1}] \in R^{N \times M}$表示样本${x_1,…,x_{2i-1},…,x_{2N-1}}$的类可能分布，$C’ = [c_2,…,c_{2i},…,c_{2N}]$表示样本${x_2,…,x_{2i},…,x_{2N}}$的类可能分布。正聚类对是由矩阵$C$和$C’$的相同列所代表的语义类别形成的，这是因为与这些列向量的每个元素相对应的实体$x_{2𝑖− 1}$ 和$x_{2i}$ 是源自同一语义类别的正样本对。<br>$$<br>\hat{s}(\hat{c_i}, \hat{c_j}) = \hat{c_i^T} \cdot \hat{c_j} \<br>…\text{其他公式和对比损失计算类似} \<br>L_{clu} = \sum_{i=1}^{2M} \hat{l_i}<br>$$</p>
+<h4 id="动量蒸馏损失"><a href="#动量蒸馏损失" class="headerlink" title="动量蒸馏损失"></a>动量蒸馏损失</h4><p>MESED 中的图像-句子对是从网络中收集的，通常伴有噪声，这就导致收集到的图像可能与句子关系不强，或者属于语义类的扩展实体没有包含在地面实况中。为了缓解上述问题，我们引入了动量蒸馏学习。在训练过程中，模型的动量版本会以指数方式缓慢更新。</p>
 <p>移动动量系数$m:\theta_t m \leftarrow \theta_t + (1-m) \theta_s$</p>
 <p>动量模型用于生成伪标签，作为额外的监督，防止学生模型过度拟合噪音。</p>
-<p>动量蒸馏损失用动量模型生成的伪实体概率分布$\tilde{y}$ 和当前一轮多模态编码器的预测结果$\hat{y}$之间的 KL 发散来表示：</p>
-<script type="math/tex; mode=display">
-L_mod= - \sum_{i=1}^{m} \tilde{y_i}log(\tilde{y_i}) - \tilde{y_i}log(\hat{y_i})</script><h3 id="实体扩展阶段"><a href="#实体扩展阶段" class="headerlink" title="实体扩展阶段"></a>实体扩展阶段</h3><p>实体被表示为包含该实体的所有句子的预测实体分布的平均值。语义类别由当前扩展集实体的加权平均值表示，权重由窗口搜索算法动态保持。这样，具有相似分布的候选实体就会被放置在当前集合中，并以 KL 分歧来衡量。当前集合中的实体数量达到目标规模时，就会执行实体重新排序算法，以完善最终的排序列表。</p>
+<p>动量蒸馏损失用动量模型生成的伪实体概率分布$\tilde{y}$ 和当前一轮多模态编码器的预测结果$\hat{y}$之间的 KL 发散来表示：<br>$$<br>L_mod= - \sum_{i=1}^{m} \tilde{y_i}log(\tilde{y_i}) - \tilde{y_i}log(\hat{y_i})<br>$$</p>
+<h3 id="实体扩展阶段"><a href="#实体扩展阶段" class="headerlink" title="实体扩展阶段"></a>实体扩展阶段</h3><p>实体被表示为包含该实体的所有句子的预测实体分布的平均值。语义类别由当前扩展集实体的加权平均值表示，权重由窗口搜索算法动态保持。这样，具有相似分布的候选实体就会被放置在当前集合中，并以 KL 分歧来衡量。当前集合中的实体数量达到目标规模时，就会执行实体重新排序算法，以完善最终的排序列表。</p>
 <blockquote>
 <p>由于扩展过程不是本文的重点，我们使用了 ProbExpan 中的窗口搜索和实体重新排序算法，在此不再赘述。</p>
 </blockquote>
 <h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><p>比较了三类模型</p>
 <ol>
-<li>传统的基于文本的 ESE 方法：包括SetEx<strong>-</strong> pan、CaSE、CGExpan、ProbExpan和 GPT-3.5。SetExpan 和 CaSE 是传统的基于统计概率的方法，而 CGExpan 和ProbExpan 则是基于预训练语言模型 BERT 的最先进方法。</li>
+<li>传统的基于文本的 ESE 方法：包括SetEx**-** pan、CaSE、CGExpan、ProbExpan和 GPT-3.5。SetExpan 和 CaSE 是传统的基于统计概率的方法，而 CGExpan 和ProbExpan 则是基于预训练语言模型 BERT 的最先进方法。</li>
 <li>基于视觉的模型：VIT、BEIT、ICLIP的图像编码器</li>
 <li>具有不同结构的多模态模型：CLIP、ALBEF</li>
 </ol>
-<p><strong>评价指标</strong> ESE 的目标是根据实体与给定种子实体的相似度，按降序扩展排序实体列表。采用了两种广泛使用的评价指标，即MAP@𝐾 和 P@𝐾。MAP@K计算方式如下：</p>
-<script type="math/tex; mode=display">
-MAP@K = \frac{1}{|Q|} \sum_{q \in Q}AP_K(R_q, G_q)</script><p>𝑄是每个查询q的集合，$AP_K(R_q, G_q)$是𝐾与排名列表$R_q$ 和groud truth列表$G_q$ 的平均精度。P@K是前K个实体的精度。</p>
-<h3 id="主要实验"><a href="#主要实验" class="headerlink" title="主要实验"></a>主要实验</h3><p><img src="../../images/deepLearning/MESED-table3" alt="image-20250112101526651"></p>
+<p><strong>评价指标</strong> ESE 的目标是根据实体与给定种子实体的相似度，按降序扩展排序实体列表。采用了两种广泛使用的评价指标，即MAP@𝐾 和 P@𝐾。MAP@K计算方式如下：<br>$$<br>MAP@K = \frac{1}{|Q|} \sum_{q \in Q}AP_K(R_q, G_q)<br>$$<br>𝑄是每个查询q的集合，$AP_K(R_q, G_q)$是𝐾与排名列表$R_q$ 和groud truth列表$G_q$ 的平均精度。P@K是前K个实体的精度。</p>
+<h3 id="主要实验"><a href="#主要实验" class="headerlink" title="主要实验"></a>主要实验</h3><p><img src="/../../images/deepLearning/MESED-table3" alt="image-20250112101526651"></p>
 <ol>
 <li>多模态方法上优于单模态方法。值得注意的是，我们的 MultiExpan（MEP）仅通过使用屏蔽实体预测任务就取得了优异的性能。完整的 MultiExpan 方法取得了最佳的整体性能。此外，完整版的 Multi-Expan也达到了最佳性能。</li>
 <li>就多模态模型的结构而言，ALBEF 和我们的 MultiExpan 通过Transformer实现了深度模态交互，与 CLIP 通过点积相似性计算实现的浅度模态交互相比，后者更适合 ESE 任务。这些结果表明，深度模态交互和融合是未来可以探索的一个方向。</li>
@@ -969,7 +955,7 @@ MAP@K = \frac{1}{|Q|} \sum_{q \in Q}AP_K(R_q, G_q)</script><p>𝑄是每个查�
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">91.1k</span>&nbsp;字
+                class="white-color">96.3k</span>&nbsp;字
             
             
             

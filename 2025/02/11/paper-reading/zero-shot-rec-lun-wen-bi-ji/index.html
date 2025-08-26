@@ -439,13 +439,13 @@
 <h4 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h4><blockquote>
 <p>我们报告了REC数据集上的SOTA零样本视觉定位结果，并在Who的Waldo数据集上显示了有希望的结果，其中我们的零样本方法达到了与完全监督方法相当的精度。</p>
 </blockquote>
-<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p><img src="../../images/deepLearning/zero-shot-REC2.png" alt="image-20250203125055175"></p>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p><img src="/../../images/deepLearning/zero-shot-REC2.png" alt="image-20250203125055175"></p>
 <p>分为两个阶段。首先，解耦图像和文本实体，并以（主题、谓词、对象）的格式构造三元组。其次，计算三重级相似度矩阵，并将其传播到实例级，得到相似度得分最高的边界框。我们的匹配管道的主要重点是精确地建模实体之间的关系，这是通过三级结构相似性来实现的，如图2所示。我们还提供了一个新的配方，使VLA模型具有更好的组合理解能力。</p>
-<h3 id="构建三元组"><a href="#构建三元组" class="headerlink" title="构建三元组"></a>构建三元组</h3><p>给定字幕$C$、图片$I$。假定字母、图片都由实体集组成，即$\epsilon_{T} = {e_i^T}_{i=1}^M$，$\epsilon_I = {e_i^I}_{i=1}^N$，M、N分别表示C、I的实体数。分别用$\gamma^T(\cdot)$、$\gamma^I(\cdot)$表示实体对之间的关系</p>
+<h3 id="构建三元组"><a href="#构建三元组" class="headerlink" title="构建三元组"></a>构建三元组</h3><p>给定字幕$C$、图片$I$。假定字母、图片都由实体集组成，即$\epsilon_{T} = {e_i^T}<em>{i=1}^M$，$\epsilon_I = {e_i^I}</em>{i=1}^N$，M、N分别表示C、I的实体数。分别用$\gamma^T(\cdot)$、$\gamma^I(\cdot)$表示实体对之间的关系</p>
 <p>在这一阶段，我们的目标是为两个模态构建实体-关系三元组。</p>
 <p>文本三元组表示为$\tau_T = {t_{ij}^T = (e_i^T, \gamma^T(e_i^{T}, e_j^T), e_j^T)|1 \leq i, j, \leq M}$，基数为$M’$。图像三元组表示为$\tau_I = {t_{kl}^I = (e_k^I, \gamma^I(e_k^{I}, e_l^I), e_l^I)|1 \leq k, l, \leq M}$，基数为$N’$。</p>
 <h4 id="文本三元组构建"><a href="#文本三元组构建" class="headerlink" title="文本三元组构建"></a>文本三元组构建</h4><p>利用LLM强大的上下文学习能力将字幕$C$解析为三联体$\tau_T$。具体来说，我们设计了一个提示来指示ChatGPT解析字幕文本$C$。图3提供了我们如何设计RefCOCO/+/g数据集的提示的概述，进一步的细节阐述如下。注意，提示可能会根据数据集的不同而有所不同，以适应不同的数据分布。如图3所示，提示可分为四个部分：</p>
-<p><img src="../../images/deepLearning/zero-shot-REC3.png" alt="image-20250203153104880"></p>
+<p><img src="/../../images/deepLearning/zero-shot-REC3.png" alt="image-20250203153104880"></p>
 <ol>
 <li>通用指令：为特定的任务定义了一个明确而通用的指令</li>
 <li>支持细节：包括预期的输出格式、基本元素以及应该或不应该包含的首选项等等</li>
@@ -461,9 +461,7 @@
 <li>$image \rightarrow text$：定位给定图像区域的相关文本描述</li>
 </ol>
 <p>鉴于它们的对称性，本节将主要关注$text \rightarrow image$的定位场景。</p>
-<h4 id="三元组级别的定位"><a href="#三元组级别的定位" class="headerlink" title="三元组级别的定位"></a>三元组级别的定位</h4><p>对于给定的文本三元组$t_{ij}^T = (e_i^T, \gamma^T(e_i^{T}, e_j^T), e_j^T)$，分别将$e_i^T$、$\gamma^T(e_i^{T}, e_j^T)$、$e_j^T$经过VLA文本编码器编码，获得三个文本embeddings$(\mathbf{t}_i, \mathbf{t}_{i,j}, \mathbf{t}_j)$。图像三元组类似，得图像embeddings$(\mathbf{v}_k,\mathbf{v}_{k,l},\mathbf{v}_l)$。这两个三元组的相似度为：</p>
-<script type="math/tex; mode=display">
-\mathbf{S}(t_{ij}^T, t_{kl}^I) = cos(\mathbf{t}_i, \mathbf{v}_k) + cos(\mathbf{t}_{i, j}, \mathbf{v}_{k, l}) + cos(\mathbf{t}_j, \mathbf{v}_l). (3)</script><p>$\mathbf{S} \in \mathbb{R}^{M’ \times N’}$是所有文本、图像三元组的相似度矩阵。之后可以得到一个二进制指标矩阵$\mathbf{B} \in {0,1}^{M’ \times N’}$，计算方式如下：</p>
+<h4 id="三元组级别的定位"><a href="#三元组级别的定位" class="headerlink" title="三元组级别的定位"></a>三元组级别的定位</h4><p>对于给定的文本三元组$t_{ij}^T = (e_i^T, \gamma^T(e_i^{T}, e_j^T), e_j^T)$，分别将$e_i^T$、$\gamma^T(e_i^{T}, e_j^T)$、$e_j^T$经过VLA文本编码器编码，获得三个文本embeddings$(\mathbf{t}<em>i, \mathbf{t}</em>{i,j}, \mathbf{t}<em>j)$。图像三元组类似，得图像embeddings$(\mathbf{v}<em>k,\mathbf{v}</em>{k,l},\mathbf{v}<em>l)$。这两个三元组的相似度为：<br>$$<br>\mathbf{S}(t</em>{ij}^T, t</em>{kl}^I) = cos(\mathbf{t}<em>i, \mathbf{v}<em>k) + cos(\mathbf{t}</em>{i, j}, \mathbf{v}</em>{k, l}) + cos(\mathbf{t}_j, \mathbf{v}_l). (3)<br>$$<br>$\mathbf{S} \in \mathbb{R}^{M’ \times N’}$是所有文本、图像三元组的相似度矩阵。之后可以得到一个二进制指标矩阵$\mathbf{B} \in {0,1}^{M’ \times N’}$，计算方式如下：</p>
 
 $$
 \mathbf{B}(t_{ij}^{T},t_{kl}^{I})  = \left\{  
@@ -473,15 +471,12 @@ $$
 \end{array}\right.
 $$
 
+
 <p>也就是说，对于每个文本三元组$t_{ij}^T$，二进制指标矩阵B将值1赋给最相似的图像三元组$t_{kl}^I$，将值0赋给所有其他图像。</p>
-<h4 id="实例级别的定位"><a href="#实例级别的定位" class="headerlink" title="实例级别的定位"></a>实例级别的定位</h4><p><img src="../../images/deepLearning/zero-shot-REC4.png" alt="image-20250203164142197"></p>
+<h4 id="实例级别的定位"><a href="#实例级别的定位" class="headerlink" title="实例级别的定位"></a>实例级别的定位</h4><p><img src="/../../images/deepLearning/zero-shot-REC4.png" alt="image-20250203164142197"></p>
 <p>视觉定位问题中的另一个实质性挑战是，三元组中的<em>主语</em>和<em>宾语</em>都可能与其他实体有多重交互。为此，我们设计了一种新的方法来将三元组级别的定位结果传播到实例中。</p>
-<p>具体来说，基于三元组级别的定位结果，我们可以计算实例级结构感知相似度矩阵R如下：</p>
-<script type="math/tex; mode=display">
-\mathbf{R}(e_i^T, e_k^I) = \sum_{j,l} \mathbf{B}(t_{ij}^{T},t_{kl}^{I}) \mathbf{S}(t_{ij}^T, t_{kl}^I) + \sum_{j,l} \mathbf{B}(t_{ji}^{T},t_{lk}^{I}) \mathbf{S}(t_{ji}^T, t_{lk}^I). (4)</script><p>等式中的两个项分别考虑了$e_i^T$和$e_k^I$以不同三元组中的<em>主语</em>和<em>宾语</em>出现的情况，如图4下半部所示。通过聚合来自多个定位三元组的相似性得分，它有助于更准确地找到实例级的对应关系。</p>
-<p>最后，对于每个文本实体，我们计算最相关的图像实体如下：</p>
-<script type="math/tex; mode=display">
-\hat{e}_i^I = {argmax}_m \mathbf{R}(e_i^T, e_m^I)</script><p>其中$\hat{e}_i^I$表示$e_i^T$对应的视觉实体。如果在等式中实现一个基于阈值的选择来代替argmax函数，我们的方法可以很容易地扩展到一对多的定位场景。但这里将讨论局限于一对一的定位，以获得更清晰的理解。</p>
+<p>具体来说，基于三元组级别的定位结果，我们可以计算实例级结构感知相似度矩阵R如下：<br>$$<br>\mathbf{R}(e_i^T, e_k^I) = \sum_{j,l} \mathbf{B}(t_{ij}^{T},t_{kl}^{I}) \mathbf{S}(t_{ij}^T, t_{kl}^I) + \sum_{j,l} \mathbf{B}(t_{ji}^{T},t_{lk}^{I}) \mathbf{S}(t_{ji}^T, t_{lk}^I). (4)<br>$$<br>等式中的两个项分别考虑了$e_i^T$和$e_k^I$以不同三元组中的<em>主语</em>和<em>宾语</em>出现的情况，如图4下半部所示。通过聚合来自多个定位三元组的相似性得分，它有助于更准确地找到实例级的对应关系。</p>
+<p>最后，对于每个文本实体，我们计算最相关的图像实体如下：<br>$$<br>\hat{e}_i^I = {argmax}_m \mathbf{R}(e_i^T, e_m^I)<br>$$<br>其中$\hat{e}_i^I$表示$e_i^T$对应的视觉实体。如果在等式中实现一个基于阈值的选择来代替argmax函数，我们的方法可以很容易地扩展到一对多的定位场景。但这里将讨论局限于一对一的定位，以获得更清晰的理解。</p>
 <h3 id="增强的关系理解"><a href="#增强的关系理解" class="headerlink" title="增强的关系理解"></a>增强的关系理解</h3><p>上面算式计算三元组相似度时用的是余弦相似度，试图通过余弦相似度来量化实体之间的关系，并假设VLA模型能够充分把握这些关系。但研究表明这种假设在实践中往往不足。</p>
 <p>为了解决这个问题，我们使用了丰富的关系知识的数据集的组合来细化VLA模型。这些数据集包括HICO-det、SWiG和视觉基因组（VG）。值得注意的是，在VG数据集的情况下，我们排除了从COCO中获得的所有图像，以保持零样本协议的完整性，并与我们基于RefCOCO/+/g的实验对齐。</p>
 <p>上述提到的数据集提供了目标的注释边界框、文本描述、与其他对象的关系。所以我们可以很容易地遵循我们在三元组级别定位阶段所做的事情来创建视觉-文本的三元组，然后对这些三元组利用对比学习损失。为了表示清晰，我们在等式中使用了相同的符号来计算两个三胞胎之间的相似性。假设$(t_{ij}^{T}$和$t_{kl}^{I}$是两个对应的三元组，我们定义对比损失如下：</p>
@@ -490,16 +485,17 @@ $$
 \mathcal{L} = \mathop{\sum }\limits_{\left( {t}_{ij}^{T},{t}_{kl}^{I}\right) }\left\lbrack  {\log \left( \frac{\mathbf{S}\left( {{t}_{ij}^{T},{t}_{kl}^{I}}\right) }{\mathop{\sum }\limits_{{m,n}}\mathbf{S}\left( {{t}_{ij}^{T},{t}_{mn}^{I}}\right) }\right) }\right.\left. {+\log \left( \frac{\mathbf{S}\left( {{t}_{ij}^{T},{t}_{kl}^{I}}\right) }{\mathop{\sum }\limits_{{m,n}}\mathbf{S}\left( {{t}_{mn}^{T},{t}_{kl}^{I}}\right) }\right) }\right\rbrack
 $$
 
+
 <p>通过这种改进的方法，可以提高VLA模型对实体间关系的理解和准确评分的能力，从而提高零样本定位能力。（具体优势见概要部分）</p>
 <h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><h3 id="建立"><a href="#建立" class="headerlink" title="建立"></a>建立</h3><p><strong>RefCOCO/RefCOCO+/RefCOCOg数据</strong>来自MS-COCO。RefCOCO包括19,994张图像，其中有142,210个参考表达式。RefCOCO+有19,992张图像和141,564个表达式。RefCOCOg包含26,771张图像，包含104,560个表达式。在RefCOCO和RefCOCO+中，表达式更短，平均有1.6个名词和3.6个单词。在RefCOCOg中，表达式更长，平均有2.8个名词和8.4个单词。</p>
 <p><strong>Who‘s Waldo</strong>引入了一个以人为中心的视觉定位任务，其中字幕中的所有名称都被屏蔽，迫使模型通过属性和视觉实体之间的交互来链接框和隐藏的[NAME]令牌。字幕很长并且包含了复杂的场景描述。我们使用它的测试分割来进行评估，其中包含6741张图像。每个字幕包含大约30个单词。</p>
 <p><strong>评估指标</strong>：在RefCOCO/+/g上，我们遵循之前的工作，使用accuracy作为接地结果（grounding results），即如果预测盒与真实区域之间的IoU值大于0.5，则是正确的预测。对于Who‘s Waldo，根据之前的工作，对于给定的文本描述中的人和图像中的边界框之间的对应关系的接地结果，我们报告了在测试集上的真实标签链接的accuracy。</p>
 <h3 id="结果-1"><a href="#结果-1" class="headerlink" title="结果"></a>结果</h3><p>RefCOCO/+/g我们将我们的方法与各种零样本视觉定位模型进行了基准测试，包括彩色提示调优（CPT）、GradCAM 和ReCLIP [54]。ReCLIP代表了零射击REC方法中最新的SOTA。</p>
-<p><img src="../../images/deepLearning/zero-shot-REC-t1.png" alt="image-20250204102809470"></p>
+<p><img src="/../../images/deepLearning/zero-shot-REC-t1.png" alt="image-20250204102809470"></p>
 <p>如表1所示，与使用相同CLIP架构的其他模型相比，我们的方法在所有的拆分中都优于其他方法。具体来说，我们的模型比ReCLIP的性能提高了19.53%，平均提高了9.74%。值得注意的是，即使不对主干CLIP模型进行微调，我们的方法也可以超过ReCLIP3.91%，平均为1.05%，这表明基于ChatGPT解析的结构相似性也有助于理解关系。</p>
 <p>此外，我们还将我们的方法扩展到另一个VLA模型——FLAVA ，以验证我们的方法的可推广性。毫不奇怪，当集成到我们的匹配管道中时，FLAVA比CLIP模型显示出更优越的性能。这可以归因于FLAVA天生更健壮的架构。在对FLAVA进行微调后，所得到的VR-FLAVA持续地提高了所有数据集分割的性能，加强了我们的方法在增强对各种VLA模型的关系理解方面的有效性。</p>
 <p><strong>Who’s Waldo</strong> 我们将我们的方法与在接地数据集上训练的模型进行了比较，包括Gupta，SL-CCRF ，MAttNet和UNITER 。Who‘s Waldo方法作为监督基线，如其原论文。此外，我们为我们的数据集适配了ReCLIP，利用它们的语言解析器来识别潜在的参考表达式，然后使用它们的原始方法进行接地。</p>
-<p><img src="../../images/deepLearning/zero-shot-REC-t2.png" alt="image-20250204103320804"></p>
+<p><img src="/../../images/deepLearning/zero-shot-REC-t2.png" alt="image-20250204103320804"></p>
 <p>如表2所示，我们的方法优于所有在接地数据集上训练的模型，具有显著的边际。</p>
 <h2 id="消融研究"><a href="#消融研究" class="headerlink" title="消融研究"></a>消融研究</h2><p>在本节中，我们将对RefCOCOg进行消融研究。这个数据集特别适合于我们的评估，因为它有更长的字幕和丰富的实体交互，使其成为评估每个组件的理想测试平台。</p>
 <h3 id="接地管道内组件的有效性"><a href="#接地管道内组件的有效性" class="headerlink" title="接地管道内组件的有效性"></a>接地管道内组件的有效性</h3><p>我们探索了两个关键的变化：三元组和VR-CLIP。三重态变量检验了使用三重实例匹配的影响，而不是基本的评分和排序方法，即使用CLIP对每个孤立的盒子进行评分，而不是选择一个相似性最高的盒子。VRCLIP变体评估了微调后的VR-CLIP和原始CLIP模型之间的性能差异。</p>
@@ -744,9 +740,9 @@ $$
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="janus">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="janus-pro部署">
                         
-                        <span class="card-title">janus</span>
+                        <span class="card-title">janus-pro部署</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -964,7 +960,7 @@ $$
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">91.1k</span>&nbsp;字
+                class="white-color">96.3k</span>&nbsp;字
             
             
             

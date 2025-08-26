@@ -444,7 +444,7 @@
 <h3 id="I-O端口地址"><a href="#I-O端口地址" class="headerlink" title="I/O端口地址"></a>I/O端口地址</h3><p>定义：接口电路中每个寄存器具有唯一的地址</p>
 <p>所有I/O端口地址形成I/O端口的地址空间，I/O指令形式与I/O地址相互关联，主要有以下形式：</p>
 <ol>
-<li><p>内存映像地址—&gt;内存映像I/O模式：控制器的内存/寄存器作为物理内存空间的一部分</p>
+<li><p>内存映像地址–&gt;内存映像I/O模式：控制器的内存/寄存器作为物理内存空间的一部分</p>
 <p>优点：</p>
 <ul>
 <li>不需要特殊的保护机制来阻止用户进程进行相应的I/O 操作。操作系统要避免把包含了控制寄存器的那部分地址空间放入用户的虚拟地址空间中</li>
@@ -452,7 +452,7 @@
 </ul>
 <p>缺点：不允许对一个控制寄存器的内容进行高速缓存（如果我们把设备控制寄存器进行了高速缓存，那么第一次引用的时候就把它 放入了高速缓存。以后再对它的引用都是从高速缓存当中取值，而不会再去对设备进行相应的检测）</p>
 </li>
-<li><p>I/O独立编址—&gt;I/O专用指令：Intel体系架构in/out指令</p>
+<li><p>I/O独立编址–&gt;I/O专用指令：Intel体系架构in/out指令</p>
 <p>优点：</p>
 <ul>
 <li>外设不占用内存的地址空间</li>
@@ -493,7 +493,6 @@
 <li>数据传送的方向、存放数据的内存地址及传送数据的长度等都由CPU控制，占用了CPU时间。</li>
 <li>每个设备占用一个DMA控制器，当设备增加时，需要增加新的DMA控制器</li>
 </ul>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -502,8 +501,7 @@
 <th>DMA</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>何时中断？</td>
 <td>每个单位数据传送完成后中断CPU</td>
 <td>传送的一批数据完成后中断</td>
@@ -518,12 +516,9 @@
 <td>具有对异常事件的处理能力</td>
 <td>适用于数据块的传输</td>
 </tr>
-</tbody>
-</table>
-</div>
+</tbody></table>
 <h3 id="通道技术（Channel）"><a href="#通道技术（Channel）" class="headerlink" title="通道技术（Channel）"></a>通道技术（Channel）</h3><p>I/O通道是专门负责输入输出的处理器，独立于CPU。</p>
 <p>与DMA的原理几乎是一样的，通道是一个特殊功能的处理器，它有自己的指令和程序专门负责数据输入输出的传输控制。CPU将“传输控制”的功能下放给通道后只负责“数据处理”功能。这样，通道与CPU分时使用内存，实现了CPU内部运算与I/O设备的并行工作</p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -532,8 +527,7 @@
 <th>通道</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td></td>
 <td>数据的传送方向、存放数据的内存起始地址和数据块长度都由CPU控制</td>
 <td>是一个特殊的处理器，有自己的指令和程序，通过执行通道程序实现对数据传输的控制，所以通道具有更强的独立处理I/O的功能</td>
@@ -543,10 +537,8 @@
 <td>通常只能控制一台或者少数几台同类设备</td>
 <td>一个通道可同时控制多种设备</td>
 </tr>
-</tbody>
-</table>
-</div>
-<h2 id="I-O软件组成"><a href="#I-O软件组成" class="headerlink" title="I/O软件组成"></a>I/O软件组成</h2><p><img src="../../images/OS/IO软件组成" alt="I/O软件组成"></p>
+</tbody></table>
+<h2 id="I-O软件组成"><a href="#I-O软件组成" class="headerlink" title="I/O软件组成"></a>I/O软件组成</h2><p><img src="/../../images/OS/IO%E8%BD%AF%E4%BB%B6%E7%BB%84%E6%88%90" alt="I/O软件组成"></p>
 <h3 id="逻辑设备表LUT-Logical-Unit-Table"><a href="#逻辑设备表LUT-Logical-Unit-Table" class="headerlink" title="逻辑设备表LUT(Logical Unit Table)"></a>逻辑设备表LUT(Logical Unit Table)</h3><p>为了实现设备的独立性，系统必须设置一张逻辑设备表，用于将应用程序中所使用的逻辑设备名映射为物理设备名。</p>
 <p>该表的每个表目中包含了三项，逻辑设备名（设备类型）、物理设备名、设备驱动程序的入口地址</p>
 <h1 id="I-O缓冲管理"><a href="#I-O缓冲管理" class="headerlink" title="I/O缓冲管理"></a>I/O缓冲管理</h1><h1 id="I-O设备管理"><a href="#I-O设备管理" class="headerlink" title="I/O设备管理"></a>I/O设备管理</h1><h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><p>通道可以有多个，一个通道管理多个控制器，一个控制器管理多个设备</p>
@@ -1032,7 +1024,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">91.1k</span>&nbsp;字
+                class="white-color">96.3k</span>&nbsp;字
             
             
             

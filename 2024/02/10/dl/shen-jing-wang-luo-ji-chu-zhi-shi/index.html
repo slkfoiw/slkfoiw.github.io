@@ -439,36 +439,25 @@
 <p>$L(\hat y, y) = -ylog\hat y - (1-y)log(1-\hat{y})$</p>
 <p>成本函数(衡量在全体训练样本上的表现)：$J\left( {w,b} \right) = \frac{1}{m}\sum\limits_{i = 1}^m {L({\hat{y}^{(i)}},\mathop y\nolimits^{(i)} )}$</p>
 <h2 id="反向传播"><a href="#反向传播" class="headerlink" title="反向传播"></a>反向传播</h2><p>梯度下降算法：</p>
-<script type="math/tex; mode=display">da = \frac{\partial L}{\partial a} =  - \frac{y}{a} + \frac{1 - y}{1 - a}</script><script type="math/tex; mode=display">dz = \frac{\partial L}{\partial z} = \frac{\partial L}{\partial a} \cdot \frac{\partial a}{\partial z} = ( - \frac{y}{a} + \frac{1 - y}{1 - a}) \cdot a \cdot (1 - a) = a - y</script><script type="math/tex; mode=display">\left\{ {\begin{array}{l}
-{d\mathop w\nolimits_1  = \frac{\partial L}{\partial \mathop w\nolimits_1 } = \frac{\partial L}{\partial a} \cdot \frac{\partial a}{\partial \mathop w\nolimits_1 } = \mathop x\nolimits_1  \cdot (a - y)}\\
-{d\mathop w\nolimits_2  = \frac{\partial L}{\partial \mathop w\nolimits_2 } = \frac{\partial L}{\partial a} \cdot \frac{\partial a}{\partial \mathop w\nolimits_2 } = \mathop x\nolimits_2  \cdot (a - y)}\\
-{db = \frac{\partial L}{\partial b} = a - y}
-\end{array}} \right.</script><p>更新：</p>
-<script type="math/tex; mode=display">\left\{ {\begin{array}{l}
-{\mathop w\nolimits_1 : = \mathop w\nolimits_1  - \partial  \cdot d\mathop w\nolimits_1 }\\
-{\mathop w\nolimits_2 : = \mathop w\nolimits_2  - \partial  \cdot d\mathop w\nolimits_2 }\\
-{b: = b - \partial  \cdot db}
-\end{array}} \right.</script><p>m个样本的梯度下降：</p>
-<script type="math/tex; mode=display">\left\{ {\begin{array}{l}
-{d{\rm{ }}{w_1} = \frac{\rm{1}}{\rm{m}}\sum\limits_{i = 1}^m {x_1^{(i)} \cdot ({a^{(i)}} - {y^{(i)}})} {\rm{ }}}\\
-{d{\rm{ }}{w_2} = \frac{\rm{1}}{\rm{m}}\sum\limits_{i = 1}^m {x_2^{(i)} \cdot ({a^{(i)}} - {y^{(i)}})} {\rm{ }}}\\
-{db = \frac{\partial L}{\partial b} = \frac{\rm{1}}{\rm{m}}\sum\limits_{i = 1}^m {({a^{(i)}} - {y^{(i)}})} }
-\end{array}} \right.</script><p>深层网络的向前传播：</p>
-<script type="math/tex; mode=display">z^{[l]}=w^{[l]}a^{[l]-1}+b^{[l]}</script><script type="math/tex; mode=display">a^{[l]} =  \sigma (z^{[l]})</script><h2 id="常见激活函数"><a href="#常见激活函数" class="headerlink" title="常见激活函数"></a>常见激活函数</h2><h3 id="sigmiod函数"><a href="#sigmiod函数" class="headerlink" title="sigmiod函数"></a>sigmiod函数</h3><script type="math/tex; mode=display">
-f(x) = \frac{1}{1 + e^{-x}}</script><p>使用范围：常用于二分类问题。被广泛地使用在输出单元/最后一层上，在隐藏层使用较少。</p>
+<p>$$da = \frac{\partial L}{\partial a} =  - \frac{y}{a} + \frac{1 - y}{1 - a}$$</p>
+<p>$$dz = \frac{\partial L}{\partial z} = \frac{\partial L}{\partial a} \cdot \frac{\partial a}{\partial z} = ( - \frac{y}{a} + \frac{1 - y}{1 - a}) \cdot a \cdot (1 - a) = a - y$$</p>
+<p>$$\left{ {\begin{array}{l}<br>{d\mathop w\nolimits_1  = \frac{\partial L}{\partial \mathop w\nolimits_1 } = \frac{\partial L}{\partial a} \cdot \frac{\partial a}{\partial \mathop w\nolimits_1 } = \mathop x\nolimits_1  \cdot (a - y)}\<br>{d\mathop w\nolimits_2  = \frac{\partial L}{\partial \mathop w\nolimits_2 } = \frac{\partial L}{\partial a} \cdot \frac{\partial a}{\partial \mathop w\nolimits_2 } = \mathop x\nolimits_2  \cdot (a - y)}\<br>{db = \frac{\partial L}{\partial b} = a - y}<br>\end{array}} \right.$$</p>
+<p>更新：<br>$$\left{ {\begin{array}{l}<br>{\mathop w\nolimits_1 : = \mathop w\nolimits_1  - \partial  \cdot d\mathop w\nolimits_1 }\<br>{\mathop w\nolimits_2 : = \mathop w\nolimits_2  - \partial  \cdot d\mathop w\nolimits_2 }\<br>{b: = b - \partial  \cdot db}<br>\end{array}} \right.$$</p>
+<p>m个样本的梯度下降：<br>$$\left{ {\begin{array}{l}<br>{d{\rm{ }}{w_1} = \frac{\rm{1}}{\rm{m}}\sum\limits_{i = 1}^m {x_1^{(i)} \cdot ({a^{(i)}} - {y^{(i)}})} {\rm{ }}}\<br>{d{\rm{ }}{w_2} = \frac{\rm{1}}{\rm{m}}\sum\limits_{i = 1}^m {x_2^{(i)} \cdot ({a^{(i)}} - {y^{(i)}})} {\rm{ }}}\<br>{db = \frac{\partial L}{\partial b} = \frac{\rm{1}}{\rm{m}}\sum\limits_{i = 1}^m {({a^{(i)}} - {y^{(i)}})} }<br>\end{array}} \right.$$</p>
+<p>深层网络的向前传播：<br>$$z^{[l]}=w^{[l]}a^{[l]-1}+b^{[l]}$$<br>$$a^{[l]} =  \sigma (z^{[l]})$$</p>
+<h2 id="常见激活函数"><a href="#常见激活函数" class="headerlink" title="常见激活函数"></a>常见激活函数</h2><h3 id="sigmiod函数"><a href="#sigmiod函数" class="headerlink" title="sigmiod函数"></a>sigmiod函数</h3><p>$$<br>f(x) = \frac{1}{1 + e^{-x}}<br>$$</p>
+<p>使用范围：常用于二分类问题。被广泛地使用在输出单元/最后一层上，在隐藏层使用较少。</p>
 <p>输出特点：值在0和1之间。</p>
 <p>具有平滑性、可导性、单调性等良好的性质，使用sigmod激活函数的神经网络可以学习到非线性的特征，提高模型的拟合能力。</p>
 <p>存在输出值偏置的问题，当输入值很大或很小时，函数的斜率会趋近于0，导致梯度消失，使得神经网络难以进行有效的学习。</p>
-<h3 id="softmax函数"><a href="#softmax函数" class="headerlink" title="softmax函数"></a>softmax函数</h3><script type="math/tex; mode=display">
-S_i = \frac{e^i}{\sum_j e^j}</script><p>使用范围：多分类问题。用在输出单元。</p>
+<h3 id="softmax函数"><a href="#softmax函数" class="headerlink" title="softmax函数"></a>softmax函数</h3><p>$$<br>S_i = \frac{e^i}{\sum_j e^j}<br>$$<br>使用范围：多分类问题。用在输出单元。</p>
 <p>输出特点：每一项的区间范围是(0, 1)，所有项相加的和为1。</p>
-<h3 id="tanh函数"><a href="#tanh函数" class="headerlink" title="tanh函数"></a>tanh函数</h3><script type="math/tex; mode=display">
-tanh(x) = \frac{1 - e^{-2x}}{1 + e^{-2x}}</script><h3 id="ReLU函数"><a href="#ReLU函数" class="headerlink" title="ReLU函数"></a>ReLU函数</h3><script type="math/tex; mode=display">
-ReLU(x) = max(x, 0)</script><p>使用范围：当搭建的神经网络层数较多时，此时不宜选择sigmoid、tanh函数，应选用ReLU。</p>
+<h3 id="tanh函数"><a href="#tanh函数" class="headerlink" title="tanh函数"></a>tanh函数</h3><p>$$<br>tanh(x) = \frac{1 - e^{-2x}}{1 + e^{-2x}}<br>$$</p>
+<h3 id="ReLU函数"><a href="#ReLU函数" class="headerlink" title="ReLU函数"></a>ReLU函数</h3><p>$$<br>ReLU(x) = max(x, 0)<br>$$<br>使用范围：当搭建的神经网络层数较多时，此时不宜选择sigmoid、tanh函数，应选用ReLU。</p>
 <p>ReLU函数的求导表现得很好，要么让参数消失，要么让参数通过。ReLU减轻了神经网络的梯度消失问题。</p>
-<h2 id="常见损失函数"><a href="#常见损失函数" class="headerlink" title="常见损失函数"></a>常见损失函数</h2><h3 id="交叉熵"><a href="#交叉熵" class="headerlink" title="交叉熵"></a>交叉熵</h3><script type="math/tex; mode=display">
-L(\hat y, y) = -ylog\hat y - (1-y)log(1-\hat{y})</script><h3 id="均方差"><a href="#均方差" class="headerlink" title="均方差"></a>均方差</h3><script type="math/tex; mode=display">
-MSE = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2</script>
+<h2 id="常见损失函数"><a href="#常见损失函数" class="headerlink" title="常见损失函数"></a>常见损失函数</h2><h3 id="交叉熵"><a href="#交叉熵" class="headerlink" title="交叉熵"></a>交叉熵</h3><p>$$<br>L(\hat y, y) = -ylog\hat y - (1-y)log(1-\hat{y})<br>$$</p>
+<h3 id="均方差"><a href="#均方差" class="headerlink" title="均方差"></a>均方差</h3><p>$$<br>MSE = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2<br>$$</p>
+
                 
             </div>
             <hr/>
@@ -927,7 +916,7 @@ MSE = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2</script>
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">91.1k</span>&nbsp;字
+                class="white-color">96.3k</span>&nbsp;字
             
             
             
