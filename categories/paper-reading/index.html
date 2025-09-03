@@ -298,29 +298,20 @@
                 
                 
                 
-                <a href="/categories/OO/" title="OO: 4">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #F9EBEA;">OO
-                        <span class="tag-length">4</span>
-                    </span>
-                </a>
-                
-                
                 <a href="/categories/deepLearning/" title="deepLearning: 17">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            style="background-color: #F5EEF8;">deepLearning
+                            style="background-color: #F9EBEA;">deepLearning
                         <span class="tag-length">17</span>
                     </span>
                 </a>
                 
                 
-                <a href="/categories/OS/" title="OS: 6">
+                <a href="/categories/OO/" title="OO: 4">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            style="background-color: #D5F5E3;">OS
-                        <span class="tag-length">6</span>
+                            style="background-color: #F5EEF8;">OO
+                        <span class="tag-length">4</span>
                     </span>
                 </a>
                 
@@ -328,8 +319,17 @@
                 <a href="/categories/compiler/" title="compiler: 3">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            style="background-color: #E8F8F5;">compiler
+                            style="background-color: #D5F5E3;">compiler
                         <span class="tag-length">3</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/categories/OS/" title="OS: 6">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            style="background-color: #E8F8F5;">OS
+                        <span class="tag-length">6</span>
                     </span>
                 </a>
                 
@@ -678,22 +678,22 @@
             
             <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2024/12/03/paper-reading/albef-lun-wen-bi-ji/">
+                    <a href="/2024/12/03/paper-reading/blip-lun-wen-bi-ji/">
                         <div class="card-image tag-image">
                             
                             
-                            <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="ALBEF论文笔记">
+                            <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="BLIP论文笔记">
                             
-                            <span class="card-title">ALBEF论文笔记</span>
+                            <span class="card-title">BLIP论文笔记</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                ALBEF论文笔记简介现有方法的缺陷
-图像特征和单词标记嵌入位于它们自己的空间中，这使得多模态编码器学习建模其交互具有挑战性；
-目标检测器既注释昂贵又计算昂贵，因为它在训练前需要边界框注释，以及高分辨率(例如。600×1000)图像；
-广泛
+                                预训练
+
+图像编码器：ViT的架构。将输入图像分割成一个个的 Patch 并将它们编码为一系列 Image Embedding，并使用额外的 [CLS] token 来表示全局的图像特征。
+文本编码器：BERT 的架构。[CLS] toke
                             
                         </div>
                         <div class="publish-info">
@@ -719,22 +719,22 @@
             
             <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2024/12/03/paper-reading/blip-lun-wen-bi-ji/">
+                    <a href="/2024/12/03/paper-reading/albef-lun-wen-bi-ji/">
                         <div class="card-image tag-image">
                             
                             
-                            <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="BLIP论文笔记">
+                            <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="ALBEF论文笔记">
                             
-                            <span class="card-title">BLIP论文笔记</span>
+                            <span class="card-title">ALBEF论文笔记</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                预训练
-
-图像编码器：ViT的架构。将输入图像分割成一个个的 Patch 并将它们编码为一系列 Image Embedding，并使用额外的 [CLS] token 来表示全局的图像特征。
-文本编码器：BERT 的架构。[CLS] toke
+                                ALBEF论文笔记简介现有方法的缺陷
+图像特征和单词标记嵌入位于它们自己的空间中，这使得多模态编码器学习建模其交互具有挑战性；
+目标检测器既注释昂贵又计算昂贵，因为它在训练前需要边界框注释，以及高分辨率(例如。600×1000)图像；
+广泛
                             
                         </div>
                         <div class="publish-info">
